@@ -1,0 +1,31 @@
+const { randomUUID } = require("crypto");
+
+class Product {
+  constructor(code, name, price) {
+    this.code = code;
+    this.name = name;
+    this.price = price;
+  }
+
+  generateId() {
+    this.id = randomUUID();
+  }
+
+  setDescription(description) {
+    this.description = description;
+  }
+
+  static build(data) {
+    const { code, name, price, description } = data;
+    const product = new Product(code, name, price);
+    product.setDescription(description);
+    product.generateId();
+    return product;
+  }
+
+  toString() {
+    return `Product(id=${this.id}, name=${this.name}, price=${this.price})`;
+  }
+}
+
+module.exports = Product;

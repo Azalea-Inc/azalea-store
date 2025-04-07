@@ -1,0 +1,23 @@
+const InventoryRepository = require("../data/sequelize/repository/InventoryRepository");
+const Inventory = require("../models/Inventory");
+
+class InventoryController {
+  constructor() {
+    this.repository = new InventoryRepository();
+  }
+
+  async addInventory(data) {
+    const inventory = Inventory.build(data);
+    return await this.repository.add(inventory);
+  }
+
+  async getAll() {
+    return await this.repository.getAll();
+  }
+
+  async getById(id) {
+    return await this.repository.getById(id);
+  }
+}
+
+module.exports = InventoryController;
