@@ -28,6 +28,11 @@ const InventoryEntity = sequelize.define(
         key: "id",
       },
     },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     // lowStockThreshold: {
     //   type: DataTypes.INTEGER,
     //   allowNull: false,

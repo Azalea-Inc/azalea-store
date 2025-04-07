@@ -7,6 +7,14 @@ class Inventory {
     this.stock = stock;
   }
 
+  activate() {
+    this.isActive = true;
+  }
+
+  deactivate() {
+    this.isActive = false;
+  }
+
   generateId() {
     this.id = randomUUID();
   }
@@ -14,6 +22,7 @@ class Inventory {
   static build(data) {
     const { productId, price, stock } = data;
     const inventory = new Inventory(productId, price, stock);
+    inventory.activate();
     inventory.generateId();
     return inventory;
   }
