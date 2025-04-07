@@ -36,6 +36,15 @@ class SequelizeDB {
     }
   }
 
+  static async seed() {
+    try {
+      await SequelizeDB.getInstance().sequelize.sync({ force: true });
+      console.log("Database seeded successfully.");
+    } catch (error) {
+      console.error("Unable to seed the database:", error);
+    }
+  }
+
   static async connect() {
     try {
       const instance = SequelizeDB.getInstance();
