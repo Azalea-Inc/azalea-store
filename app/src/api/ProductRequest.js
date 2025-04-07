@@ -1,5 +1,6 @@
 const express = require("express");
 const ProductController = require("../controllers/ProductController");
+const UpdateProductHandler = require("./products/UpdateProductHandler");
 
 class ProductRequest {
   constructor() {
@@ -77,6 +78,8 @@ class ProductRequest {
     this.router.get("/", this.showProducts.bind(this));
     this.router.get("/:id", this.showProductDetail.bind(this));
     this.router.delete("/:id", this.removeProduct.bind(this));
+
+    new UpdateProductHandler().setup(this.router);
 
     router.use("/products", this.router);
   }

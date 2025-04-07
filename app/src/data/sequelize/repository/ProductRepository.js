@@ -45,8 +45,7 @@ class ProductRepository {
       if (!product) {
         throw new Error("Product not found");
       }
-      await product.update(data);
-      return product;
+      await this.model.update(data, { where: { id } });
     } catch (error) {
       throw error;
     }
