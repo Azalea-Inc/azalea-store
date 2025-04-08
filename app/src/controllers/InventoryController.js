@@ -22,6 +22,10 @@ class InventoryController {
   async removeInventory(id) {
     return await this.repository.remove(id);
   }
+
+  async deactivateProductToInventory(id) {
+    return await this.repository.deactivateProductToInventory(id);
+  }
 }
 
 module.exports = InventoryController;

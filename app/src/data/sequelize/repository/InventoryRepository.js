@@ -43,6 +43,13 @@ class InventoryRepository {
     await inventory.destroy();
     return inventory;
   }
+
+  async deactivateProductToInventory(id) {
+    const inventory = await this.model.findByPk(id);
+    if (!inventory) throw new Error("Inventory not found");
+    await inventory.update({ isActive: false });
+    return inventory;
+  }
 }
 
 module.exports = InventoryRepository;
