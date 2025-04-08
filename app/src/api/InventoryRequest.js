@@ -28,9 +28,19 @@ class InventoryRequest {
     }
   }
 
+  async removeInventory(req, res) {
+    try {
+      await this.controller.removeInventory(req.params.id);
+      res.status(200).json({ message: "Inventory removed successfully" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.addInventory.bind(this));
     this.router.get("/", this.getInventories.bind(this));
+    this.router.delete("/:id", this.removeInventory.bind(this));
 
     router.use("/inventory", this.router);
   }

@@ -36,6 +36,13 @@ class InventoryRepository {
     if (!inventory) throw new Error("Inventory not found");
     return inventory;
   }
+
+  async remove(id) {
+    const inventory = await this.model.findByPk(id);
+    if (!inventory) throw new Error("Inventory not found");
+    await inventory.destroy();
+    return inventory;
+  }
 }
 
 module.exports = InventoryRepository;

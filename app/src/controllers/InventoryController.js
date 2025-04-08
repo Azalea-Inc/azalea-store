@@ -18,6 +18,10 @@ class InventoryController {
   async getById(id) {
     return await this.repository.getById(id);
   }
+
+  async removeInventory(id) {
+    return await this.repository.remove(id);
+  }
 }
 
 module.exports = InventoryController;
