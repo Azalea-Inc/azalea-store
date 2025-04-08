@@ -11,8 +11,8 @@ class UserController {
     return user;
   }
 
-  async getUsers() {
-    const users = await this.repository.findAll();
+  async showUsers() {
+    const users = await this.repository.getAll();
     return users;
   }
 

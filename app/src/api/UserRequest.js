@@ -16,20 +16,21 @@ class UserRequest {
       .catch((error) => res.status(400).json({ error }));
   }
 
-  async getUsers(req, res) {
+  async showUsers(req, res) {
     try {
-      const users = await this.controller.getUsers();
+      const users = await this.controller.showUsers();
       res
         .status(200)
         .json({ message: "Users retrieved successfully", data: users });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error });
     }
   }
 
   setupRoutes(router) {
     this.router.post("/", this.registerUser.bind(this));
-    this.router.get("/", this.getUsers.bind(this));
+    this.router.get("/", this.showUsers.bind(this));
 
     router.use("/users", this.router);
   }
