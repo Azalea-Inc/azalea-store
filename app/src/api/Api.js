@@ -1,10 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const ProductRequest = require("./ProductRequest");
-const InventoryRequest = require("./InventoryRequest");
-const UserRequest = require("./UserRequest");
-
 const SequelizeDB = require("../data/sequelize/SequelizeDB");
+const ApiRouterBuilder = require("./ApiRouterBuilder");
 
 class Api {
   constructor() {
@@ -18,9 +15,7 @@ class Api {
 
   setupRoutes() {
     this.app.use("/api", this.router);
-    new InventoryRequest().setupRoutes(this.router);
-    new ProductRequest().setupRoutes(this.router);
-    new UserRequest().setupRoutes(this.router);
+    new ApiRouterBuilder(this.router).build();
   }
 
   setupDatabase() {
