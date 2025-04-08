@@ -23,9 +23,9 @@ class ProductRepository {
     }
   }
 
-  async addProduct(data) {
+  async addProduct(productData) {
     try {
-      return await this.model.create(data);
+      return await this.model.create(productData);
     } catch (error) {
       throw error;
     }
