@@ -28,7 +28,7 @@ class InventoryRequest {
     }
   }
 
-  async getInventoryDetail(req, res) {
+  async showInventoryDetail(req, res) {
     try {
       const inventory = await this.controller.getById(req.params.id);
       res.status(200).json({
@@ -52,7 +52,7 @@ class InventoryRequest {
   setupRoutes(router) {
     this.router.post("/", this.addInventory.bind(this));
     this.router.get("/", this.getInventories.bind(this));
-    this.router.get("/:id", this.getInventoryDetail.bind(this));
+    this.router.get("/:id", this.showInventoryDetail.bind(this));
     this.router.delete("/:id", this.removeInventory.bind(this));
 
     router.use("/inventory", this.router);
