@@ -18,11 +18,7 @@ class CashBoxRequest {
   }
 
   setupRoutes(router) {
-    this.post("/", this.createBox.bind(this));
-    this.get("/", this.showBoxes.bind(this));
-    this.get("/:id", this.shwowBoxById.bind(this));
-    this.delete("/:id", this.deleteBox.bind(this));
-
+    this.router.post("/", this.createBox.bind(this));
     router.use("/cashbox", this.router);
   }
 }
