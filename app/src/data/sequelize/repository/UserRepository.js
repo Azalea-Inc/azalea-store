@@ -11,7 +11,9 @@ class UserRepository {
   }
 
   async getAll() {
-    const users = await this.model.findAll();
+    const users = await this.model.findAll({
+      attributes: { exclude: ["password"] },
+    });
     return users;
   }
 
@@ -32,6 +34,11 @@ class UserRepository {
   async getById(id) {
     const user = await this.model.findByPk(id);
     if (!user) throw new Error("User not found");
+    return user;
+  }
+
+  async getByEmail(email) {
+    const user = await this.model.findOne({ where: { email } });
     return user;
   }
 }

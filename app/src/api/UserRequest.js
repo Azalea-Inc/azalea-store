@@ -7,13 +7,13 @@ class UserRequest {
     this.controller = new UserController();
   }
 
-  registerUser(req, res) {
-    this.controller
-      .registerUser(req.body)
-      .then((user) =>
-        res.status(201).json({ message: "User created successfully" }),
-      )
-      .catch((error) => res.status(400).json({ error }));
+  async addUser(req, res) {
+    try {
+      await this.controller.addUser(req.body);
+      res.status(201).json({ message: "User created successfully" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
 
   async showUsers(req, res) {
@@ -29,7 +29,7 @@ class UserRequest {
   }
 
   setupRoutes(router) {
-    this.router.post("/", this.registerUser.bind(this));
+    this.router.post("/", this.addUser.bind(this));
     this.router.get("/", this.showUsers.bind(this));
 
     router.use("/users", this.router);

@@ -6,9 +6,17 @@ class UserController {
     this.repository = new UserRepository();
   }
 
-  async registerUser(data) {
+  async addUser(data) {
     const user = User.build(data);
+    const exists = await this.repository.getByEmail(user.email);
+    if (exists) throw new Error("User already exists");
+
+    await this.repository.save(user);
     return user;
+  }
+
+  async getUserByEmail(email) {
+    return await this.repository.getByEmail(email);
   }
 
   async showUsers() {
