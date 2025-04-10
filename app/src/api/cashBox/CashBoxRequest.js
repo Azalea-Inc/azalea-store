@@ -41,6 +41,15 @@ class CashBoxRequest {
     }
   }
 
+  async closeCashBox(req, res) {
+    try {
+      await this.controller.closeCashBox(req.params.id, req.body.closeAmount);
+      res.status(200).json({ message: "Box closed successfully" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   async showRegistries(req, res) {
     try {
       const registries = await this.controller.showRegistries(req.params.id);
@@ -72,6 +81,7 @@ class CashBoxRequest {
   setupRoutes(router) {
     this.router.post("/", this.createCashBox.bind(this));
     this.router.get("/", this.showCashBoxes.bind(this));
+    this.router.post("/:id/close", this.closeCashBox.bind(this));
     this.router.get("/:id/registries", this.showCashBoxRegistries.bind(this));
     this.router.post("/open", this.openCashBox.bind(this));
     this.router.get("/registries", this.showRegistries.bind(this));

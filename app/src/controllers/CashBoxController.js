@@ -25,6 +25,10 @@ class CashBoxController {
     await this.repository.openCashBox(cashBoxRegistry);
   }
 
+  async closeCashBox(id, closeAmount) {
+    await this.repository.closeCashBox(id, closeAmount);
+  }
+
   async showRegistries() {
     return await this.repository.showRegistries();
   }

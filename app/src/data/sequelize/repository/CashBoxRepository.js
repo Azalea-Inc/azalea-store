@@ -31,16 +31,13 @@ class CashBoxRepository {
     await this.modelRegistry.create(cashBoxRegistry);
   }
 
-  async closeCashBox(id) {
-    try {
-      const cashBox = await this.model.findByPk(id);
-      if (!cashBox) throw new Error("Cash box not found");
-      cashBox.closeDate = new Date();
-      await cashBox.save();
-      return cashBox;
-    } catch (error) {
-      throw new Error("Failed to close cash box");
-    }
+  async closeCashBox(id, closeAmount) {
+    const cashBoxRegistry = await this.modelRegistry.findByPk(id);
+    if (!cashBoxRegistry) throw new Error("Cash box registry not found");
+
+    cashBoxRegistry.closeAmount = closeAmount;
+    cashBoxRegistry.closeDate = new Date();
+    await cashBoxRegistry.save();
   }
 
   async showCashBoxRegistries(id) {
