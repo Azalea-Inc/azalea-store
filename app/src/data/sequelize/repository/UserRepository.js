@@ -41,6 +41,20 @@ class UserRepository {
     const user = await this.model.findOne({ where: { email } });
     return user;
   }
+
+  async deactivateUser(id) {
+    const user = await this.model.findByPk(id);
+    if (!user) throw new Error("User not found");
+    user.active = false;
+    await user.save();
+  }
+
+  async activateUser(id) {
+    const user = await this.model.findByPk(id);
+    if (!user) throw new Error("User not found");
+    user.active = true;
+    await user.save();
+  }
 }
 
 module.exports = UserRepository;

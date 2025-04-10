@@ -29,6 +29,14 @@ class UserController {
     if (!user) throw new Error("User not found");
     return user;
   }
+
+  async deactivateUser(id) {
+    await this.repository.deactivateUser(id);
+  }
+
+  async activateUser(id) {
+    await this.repository.activateUser(id);
+  }
 }
 
 module.exports = UserController;
