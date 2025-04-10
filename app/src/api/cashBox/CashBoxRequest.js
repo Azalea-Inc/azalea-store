@@ -31,6 +31,21 @@ class CashBoxRequest {
     }
   }
 
+  async renameCashBox(req, res) {
+    try {
+      const cashBox = await this.controller.renameCashBox(
+        req.params.id,
+        req.body.name,
+      );
+
+      res
+        .status(200)
+        .json({ message: "Box renamed successfully", data: cashBox });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   async openCashBox(req, res) {
     try {
       await this.controller.openCashBox(req.body);
@@ -81,6 +96,7 @@ class CashBoxRequest {
   setupRoutes(router) {
     this.router.post("/", this.createCashBox.bind(this));
     this.router.get("/", this.showCashBoxes.bind(this));
+    this.router.patch("/:id/rename", this.renameCashBox.bind(this));
     this.router.post("/:id/close", this.closeCashBox.bind(this));
     this.router.get("/:id/registries", this.showCashBoxRegistries.bind(this));
     this.router.post("/open", this.openCashBox.bind(this));

@@ -18,6 +18,14 @@ class CashBoxRepository {
     return await this.model.findAll();
   }
 
+  async renameCashBox(id, name) {
+    const cashBox = await this.model.findByPk(id);
+    if (!cashBox) throw new Error("Cash box not found");
+    if (!name) throw new Error("Name is required");
+    cashBox.name = name;
+    await cashBox.save();
+  }
+
   async getCashBoxById(id) {
     try {
       const cashBox = await this.model.findByPk(id);
