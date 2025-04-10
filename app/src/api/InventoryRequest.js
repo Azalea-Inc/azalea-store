@@ -49,6 +49,15 @@ class InventoryRequest {
     }
   }
 
+  async activateProductToInventory(req, res) {
+    try {
+      await this.controller.activateProductToInventory(req.params.id);
+      res.status(200).json({ message: "Product activated successfully" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   async deactivateProductToInventory(req, res) {
     try {
       await this.controller.deactivateProductToInventory(req.params.id);
@@ -66,6 +75,10 @@ class InventoryRequest {
     this.router.patch(
       "/:id/deactivate",
       this.deactivateProductToInventory.bind(this),
+    );
+    this.router.patch(
+      "/:id/activate",
+      this.activateProductToInventory.bind(this),
     );
 
     router.use("/inventory", this.router);
