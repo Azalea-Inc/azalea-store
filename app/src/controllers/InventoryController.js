@@ -24,11 +24,11 @@ class InventoryController {
   }
 
   async activateProductToInventory(id) {
-    return await this.repository.activateProductToInventory(id);
+    await this.repository.activateProductToInventory(id);
   }
 
   async deactivateProductToInventory(id) {
-    return await this.repository.deactivateProductToInventory(id);
+    await this.repository.deactivateProductToInventory(id);
   }
 }
 

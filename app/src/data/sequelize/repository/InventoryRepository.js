@@ -48,14 +48,12 @@ class InventoryRepository {
     const inventory = await this.model.findByPk(id);
     if (!inventory) throw new Error("Inventory not found");
     await inventory.update({ isActive: true });
-    return inventory;
   }
 
   async deactivateProductToInventory(id) {
     const inventory = await this.model.findByPk(id);
     if (!inventory) throw new Error("Inventory not found");
     await inventory.update({ isActive: false });
-    return inventory;
   }
 }
 
