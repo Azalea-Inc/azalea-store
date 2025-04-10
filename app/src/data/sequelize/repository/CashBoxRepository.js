@@ -14,6 +14,10 @@ class CashBoxRepository {
     }
   }
 
+  async showCashBoxes() {
+    return await this.model.findAll();
+  }
+
   async getCashBoxById(id) {
     try {
       const cashBox = await this.model.findByPk(id);
@@ -48,6 +52,12 @@ class CashBoxRepository {
     } catch (error) {
       throw new Error("Failed to get cash box registry");
     }
+  }
+
+  async showRegistries() {
+    return await this.modelRegistry.findAll({
+      include: "cashBox",
+    });
   }
 }
 
