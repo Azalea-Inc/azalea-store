@@ -65,6 +65,19 @@ class UserRequest {
     }
   }
 
+  async changePassword(req, res) {
+    try {
+      await this.controller.changePassword(
+        req.params.id,
+        req.body.password,
+        req.body.oldPassword,
+      );
+      res.status(200).json({ message: "Password changed successfully" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.addUser.bind(this));
     this.router.get("/", this.showUsers.bind(this));
@@ -72,6 +85,7 @@ class UserRequest {
     this.router.patch("/:id/deactivate", this.deactivateUser.bind(this));
     this.router.patch("/:id/activate", this.activateUser.bind(this));
     this.router.delete("/:id", this.removerUser.bind(this));
+    this.router.patch("/:id/password", this.changePassword.bind(this));
 
     router.use("/users", this.router);
   }

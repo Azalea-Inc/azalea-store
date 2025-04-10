@@ -12,6 +12,10 @@ class User {
     this.id = randomUUID();
   }
 
+  setId(id) {
+    this.id = id;
+  }
+
   setRole(role) {
     this.roles.push(role);
   }
@@ -20,11 +24,39 @@ class User {
     this.roles = roles;
   }
 
+  setIsActive(active) {
+    this.active = active;
+  }
+
   encryptedPassword(password) {
+    this.password = this.#generateHash(password);
+  }
+
+  #generateHash(password) {
     const hash = crypto.createHash("sha256");
+    return hash.update(password).digest("hex");
+  }
+
+  changePassword(oldPassword, newPassword) {
+    if (this.password !== this.#generateHash(oldPassword)) {
+      throw new Error("Incorrect old password");
+    }
+
+    this.encryptedPassword(newPassword);
+  }
+
+  setPassword(password) {
     this.password = password;
-    const encryptedPassword = hash.update(password).digest("hex");
-    this.password = encryptedPassword;
+  }
+
+  static buildToData(data) {
+    const { email, name, active, id, password } = data;
+
+    const user = new User(email, name);
+    user.setId(id);
+    user.setIsActive(active);
+    user.setPassword(password);
+    return user;
   }
 
   static build(data) {

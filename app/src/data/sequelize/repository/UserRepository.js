@@ -1,3 +1,4 @@
+const User = require("../../../models/User");
 const UserEntity = require("../entities/UserEntity");
 
 class UserRepository {
@@ -53,6 +54,15 @@ class UserRepository {
     if (!user) throw new Error("User not found");
     user.active = true;
     await user.save();
+  }
+
+  async changePassword(id, password, oldPassword) {
+    if (!password) throw new Error("Password is required");
+    const user = await this.model.findByPk(id);
+    if (!user) throw new Error("User not found");
+    const saveUser = User.buildToData(user);
+    saveUser.changePassword(oldPassword, password);
+    await user.update(saveUser);
   }
 }
 

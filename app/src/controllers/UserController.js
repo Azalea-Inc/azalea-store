@@ -41,6 +41,10 @@ class UserController {
   async removerUser(id) {
     await this.repository.delete(id);
   }
+
+  async changePassword(id, password, oldPassword) {
+    await this.repository.changePassword(id, password, oldPassword);
+  }
 }
 
 module.exports = UserController;
