@@ -24,9 +24,10 @@ class UserController {
     return users;
   }
 
-  async getUserById(id) {
-    // const user = await this.repository.findById(id);
-    // return user;
+  async showUserInfo(id) {
+    const user = await this.repository.getById(id);
+    if (!user) throw new Error("User not found");
+    return user;
   }
 }
 

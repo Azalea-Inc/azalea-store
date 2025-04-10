@@ -23,14 +23,25 @@ class UserRequest {
         .status(200)
         .json({ message: "Users retrieved successfully", data: users });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error });
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async showUserInfo(req, res) {
+    try {
+      const user = await this.controller.showUserInfo(req.params.id);
+      res
+        .status(200)
+        .json({ message: "User retrieved successfully", data: user });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
     }
   }
 
   setupRoutes(router) {
     this.router.post("/", this.addUser.bind(this));
     this.router.get("/", this.showUsers.bind(this));
+    this.router.get("/:id", this.showUserInfo.bind(this));
 
     router.use("/users", this.router);
   }

@@ -32,9 +32,9 @@ class UserRepository {
   }
 
   async getById(id) {
-    const user = await this.model.findByPk(id);
-    if (!user) throw new Error("User not found");
-    return user;
+    return await this.model.findByPk(id, {
+      attributes: { exclude: ["password"] },
+    });
   }
 
   async getByEmail(email) {
