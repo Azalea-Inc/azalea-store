@@ -16,6 +16,10 @@ class CashBoxController {
     return await this.repository.showCashBoxes();
   }
 
+  async showCashBoxRegistries(id) {
+    return await this.repository.showCashBoxRegistries(id);
+  }
+
   async openCashBox(data) {
     const cashBoxRegistry = CashBoxRegistry.build(data);
     await this.repository.openCashBox(cashBoxRegistry);

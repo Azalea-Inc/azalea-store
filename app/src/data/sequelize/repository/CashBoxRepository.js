@@ -43,12 +43,11 @@ class CashBoxRepository {
     }
   }
 
-  async getCashBoxRegistry(id) {
+  async showCashBoxRegistries(id) {
     try {
       const cashBox = await this.model.findByPk(id);
       if (!cashBox) throw new Error("Cash box not found");
-      const registry = await cashBox.getRegistry();
-      return registry;
+      return await cashBox.getRegistries();
     } catch (error) {
       throw new Error("Failed to get cash box registry");
     }

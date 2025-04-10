@@ -54,9 +54,25 @@ class CashBoxRequest {
     }
   }
 
+  async showCashBoxRegistries(req, res) {
+    try {
+      const registries = await this.controller.showCashBoxRegistries(
+        req.params.id,
+      );
+
+      res.status(200).json({
+        message: "Registries retrieved successfully",
+        data: registries,
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.createCashBox.bind(this));
     this.router.get("/", this.showCashBoxes.bind(this));
+    this.router.get("/:id/registries", this.showCashBoxRegistries.bind(this));
     this.router.post("/open", this.openCashBox.bind(this));
     this.router.get("/registries", this.showRegistries.bind(this));
     router.use("/cashbox", this.router);
