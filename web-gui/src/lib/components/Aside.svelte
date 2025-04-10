@@ -27,6 +27,12 @@
             icon: Package,
             notifications: 0,
         },
+        {
+            title: "Cajas",
+            href: "/cashbox",
+            icon: Box,
+            notifications: 0,
+        },
     ];
 </script>
 
