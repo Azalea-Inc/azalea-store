@@ -37,6 +37,10 @@ class UserController {
   async activateUser(id) {
     await this.repository.activateUser(id);
   }
+
+  async removerUser(id) {
+    await this.repository.delete(id);
+  }
 }
 
 module.exports = UserController;

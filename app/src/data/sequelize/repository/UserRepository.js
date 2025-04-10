@@ -28,7 +28,6 @@ class UserRepository {
     const user = await this.model.findByPk(id);
     if (!user) throw new Error("User not found");
     await user.destroy();
-    return user;
   }
 
   async getById(id) {

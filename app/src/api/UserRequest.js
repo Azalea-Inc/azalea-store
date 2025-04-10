@@ -56,12 +56,22 @@ class UserRequest {
     }
   }
 
+  async removerUser(req, res) {
+    try {
+      await this.controller.removerUser(req.params.id);
+      res.status(200).json({ message: "User removed successfully" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.addUser.bind(this));
     this.router.get("/", this.showUsers.bind(this));
     this.router.get("/:id", this.showUserInfo.bind(this));
     this.router.patch("/:id/deactivate", this.deactivateUser.bind(this));
     this.router.patch("/:id/activate", this.activateUser.bind(this));
+    this.router.delete("/:id", this.removerUser.bind(this));
 
     router.use("/users", this.router);
   }
