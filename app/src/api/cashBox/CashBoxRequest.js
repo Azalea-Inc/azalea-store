@@ -7,18 +7,31 @@ class CashBoxRequest {
     this.controller = new CashBoxController();
   }
 
-  async createBox(req, res) {
+  async createCashBox(req, res) {
     try {
-      await this.controller.createBox(req.body);
+      const cashBox = await this.controller.createCashBox(req.body);
 
-      res.status(201).json({ message: "Box created successfully" });
+      res
+        .status(201)
+        .json({ message: "Box created successfully", data: cashBox });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async openCashBox(req, res) {
+    try {
+      await this.controller.openCashBox(req.body);
+
+      res.status(200).json({ message: "Box opened successfully" });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
   }
 
   setupRoutes(router) {
-    this.router.post("/", this.createBox.bind(this));
+    this.router.post("/", this.createCashBox.bind(this));
+    this.router.post("/open", this.openCashBox.bind(this));
     router.use("/cashbox", this.router);
   }
 }

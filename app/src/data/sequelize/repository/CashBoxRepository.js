@@ -1,13 +1,15 @@
 class CashBoxRepository {
   constructor() {
     this.model = require("../entities/CashBoxEntity");
+    this.modelRegistry = require("../entities/CashBoxRegistryEntity");
   }
 
-  async createCashBox(name, location) {
+  async createCashBox(cashBox) {
     try {
-      const cashBox = await this.model.create({ name, location });
-      return cashBox;
+      const newCashBox = await this.model.create(cashBox);
+      return newCashBox;
     } catch (error) {
+      console.error(error);
       throw new Error("Failed to create cash box");
     }
   }
@@ -18,6 +20,33 @@ class CashBoxRepository {
       return cashBox;
     } catch (error) {
       throw new Error("Failed to get cash box");
+    }
+  }
+
+  async openCashBox(cashBoxRegistry) {
+    await this.modelRegistry.create(cashBoxRegistry);
+  }
+
+  async closeCashBox(id) {
+    try {
+      const cashBox = await this.model.findByPk(id);
+      if (!cashBox) throw new Error("Cash box not found");
+      cashBox.closeDate = new Date();
+      await cashBox.save();
+      return cashBox;
+    } catch (error) {
+      throw new Error("Failed to close cash box");
+    }
+  }
+
+  async getCashBoxRegistry(id) {
+    try {
+      const cashBox = await this.model.findByPk(id);
+      if (!cashBox) throw new Error("Cash box not found");
+      const registry = await cashBox.getRegistry();
+      return registry;
+    } catch (error) {
+      throw new Error("Failed to get cash box registry");
     }
   }
 }
