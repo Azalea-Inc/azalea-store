@@ -11,6 +11,15 @@ class SaleController {
     const createdSale = await this.respository.addSale(sale);
     return createdSale;
   }
+
+  async showSale(id) {
+    try {
+      const sale = await this.respository.showSale(id);
+      return sale;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 module.exports = SaleController;

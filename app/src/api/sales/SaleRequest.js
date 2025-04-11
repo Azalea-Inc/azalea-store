@@ -16,8 +16,21 @@ class SaleRequest {
     }
   }
 
+  async showSale(req, res) {
+    try {
+      const sale = await this.controller.showSale(req.params.id);
+      res
+        .status(200)
+        .json({ message: "Sale retrieved successfully", data: sale });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     router.post("/sales", this.addSale.bind(this));
+    router.get("/sales/:id", this.showSale.bind(this));
+
     router.use("/sales", this.router);
   }
 }
