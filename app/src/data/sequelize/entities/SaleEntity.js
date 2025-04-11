@@ -21,6 +21,14 @@ const SaleEntity = sequelize.define("Sale", {
       min: 0,
     },
   },
+  cashBoxRegistryId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: "CashBoxRegistries",
+      key: "id",
+    },
+  },
 });
 
 module.exports = SaleEntity;

@@ -1,16 +1,18 @@
 const { randomUUID } = require("crypto");
 
 class Sale {
-  constructor() {
+  constructor(cashBoxRegistryId) {
     this.date = new Date();
+    this.cashBoxRegistryId = cashBoxRegistryId;
   }
 
   generateId() {
     this.id = randomUUID();
   }
 
-  static build() {
-    const sale = new Sale();
+  static build(data) {
+    const { cashBoxRegistryId } = data;
+    const sale = new Sale(cashBoxRegistryId);
     sale.generateId();
     return sale;
   }

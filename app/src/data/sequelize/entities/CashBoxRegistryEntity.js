@@ -33,7 +33,7 @@ const CashBoxRegistryEntity = sequelize.define(
     cashBoxId: {
       type: DataTypes.UUID,
       references: {
-        model: "CashBox",
+        model: "CashBoxes",
         key: "id",
       },
     },

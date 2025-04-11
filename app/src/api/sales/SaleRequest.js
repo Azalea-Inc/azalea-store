@@ -22,4 +22,4 @@ class SaleRequest {
   }
 }
 
-module.exports = SalesRequest;
+module.exports = SaleRequest;

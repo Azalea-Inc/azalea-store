@@ -2,6 +2,7 @@ const InventoryRequest = require("./InventoryRequest");
 const ProductRequest = require("./ProductRequest");
 const UserRequest = require("./UserRequest");
 const CashBoxRequest = require("./cashBox/CashBoxRequest");
+const SaleRequest = require("./sales/SaleRequest");
 
 class ApiRouterBuilder {
   constructor(router) {
@@ -13,6 +14,7 @@ class ApiRouterBuilder {
     new ProductRequest().setupRoutes(this.router);
     new UserRequest().setupRoutes(this.router);
     new CashBoxRequest().setupRoutes(this.router);
+    new SaleRequest().setupRoutes(this.router);
   }
 }
 

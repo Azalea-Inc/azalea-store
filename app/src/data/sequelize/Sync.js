@@ -23,12 +23,23 @@ module.exports = () => {
     as: "cashBox",
   });
 
-  SaleEntity.hasMany(InventoryEntity, {
-    foreignKey: "saleId",
-    as: "inventories",
-  });
-  InventoryEntity.belongsTo(SaleEntity, {
-    foreignKey: "saleId",
+  CashBoxRegistryEntity.hasOne(SaleEntity, {
+    foreignKey: "cashBoxRegistryId",
     as: "sale",
   });
+
+  // SaleEntity.hasMany(InventoryEntity, {
+  //   foreignKey: "saleId",
+  //   as: "inventories",
+  // });
+
+  SaleEntity.belongsTo(CashBoxRegistryEntity, {
+    foreignKey: "cashBoxRegistryId",
+    as: "registry",
+  });
+
+  // InventoryEntity.belongsTo(SaleEntity, {
+  //   foreignKey: "saleId",
+  //   as: "sale",
+  // });
 };
