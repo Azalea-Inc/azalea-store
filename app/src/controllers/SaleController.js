@@ -20,6 +20,15 @@ class SaleController {
       throw new Error(error.message);
     }
   }
+
+  async showSales(id) {
+    try {
+      const sales = await this.respository.showSales(id);
+      return sales;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 module.exports = SaleController;
