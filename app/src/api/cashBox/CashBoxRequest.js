@@ -123,7 +123,7 @@ class CashBoxRequest {
     this.router.post("/:id/close", this.closeCashBox.bind(this));
     this.router.get("/:id/registries", this.showCashBoxRegistries.bind(this));
     this.router.post("/open", this.openCashBox.bind(this));
-    this.router.get("/registries", this.showRegistries.bind(this));
+    this.router.get("/registries/all", this.showRegistries.bind(this));
     router.use("/cashbox", this.router);
   }
 }

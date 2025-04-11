@@ -71,9 +71,13 @@ class CashBoxRepository {
   }
 
   async showRegistries() {
-    return await this.modelRegistry.findAll({
-      include: "cashBox",
-    });
+    try {
+      return await this.modelRegistry.findAll({
+        include: "cashBox",
+      });
+    } catch (error) {
+      throw new Error("Failed to get registries");
+    }
   }
 }
 
