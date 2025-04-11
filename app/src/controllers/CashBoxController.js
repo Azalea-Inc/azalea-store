@@ -24,6 +24,10 @@ class CashBoxController {
     await this.repository.renameCashBox(id, name);
   }
 
+  async removeCashBox(id) {
+    await this.repository.removeCashBox(id);
+  }
+
   async showCashBoxRegistries(id) {
     return await this.repository.showCashBoxRegistries(id);
   }

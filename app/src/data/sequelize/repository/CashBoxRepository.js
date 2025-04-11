@@ -41,6 +41,12 @@ class CashBoxRepository {
     }
   }
 
+  async removeCashBox(id) {
+    const cashBox = await this.model.findByPk(id);
+    if (!cashBox) throw new Error("Cash box not found");
+    await cashBox.destroy();
+  }
+
   async openCashBox(cashBoxRegistry) {
     await this.modelRegistry.create(cashBoxRegistry);
   }

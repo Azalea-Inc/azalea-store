@@ -58,6 +58,15 @@ class CashBoxRequest {
     }
   }
 
+  async removeCashBox(req, res) {
+    try {
+      await this.controller.removeCashBox(req.params.id);
+      res.status(200).json({ message: "Box removed successfully" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   async openCashBox(req, res) {
     try {
       await this.controller.openCashBox(req.body);
@@ -110,6 +119,7 @@ class CashBoxRequest {
     this.router.get("/", this.showCashBoxes.bind(this));
     this.router.get("/:id", this.showCashBoxInfo.bind(this));
     this.router.patch("/:id/rename", this.renameCashBox.bind(this));
+    this.router.delete("/:id", this.removeCashBox.bind(this));
     this.router.post("/:id/close", this.closeCashBox.bind(this));
     this.router.get("/:id/registries", this.showCashBoxRegistries.bind(this));
     this.router.post("/open", this.openCashBox.bind(this));
