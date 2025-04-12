@@ -1,9 +1,7 @@
-const express = require("express");
 const InventoryController = require("../controllers/InventoryController");
 
 class InventoryRequest {
   constructor() {
-    this.router = express.Router();
     this.controller = new InventoryController();
   }
 
@@ -65,23 +63,6 @@ class InventoryRequest {
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
-  }
-
-  setupRoutes(router) {
-    this.router.post("/", this.addInventory.bind(this));
-    this.router.get("/", this.getInventories.bind(this));
-    this.router.get("/:id", this.showInventoryDetail.bind(this));
-    this.router.delete("/:id", this.removeInventory.bind(this));
-    this.router.patch(
-      "/:id/deactivate",
-      this.deactivateProductToInventory.bind(this),
-    );
-    this.router.patch(
-      "/:id/activate",
-      this.activateProductToInventory.bind(this),
-    );
-
-    router.use("/inventory", this.router);
   }
 }
 
