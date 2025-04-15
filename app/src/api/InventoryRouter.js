@@ -1,16 +1,25 @@
 const Router = require("./Router");
+const InventoryRequest = require("./InventoryRequest");
 
 class InventoryRouter extends Router {
+  constructor() {
+    super();
+    this.request = new InventoryRequest();
+  }
+
   #initializeRoutes() {
-    this.post("/", "InventoryRequest@addInventory");
-    this.get("/", "InventoryRequest@getInventories");
-    this.get("/:id", "InventoryRequest@showInventoryDetail");
-    this.delete("/:id", "InventoryRequest@removeInventory");
+    this.post("/", this.request.addInventory.bind(this.request));
+    this.get("/", this.request.getInventories.bind(this.request));
+    this.get("/:id", this.request.showInventoryDetail.bind(this.request));
+    this.delete("/:id", this.request.removeInventory.bind(this.request));
     this.patch(
       "/:id/deactivate",
-      "InventoryRequest@deactivateProductToInventory",
+      this.request.deactivateProductToInventory.bind(this.request),
     );
-    this.patch("/:id/activate", "InventoryRequest@activateProductToInventory");
+    this.patch(
+      "/:id/activate",
+      this.request.activateProductToInventory.bind(this.request),
+    );
   }
 
   #setupRouterMiddleware(router) {
