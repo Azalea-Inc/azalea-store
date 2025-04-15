@@ -8,15 +8,18 @@ class InventoryRouter extends Router {
   }
 
   #initializeRoutes() {
-    this.post("/", this.request.addInventory.bind(this.request));
-    this.get("/", this.request.getInventories.bind(this.request));
-    this.get("/:id", this.request.showInventoryDetail.bind(this.request));
-    this.delete("/:id", this.request.removeInventory.bind(this.request));
-    this.patch(
+    this.router.post("/", this.request.addInventory.bind(this.request));
+    this.router.get("/", this.request.getInventories.bind(this.request));
+    this.router.get(
+      "/:id",
+      this.request.showInventoryDetail.bind(this.request),
+    );
+    this.router.delete("/:id", this.request.removeInventory.bind(this.request));
+    this.router.patch(
       "/:id/deactivate",
       this.request.deactivateProductToInventory.bind(this.request),
     );
-    this.patch(
+    this.router.patch(
       "/:id/activate",
       this.request.activateProductToInventory.bind(this.request),
     );
