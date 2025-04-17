@@ -1,5 +1,4 @@
 const InventoryController = require("../controllers/InventoryController");
-const Movement = require("../models/Movement");
 
 class InventoryRequest {
   constructor() {
@@ -69,8 +68,6 @@ class InventoryRequest {
   async addMovementToInventory(req, res) {
     try {
       //await this.controller.AddMovementToInventory(req.body);
-      console.log(req.body);
-      console.log(Movement.build(req.body));
       res.status(200).json({ message: "Movement created successfully" });
     } catch (error) {
       res.status(400).json({ error: error.message });
