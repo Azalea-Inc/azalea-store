@@ -14,9 +14,10 @@ class InventoryRouter extends Router {
     this.router.delete("/:id", request.removeInventory.bind(request));
     this.router.patch(
       "/:id/deactivate",
-      "InventoryRequest@deactivateProductToInventory",
+      request.deactivateProductToInventory.bind(request)
     );
-    this.patch("/:id/activate", "InventoryRequest@activateProductToInventory");
+    this.router.patch("/:id/activate", request.activateProductToInventory.bind(request));
+
   }
 
   #setupRouterMiddleware(router) {
