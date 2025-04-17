@@ -55,6 +55,21 @@ class InventoryRepository {
     if (!inventory) throw new Error("Inventory not found");
     await inventory.update({ isActive: false });
   }
+
+  async addMovement(id, movement) {
+    const inventory = await this.model.findByPk(id);
+    if (!inventory) throw new Error("Inventory not found");
+    if(movement.type === 'OUTPUT') {
+      if(inventory.stock < movement.amount){
+        throw new Error("Not enough stock");
+      }
+      inventory.stock = inventory.stock - movement.amount;
+    } else {
+      inventory.stock = inventory.stock + movement.amount;
+    }
+    await inventory.save();
+    await inventory.addMovement(movement);
+  }
 }
 
 module.exports = InventoryRepository;

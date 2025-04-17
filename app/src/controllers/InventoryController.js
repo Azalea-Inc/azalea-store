@@ -1,5 +1,6 @@
 const InventoryRepository = require("../data/sequelize/repository/InventoryRepository");
 const Inventory = require("../models/Inventory");
+const Movement = require("../models/Movement");
 
 class InventoryController {
   constructor() {
@@ -29,6 +30,11 @@ class InventoryController {
 
   async deactivateProductToInventory(id) {
     await this.repository.deactivateProductToInventory(id);
+  }
+
+  async addMovementToInventory(id, data) {
+    const movement = Movement.build({ inventoryId: id, ...data });
+    await this.repository.addMovement(id, movement);
   }
 }
 

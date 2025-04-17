@@ -4,6 +4,7 @@ const CashBoxEntity = require("./entities/CashBoxEntity");
 const CashBoxRegistryEntity = require("./entities/CashBoxRegistryEntity");
 const CashBoxMovementEntity = require("./entities/CashBoxMovementEntity");
 const SaleEntity = require("./entities/SaleEntity");
+const MovementEntity = require("./entities/MovementEntity");
 
 module.exports = () => {
   ProductEntity.hasOne(InventoryEntity, {
@@ -53,5 +54,15 @@ module.exports = () => {
   CashBoxMovementEntity.belongsTo(CashBoxRegistryEntity, {
     foreignKey: "registryId",
     as: "registry",
+  });
+
+  InventoryEntity.hasMany(MovementEntity, {
+    foreignKey: "inventoryId",
+    as: "movements",
+  });
+
+  CashBoxMovementEntity.belongsTo(InventoryEntity, {
+    foreignKey: "inventoryId",
+    as: "inventory",
   });
 };

@@ -67,7 +67,7 @@ class InventoryRequest {
 
   async addMovementToInventory(req, res) {
     try {
-      //await this.controller.AddMovementToInventory(req.body);
+      await this.controller.addMovementToInventory(req.params.id, req.body);
       res.status(200).json({ message: "Movement created successfully" });
     } catch (error) {
       res.status(400).json({ error: error.message });
