@@ -1,17 +1,26 @@
+const { randomUUID } = require("crypto");
+
 class CashBoxMovement {
-  constructor(id, amount, type, date) {
-    this.id = id;
+  constructor(amount, type) {
     this.amount = amount;
     this.type = type;
-    this.date = date;
+    this.date = new Date();
   }
 
-  static create(id, amount, type, date) {
-    return new CashBoxMovement(id, amount, type, date);
+  setRegistryId(id) {
+    this.registryId = id;
   }
 
-  static fromObject(obj) {
-    return new CashBoxMovement(obj.id, obj.amount, obj.type, obj.date);
+  generateId() {
+    this.id = randomUUID();
+  }
+
+  static build(data) {
+    const { amount, type, registryId } = data;
+    const movement = new CashBoxMovement(amount, type);
+    movement.generateId();
+    movement.setRegistryId(registryId);
+    return movement;
   }
 }
 

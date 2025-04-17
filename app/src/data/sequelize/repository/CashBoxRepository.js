@@ -2,6 +2,7 @@ class CashBoxRepository {
   constructor() {
     this.model = require("../entities/CashBoxEntity");
     this.modelRegistry = require("../entities/CashBoxRegistryEntity");
+    this.modelMovement = require("../entities/CashBoxMovementEntity");
   }
 
   async createCashBox(cashBox) {
@@ -77,6 +78,27 @@ class CashBoxRepository {
       });
     } catch (error) {
       throw new Error("Failed to get registries");
+    }
+  }
+
+  async createMovement(id, movement) {
+    try {
+      const registry = await this.modelRegistry.findByPk(id);
+      if (!registry) throw new Error("Cash box not found");
+      return await registry.createMovement(movement);
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to create movement");
+    }
+  }
+
+  async showMovementsByRegistry(id) {
+    try {
+      const registry = await this.modelRegistry.findByPk(id);
+      if (!registry) throw new Error("Cash box not found");
+      return await registry.getMovements();
+    } catch (error) {
+      throw new Error("Failed to get movements");
     }
   }
 }

@@ -1,5 +1,6 @@
 const CashBox = require("../models/CashBox");
 const CashBoxRegistry = require("../models/CashBoxRegistry");
+const CashBoxMovement = require("../models/CashBoxMovement");
 const CashBoxRepository = require("../data/sequelize/repository/CashBoxRepository");
 
 class CashBoxController {
@@ -43,6 +44,15 @@ class CashBoxController {
 
   async showRegistries() {
     return await this.repository.showRegistries();
+  }
+
+  async createMovement(registryId, data) {
+    const movement = CashBoxMovement.build({ registryId, ...data });
+    await this.repository.createMovement(registryId, movement);
+  }
+
+  async showMovementsByRegistry(registryId) {
+    return await this.repository.showMovementsByRegistry(registryId);
   }
 }
 

@@ -46,12 +46,12 @@ module.exports = () => {
   //
 
   CashBoxRegistryEntity.hasMany(CashBoxMovementEntity, {
-    foreignKey: "cashBoxRegistryId",
+    foreignKey: "registryId",
     as: "movements",
   });
 
   CashBoxMovementEntity.belongsTo(CashBoxRegistryEntity, {
-    foreignKey: "cashBoxRegistryId",
+    foreignKey: "registryId",
     as: "registry",
   });
 };

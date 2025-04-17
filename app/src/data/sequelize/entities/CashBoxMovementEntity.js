@@ -10,11 +10,6 @@ const CashBoxMovementEntity = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    openDate: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
     amount: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
@@ -28,13 +23,13 @@ const CashBoxMovementEntity = sequelize.define(
     type: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "deposit",
-      values: ["deposit", "withdrawal"],
+      defaultValue: "entry",
+      values: ["open_register", "entry", "exit", "other"],
     },
-    cashBoxRegistryId: {
+    registryId: {
       type: DataTypes.UUID,
       references: {
-        model: "CashBoxeRegistries",
+        model: "CashBoxRegistries",
         key: "id",
       },
     },
