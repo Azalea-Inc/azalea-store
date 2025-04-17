@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const SequelizeDB = require("../data/sequelize/SequelizeDB");
 const ApiRouterBuilder = require("./ApiRouterBuilder");
+const { swaggerSpec, swaggerUi } = require("../api/swagger/swagger");
 
 class Api {
   constructor() {
@@ -9,6 +10,7 @@ class Api {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());
+    this.app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     this.router = express.Router();
     this.databse = SequelizeDB.getInstance();
   }
