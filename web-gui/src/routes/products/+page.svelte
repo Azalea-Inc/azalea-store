@@ -2,7 +2,9 @@
     import InError from "./InError.svelte";
     import ProductList from "./ProductList.svelte";
     import InLoading from "./InLoading.svelte";
+    import Modal from "$lib/components/Modal.svelte";
     import { newState } from "$lib/lib";
+    import { writable } from "svelte/store";
 
     let { state } = newState(
         {
@@ -12,15 +14,42 @@
         },
         "loading",
     );
+
+    const isOpen = writable(false);
 </script>
 
 <div
     class="flex-1 px-8 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200"
 >
+    <Modal isOpen={$isOpen} title="Nuevo Producto">
+        <form action="" class="flex flex-col gap-2">
+            <label for="name">Nombre</label>
+            <input
+                class="input"
+                type="text"
+                name="name"
+                placeholder="Ingrese el nombre"
+            />
+            <label for="price">Precio</label>
+            <input
+                class="input"
+                type="number"
+                name="price"
+                placeholder="Ingrese el precio"
+                min="0"
+            />
+
+            <button class="button button-primary mt-4"> Guardar </button>
+        </form>
+    </Modal>
+
     <div class="flex items-center justify-between py-4 mb-2">
         <h1 class="text-xl font-bold text-gray-800">Productos</h1>
         <div class="flex gap-4">
-            <button class="btn btn-primary flex items-center gap-2">
+            <button
+                class="btn btn-primary flex items-center gap-2"
+                on:click={() => ($isOpen = true)}
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     class="h-4 w-4"
