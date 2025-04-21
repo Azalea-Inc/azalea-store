@@ -38,7 +38,6 @@ class InventoryController {
   }
 
   async showMovementsToInventory(id) {
-    const movements = await this.repository.showMovementsToInventory(id);
     return await this.repository.showMovementsToInventory(id);
   }
   async showMovementDetail(id) {
