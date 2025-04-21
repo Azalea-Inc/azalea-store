@@ -41,6 +41,9 @@ class InventoryController {
     const movements = await this.repository.showMovementsToInventory(id);
     return await this.repository.showMovementsToInventory(id);
   }
+  async showMovementDetail(id) {
+    return await this.repository.showMovementDetail(id);
+  }
 }
 
 module.exports = InventoryController;

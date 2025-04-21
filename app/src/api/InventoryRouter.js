@@ -15,6 +15,7 @@ class InventoryRouter extends Router {
       "/:id/movement",
       request.addMovementToInventory.bind(request),
     );
+    this.router.get("/movements/:id", request.showMovementDetail.bind(request));
     this.router.get(
       "/:id/movements",
       request.showMovementsToInventory.bind(request),

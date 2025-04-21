@@ -87,6 +87,14 @@ class InventoryRepository {
     if (!inventory) throw new Error("Inventory not found");
     return await inventory.getMovements();
   }
+
+  async showMovementDetail(id) {
+    const movement = await this.movementModel.findByPk(id, {
+      include: "inventory",
+    });
+    if (!movement) throw new Error("Movement not found");
+    return movement;
+  }
 }
 
 module.exports = InventoryRepository;
