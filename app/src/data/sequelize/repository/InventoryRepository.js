@@ -81,6 +81,12 @@ class InventoryRepository {
     await inventory.save();
     return await this.movementModel.create(movement);
   }
+
+  async showMovementsToInventory(id) {
+    const inventory = await this.model.findByPk(id);
+    if (!inventory) throw new Error("Inventory not found");
+    return await inventory.getMovements();
+  }
 }
 
 module.exports = InventoryRepository;

@@ -11,13 +11,23 @@ class InventoryRouter extends Router {
     this.router.post("/", request.addInventory.bind(request));
     this.router.get("/", request.getInventories.bind(request));
     this.router.get("/:id", request.showInventoryDetail.bind(request));
-    this.router.post("/:id/movement", request.addMovementToInventory.bind(request));
+    this.router.post(
+      "/:id/movement",
+      request.addMovementToInventory.bind(request),
+    );
+    this.router.get(
+      "/:id/movements",
+      request.showMovementsToInventory.bind(request),
+    );
     this.router.delete("/:id", request.removeInventory.bind(request));
     this.router.patch(
       "/:id/deactivate",
-      request.deactivateProductToInventory.bind(request)
+      request.deactivateProductToInventory.bind(request),
     );
-    this.router.patch("/:id/activate", request.activateProductToInventory.bind(request));
+    this.router.patch(
+      "/:id/activate",
+      request.activateProductToInventory.bind(request),
+    );
   }
 
   #setupRouterMiddleware(router) {

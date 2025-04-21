@@ -36,6 +36,11 @@ class InventoryController {
     const movement = Movement.build({ inventoryId: id, ...data });
     return await this.repository.addMovement(id, movement);
   }
+
+  async showMovementsToInventory(id) {
+    const movements = await this.repository.showMovementsToInventory(id);
+    return await this.repository.showMovementsToInventory(id);
+  }
 }
 
 module.exports = InventoryController;

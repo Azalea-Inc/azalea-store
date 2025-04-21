@@ -80,6 +80,20 @@ class InventoryRequest {
       res.status(400).json({ error: error.message });
     }
   }
+
+  async showMovementsToInventory(req, res) {
+    try {
+      const movements = await this.controller.showMovementsToInventory(
+        req.params.id,
+      );
+      res.status(200).json({
+        message: "Movements fetched successfully",
+        data: movements,
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = InventoryRequest;
