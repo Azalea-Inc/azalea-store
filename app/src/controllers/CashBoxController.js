@@ -35,7 +35,7 @@ class CashBoxController {
 
   async openCashBox(data) {
     const cashBoxRegistry = CashBoxRegistry.build(data);
-    await this.repository.openCashBox(cashBoxRegistry);
+    return await this.repository.openCashBox(cashBoxRegistry);
   }
 
   async closeCashBox(id, closeAmount) {
@@ -46,9 +46,13 @@ class CashBoxController {
     return await this.repository.showRegistries();
   }
 
+  async showRegistry(id) {
+    return await this.repository.showRegistry(id);
+  }
+
   async createMovement(registryId, data) {
     const movement = CashBoxMovement.build({ registryId, ...data });
-    await this.repository.createMovement(registryId, movement);
+    return await this.repository.createMovement(registryId, movement);
   }
 
   async showMovementsByRegistry(registryId) {

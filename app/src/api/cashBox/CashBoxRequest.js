@@ -69,9 +69,11 @@ class CashBoxRequest {
 
   async openCashBox(req, res) {
     try {
-      await this.controller.openCashBox(req.body);
+      const registry = await this.controller.openCashBox(req.body);
 
-      res.status(200).json({ message: "Box opened successfully" });
+      res
+        .status(200)
+        .json({ message: "Box opened successfully", data: registry });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -81,19 +83,6 @@ class CashBoxRequest {
     try {
       await this.controller.closeCashBox(req.params.id, req.body.closeAmount);
       res.status(200).json({ message: "Box closed successfully" });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  }
-
-  async showRegistries(req, res) {
-    try {
-      const registries = await this.controller.showRegistries(req.params.id);
-
-      res.status(200).json({
-        message: "Registries retrieved successfully",
-        data: registries,
-      });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -114,36 +103,6 @@ class CashBoxRequest {
     }
   }
 
-  async createMovement(req, res) {
-    try {
-      const movement = await this.controller.createMovement(
-        req.params.id,
-        req.body,
-      );
-
-      res.status(200).json({
-        message: "Movement retrieved successfully",
-        data: movement,
-      });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  }
-
-  async showMovementsByRegistry(req, res) {
-    try {
-      const movements = await this.controller.showMovementsByRegistry(
-        req.params.id,
-      );
-      res.status(200).json({
-        message: "Movements retrieved successfully",
-        data: movements,
-      });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  }
-
   setupRoutes(router) {
     this.router.post("/", this.createCashBox.bind(this));
     this.router.get("/", this.showCashBoxes.bind(this));
@@ -152,16 +111,7 @@ class CashBoxRequest {
     this.router.delete("/:id", this.removeCashBox.bind(this));
     this.router.post("/:id/close", this.closeCashBox.bind(this));
     this.router.get("/:id/registries", this.showCashBoxRegistries.bind(this));
-    this.router.post(
-      "/registries/:id/movement",
-      this.createMovement.bind(this),
-    );
-    this.router.get(
-      "/registries/:id/movements",
-      this.showMovementsByRegistry.bind(this),
-    );
     this.router.post("/open", this.openCashBox.bind(this));
-    this.router.get("/registries/all", this.showRegistries.bind(this));
     router.use("/cashbox", this.router);
   }
 }
