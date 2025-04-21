@@ -10,7 +10,7 @@ class ProductController {
 
   async addProduct(data) {
     const product = Product.build(data);
-    await this.#repository.addProduct(product);
+    return await this.#repository.addProduct(product);
   }
 
   async getProducts(page = 1, limit = 10) {

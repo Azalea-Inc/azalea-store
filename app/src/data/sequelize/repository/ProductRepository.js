@@ -5,6 +5,14 @@ class ProductRepository {
     this.model = ProductEntity;
   }
 
+  async addProduct(productData) {
+    try {
+      return await this.model.create(productData);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getProducts(page = 1, limit = 10) {
     try {
       const offset = (page - 1) * limit;
@@ -18,14 +26,6 @@ class ProductRepository {
   async getProductsCount() {
     try {
       return await this.model.count();
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  async addProduct(productData) {
-    try {
-      return await this.model.create(productData);
     } catch (error) {
       throw error;
     }

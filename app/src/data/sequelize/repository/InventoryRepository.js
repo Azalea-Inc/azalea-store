@@ -3,11 +3,14 @@ const InventoryEntity = require("../entities/InventoryEntity");
 class InventoryRepository {
   constructor() {
     this.model = InventoryEntity;
+    this.productModel = require("../entities/ProductEntity");
+    this.movementModel = require("../entities/MovementEntity");
   }
 
   async add(data) {
-    const inventory = await this.model.create(data);
-    return inventory;
+    const product = await this.productModel.findByPk(data.productId);
+    if (!product) throw new Error("Product not found");
+    return product.createInventory(data);
   }
 
   async getAll() {
@@ -59,16 +62,24 @@ class InventoryRepository {
   async addMovement(id, movement) {
     const inventory = await this.model.findByPk(id);
     if (!inventory) throw new Error("Inventory not found");
-    if(movement.type === 'OUTPUT') {
-      if(inventory.stock < movement.amount){
+
+    if (movement.type !== "INPUT" && movement.type !== "OUTPUT") {
+      throw new Error("Movement type must be INPUT or OUTPUT");
+    }
+
+    if (movement.type === "OUTPUT") {
+      const numericStock = Number(inventory.stock);
+      const numericAmount = Number(movement.amount);
+      if (numericStock < numericAmount) {
         throw new Error("Not enough stock");
       }
-      inventory.stock = inventory.stock - movement.amount;
+      inventory.stock = numericStock - numericAmount;
     } else {
-      inventory.stock = inventory.stock + movement.amount;
+      inventory.stock = Number(inventory.stock) + Number(movement.amount);
     }
+
     await inventory.save();
-    await inventory.addMovement(movement);
+    return await this.movementModel.create(movement);
   }
 }
 

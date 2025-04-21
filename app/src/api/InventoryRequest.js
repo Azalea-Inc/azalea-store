@@ -7,8 +7,10 @@ class InventoryRequest {
 
   async addInventory(req, res) {
     try {
-      await this.controller.addInventory(req.body);
-      res.status(201).json({ message: "Inventory added successfully" });
+      const inventory = await this.controller.addInventory(req.body);
+      res
+        .status(201)
+        .json({ message: "Inventory added successfully", data: inventory });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -67,8 +69,13 @@ class InventoryRequest {
 
   async addMovementToInventory(req, res) {
     try {
-      await this.controller.addMovementToInventory(req.params.id, req.body);
-      res.status(200).json({ message: "Movement created successfully" });
+      const movement = await this.controller.addMovementToInventory(
+        req.params.id,
+        req.body,
+      );
+      res
+        .status(200)
+        .json({ message: "Movement created successfully", data: movement });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

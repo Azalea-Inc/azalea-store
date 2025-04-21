@@ -1,8 +1,8 @@
 const { randomUUID } = require("crypto");
 
 class Movement {
-  constructor(amout, type, inventoryId) {
-    this.amout = amout;
+  constructor(amount, type, inventoryId) {
+    this.amount = amount;
     this.type = type;
     this.date = new Date();
     this.inventoryId = inventoryId;
@@ -13,11 +13,11 @@ class Movement {
   }
 
   static build(data) {
-    const { amout, type, inventoryId } = data;
+    const { amount, type, inventoryId } = data;
     if (!inventoryId) {
       throw new Error("InventoryId Requiered.");
     }
-    const movement = new Movement(amout, type, inventoryId);
+    const movement = new Movement(amount, type, inventoryId);
     movement.generateId();
     return movement;
   }

@@ -19,10 +19,10 @@ class ProductRequest {
 
   async addProduct(req, res) {
     await this.handleRequest(req, res, async () => {
-      await this.controller.addProduct(req.body);
+      const product = await this.controller.addProduct(req.body);
       return {
         status: 201,
-        data: { message: "Product added successfully" },
+        data: { message: "Product added successfully", data: product },
       };
     });
   }

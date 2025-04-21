@@ -1,3 +1,5 @@
+const { REAL } = require("sequelize");
+
 class CashBoxRepository {
   constructor() {
     this.model = require("../entities/CashBoxEntity");
@@ -49,7 +51,7 @@ class CashBoxRepository {
   }
 
   async openCashBox(cashBoxRegistry) {
-    await this.modelRegistry.create(cashBoxRegistry);
+    return await this.modelRegistry.create(cashBoxRegistry);
   }
 
   async closeCashBox(id, closeAmount) {
@@ -81,13 +83,24 @@ class CashBoxRepository {
     }
   }
 
+  async showRegistry(id) {
+    try {
+      const registry = await this.modelRegistry.findByPk(id, {
+        include: "cashBox",
+      });
+      if (!registry) throw new Error("Registry not found");
+      return registry;
+    } catch (error) {
+      throw new Error("Failed to get registry");
+    }
+  }
+
   async createMovement(id, movement) {
     try {
       const registry = await this.modelRegistry.findByPk(id);
       if (!registry) throw new Error("Cash box not found");
       return await registry.createMovement(movement);
     } catch (error) {
-      console.error(error);
       throw new Error("Failed to create movement");
     }
   }
@@ -95,7 +108,7 @@ class CashBoxRepository {
   async showMovementsByRegistry(id) {
     try {
       const registry = await this.modelRegistry.findByPk(id);
-      if (!registry) throw new Error("Cash box not found");
+      if (!registry) throw new Error("Registry not found");
       return await registry.getMovements();
     } catch (error) {
       throw new Error("Failed to get movements");

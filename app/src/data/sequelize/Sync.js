@@ -61,7 +61,7 @@ module.exports = () => {
     as: "movements",
   });
 
-  CashBoxMovementEntity.belongsTo(InventoryEntity, {
+  MovementEntity.belongsTo(InventoryEntity, {
     foreignKey: "inventoryId",
     as: "inventory",
   });
