@@ -17,6 +17,10 @@ class Product {
 
   static build(data) {
     const { code, name, price, description } = data;
+    console.log(data);
+    if (!code || !name || !price) {
+      throw new Error("Code, name, and price are required fields");
+    }
     const product = new Product(code, name, price);
     product.setDescription(description);
     product.generateId();
