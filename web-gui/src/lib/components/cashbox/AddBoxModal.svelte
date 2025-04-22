@@ -9,7 +9,15 @@
         location: "",
     };
 
+    let isSubmitting = false;
+
     async function createCashbox() {
+        if (isSubmitting || !cashbox.name.trim() || !cashbox.location.trim()) {
+            return;
+        }
+
+        isSubmitting = true;
+
         try {
             const response = await fetch("http://localhost:3000/api/cashbox", {
                 method: "POST",
@@ -29,6 +37,8 @@
             dispatch("close");
         } catch (error) {
             console.error(error);
+        } finally {
+            isSubmitting = false;
         }
     }
 </script>
@@ -37,22 +47,28 @@
     <form on:submit|preventDefault={createCashbox} class="flex flex-col gap-2">
         <label for="name">Nombre</label>
         <input
+            id="name"
             class="input"
             type="text"
             name="name"
             placeholder="Ingrese el nombre"
             bind:value={cashbox.name}
+            required
         />
         <label for="location">Ubicación</label>
         <input
+            id="location"
             class="input"
             type="text"
             name="location"
             placeholder="Ingrese la ubicación"
             bind:value={cashbox.location}
+            required
         />
 
-        <button class="btn btn-primary mt-4">Guardar</button>
+        <button class="btn btn-primary mt-4" disabled={isSubmitting}>
+            {isSubmitting ? "Guardando..." : "Guardar"}
+        </button>
     </form>
 </Modal>
 
