@@ -40,7 +40,8 @@
     <div class="flex flex-col p-4 flex-1">
         {#each menu as item}
             <a
-                class:item-active={item.href === $page.url.pathname}
+                class:item-active={item.href === $page.url.pathname ||
+                    $page.url.pathname.startsWith(item.href + "/")}
                 href={item.href}
                 class="menu-item"
             >
