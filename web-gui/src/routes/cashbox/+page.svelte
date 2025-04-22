@@ -2,7 +2,9 @@
     import { onMount } from "svelte";
 
     const host = "http://localhost:3000/api";
+    import AddBoxModal from "$lib/components/cashbox/AddBoxModal.svelte";
 
+    let isOpen = false;
     let boxes = [];
 
     async function getBoxes() {
@@ -14,11 +16,14 @@
     onMount(getBoxes);
 </script>
 
+<AddBoxModal {isOpen} on:close={() => (isOpen = false)} />
 <div class="h-screen overflow-y-auto flex flex-col p-10 flex-1 bg-gray-50">
     <nav class="flex flex-row items-center justify-between w-full">
         <h1 class="text-2xl font-bold text-gray-600">Cajas registradoras</h1>
 
-        <button class="btn btn-primary">Agregar caja</button>
+        <button class="btn btn-primary" on:click={() => (isOpen = true)}
+            >Agregar caja</button
+        >
     </nav>
     <main class="flex-1 pt-6">
         <div class="grid grid-cols-3 gap-6">
@@ -42,24 +47,25 @@
 
 <style>
     .btn {
-        display: inline-block;
         padding: 0.5rem 1rem;
-        border-radius: 0.55rem;
-        font-weight: 500;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: #fff;
+        background-color: #666;
+        border: none;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        transition: all 0.2s ease;
+        &:hover {
+            background-color: #555;
+            transform: translateY(-1px);
+        }
     }
 
     .btn-primary {
-        background-color: #10b981;
-        color: white;
-        border: 1px solid #10b981;
-    }
-
-    .btn-primary:hover {
-        background-color: #059669;
-        border-color: #059669;
+        background-color: #22c55e;
+        &:hover {
+            background-color: #16a34a;
+        }
     }
 </style>
