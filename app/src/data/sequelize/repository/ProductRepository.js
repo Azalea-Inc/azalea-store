@@ -16,7 +16,11 @@ class ProductRepository {
   async getProducts(page = 1, limit = 10) {
     try {
       const offset = (page - 1) * limit;
-      return await this.model.findAll({ limit, offset });
+      return await this.model.findAll({
+        limit,
+        offset,
+        order: [["createdAt", "DESC"]],
+      });
     } catch (error) {
       console.error("Error getting all products:", error);
       throw error;

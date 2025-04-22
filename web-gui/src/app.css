@@ -1,8 +1,4 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
-
 body {
     font-family: "Geist", sans-serif;
     font-optical-sizing: auto;
@@ -12,7 +8,7 @@ body {
 }
 
 .input {
-    @apply px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    @apply px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500;
 }
 
 .button {
@@ -20,5 +16,5 @@ body {
 }
 
 .button-primary {
-    @apply bg-blue-500 text-white hover:bg-blue-600 border-transparent;
+    @apply bg-green-500 text-white hover:bg-green-600 border-transparent;
 }
