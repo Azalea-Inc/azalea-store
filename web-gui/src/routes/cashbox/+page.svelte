@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
 
     const host = "http://localhost:3000/api";
     import AddBoxModal from "$lib/components/cashbox/AddBoxModal.svelte";
@@ -17,9 +18,11 @@
 </script>
 
 <AddBoxModal {isOpen} on:close={() => (isOpen = false)} />
-<div class="h-screen overflow-y-auto flex flex-col p-10 flex-1 bg-gray-50">
+<div class="h-screen overflow-y-auto flex flex-col p-4 px-8 flex-1 bg-gray-50">
+    <Breadcrumb />
+
     <nav class="flex flex-row items-center justify-between w-full">
-        <h1 class="text-2xl font-bold text-gray-600">Cajas registradoras</h1>
+        <h1 class="text-2xl font-bold">Cajas registradoras</h1>
 
         <button class="btn btn-primary" on:click={() => (isOpen = true)}
             >Agregar caja</button
@@ -28,7 +31,9 @@
     <main class="flex-1 pt-6">
         <div class="grid grid-cols-3 gap-6">
             {#each boxes as box}
-                <div class="bg-white rounded-lg hover:shadow-md shadow-lg p-4">
+                <div
+                    class="bg-white rounded-xl border border-gray-200 hover:shadow-md shadow-lg p-4"
+                >
                     <h2 class="text-lg text-gray-600 font-bold">{box.name}</h2>
                     <p class="text-gray-500">📍 {box.location}</p>
 

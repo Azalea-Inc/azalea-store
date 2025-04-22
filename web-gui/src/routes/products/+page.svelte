@@ -3,6 +3,7 @@
     import ProductList from "./ProductList.svelte";
     import InLoading from "./InLoading.svelte";
     import AddProductModal from "$lib/components/products/AddProductModal.svelte";
+    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
 
     import { newState } from "$lib/lib";
     import { writable } from "svelte/store";
@@ -20,11 +21,12 @@
 </script>
 
 <div
-    class="flex-1 px-8 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200"
+    class="flex-1 px-8 py-4 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200"
 >
+    <Breadcrumb />
     <AddProductModal {isOpen} on:close={() => (isOpen = false)} />
 
-    <div class="flex items-center justify-between py-4 mb-2">
+    <div class="flex items-center justify-between mb-4">
         <h1 class="text-xl font-bold text-gray-800">Productos</h1>
         <div class="flex gap-4">
             <button

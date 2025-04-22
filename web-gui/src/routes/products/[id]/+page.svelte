@@ -1,6 +1,7 @@
 <script>
     import { page } from "$app/stores";
     import { onMount } from "svelte";
+    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
 
     $: id = $page.params.id;
 
@@ -20,7 +21,9 @@
     onMount(fetchProduct);
 </script>
 
-<div class="product-page">
+<div class="product-page flex-1">
+    <Breadcrumb />
+
     <h1>{product.name}</h1>
 
     <div class="product-details">
@@ -49,7 +52,6 @@
 
 <style>
     .product-page {
-        padding: 0.5rem;
         max-width: 1400px;
         margin: 0 auto;
         font-family: -apple-system, BlinkMacSystemFont, sans-serif;

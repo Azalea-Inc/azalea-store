@@ -1,4 +1,5 @@
 <script>
+    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
     import { page } from "$app/stores";
     import { onMount } from "svelte";
 
@@ -39,7 +40,8 @@
 
 <div class="h-screen flex-1">
     <header class="p-4 border-b border-gray-200">
-        <div class="py-4">
+        <Breadcrumb />
+        <div class="mb-2">
             <h1 class="text-2xl font-bold">{cashbox.name}</h1>
             <p class="text-gray-600 pt-4">
                 📍
