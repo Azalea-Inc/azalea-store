@@ -1,68 +1,15 @@
 <script>
+    import UserAsideInfo from "@components/users/UserAsideInfo.svelte";
     import { page } from "$app/stores";
-    import {
-        ShoppingCart,
-        Package,
-        Box,
-        Settings,
-        NotebookPen,
-    } from "lucide-svelte";
-
-    let menu = [
-        {
-            title: "Ventas",
-            href: "/",
-            icon: ShoppingCart,
-            notifications: 0,
-        },
-        {
-            title: "Inventario",
-            href: "/inventory",
-            icon: NotebookPen,
-            notifications: 0,
-        },
-        {
-            title: "Productos",
-            href: "/products",
-            icon: Package,
-            notifications: 0,
-        },
-        {
-            title: "Cajas",
-            href: "/cashbox",
-            icon: Box,
-            notifications: 0,
-        },
-    ];
+    import { asideStore } from "@store/AsideStore";
+    import { Settings } from "lucide-svelte";
 </script>
 
 <aside class="min-h-screen aside border-r flex flex-col overflow-hidden">
-    <div class="p-4">
-        <div class="flex items-center">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="w-12 h-12 rounded-full mr-2 p-2 bg-gray-100"
-            >
-                <circle cx="12" cy="8" r="5" />
-                <path d="M20 21a8 8 0 0 0-16 0" />
-            </svg>
-            <div>
-                <h2 class="text-lg font-bold">Usuario</h2>
-                <a href="/profile" class="text-sm text-gray-500"
-                    >Apartado de usuario</a
-                >
-            </div>
-        </div>
-    </div>
+    <UserAsideInfo />
 
     <div class="flex flex-col p-4 flex-1">
-        {#each menu as item}
+        {#each $asideStore.menu as item}
             <a
                 class:item-active={item.href === $page.url.pathname ||
                     $page.url.pathname.startsWith(item.href + "/")}
