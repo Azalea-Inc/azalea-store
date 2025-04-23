@@ -1,5 +1,5 @@
 <script>
-    import Aside from "$lib/components/Aside.svelte";
+    import Aside from "@components/Aside.svelte";
     import "../app.css";
 
     let { children } = $props();

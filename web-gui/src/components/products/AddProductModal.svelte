@@ -1,5 +1,5 @@
 <script>
-    import Modal from "../Modal.svelte";
+    import Modal from "@components/Modal.svelte";
     import { createEventDispatcher } from "svelte";
 
     const API_URL = "http://localhost:3000/api/products";

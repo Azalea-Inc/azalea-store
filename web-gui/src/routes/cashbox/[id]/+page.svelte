@@ -1,5 +1,5 @@
 <script>
-    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
+    import Breadcrumb from "@components/Breadcrumb.svelte";
     import { page } from "$app/stores";
     import { onMount } from "svelte";
 

@@ -2,8 +2,8 @@
     import InError from "./InError.svelte";
     import ProductList from "./ProductList.svelte";
     import InLoading from "./InLoading.svelte";
-    import AddProductModal from "$lib/components/products/AddProductModal.svelte";
-    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
+    import AddProductModal from "@components/products/AddProductModal.svelte";
+    import Breadcrumb from "@components/Breadcrumb.svelte";
 
     import { newState } from "$lib/lib";
     import { writable } from "svelte/store";

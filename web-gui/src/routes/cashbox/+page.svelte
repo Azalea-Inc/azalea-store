@@ -1,9 +1,9 @@
 <script>
     import { onMount } from "svelte";
-    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
+    import Breadcrumb from "@components/Breadcrumb.svelte";
 
     const host = "http://localhost:3000/api";
-    import AddBoxModal from "$lib/components/cashbox/AddBoxModal.svelte";
+    import AddBoxModal from "@components/cashbox/AddBoxModal.svelte";
 
     let isOpen = false;
     let boxes = [];

@@ -1,5 +1,5 @@
 <script>
-    import Spinner from "$lib/components/Spinner.svelte";
+    import Spinner from "@components/Spinner.svelte";
     import { onMount } from "svelte";
 
     const host = "http://localhost:3000";

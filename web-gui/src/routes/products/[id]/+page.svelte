@@ -1,7 +1,7 @@
 <script>
     import { page } from "$app/stores";
     import { onMount } from "svelte";
-    import Breadcrumb from "$lib/components/Breadcrumb.svelte";
+    import Breadcrumb from "@components/Breadcrumb.svelte";
 
     $: id = $page.params.id;
 
