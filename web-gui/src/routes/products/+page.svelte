@@ -21,7 +21,7 @@
 </script>
 
 <div
-    class="flex-1 px-8 py-4 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200"
+    class="flex-1 flex flex-col h-screen overflow-hidden px-8 py-4 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200"
 >
     <Breadcrumb />
     <AddProductModal {isOpen} on:close={() => (isOpen = false)} />

@@ -97,7 +97,7 @@
     </div>
 {:else}
     <div
-        class="overflow-hidden shadow-sm sm:rounded-2xl bg-white"
+        class="overflow-hidden flex flex-col shadow-sm sm:rounded-2xl bg-white"
         transition={{ slide }}
     >
         <div class="px-4 py-3">
@@ -165,7 +165,7 @@
                 >
             </div>
         </div>
-        <div class="max-h-[calc(100vh-210px)] overflow-y-auto">
+        <div class="overflow-y-auto">
             <table class="w-full text-xs text-left text-gray-700">
                 <thead class="text-2xs sticky top-0 bg-white">
                     <tr>
