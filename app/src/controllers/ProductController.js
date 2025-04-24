@@ -21,6 +21,10 @@ class ProductController {
     return this.#repository.getProductById(id);
   }
 
+  async deactivateProduct(id) {
+    await this.#repository.deactivateProduct(id);
+  }
+
   async removeProduct(id) {
     await this.#repository.removeProduct(id);
   }
