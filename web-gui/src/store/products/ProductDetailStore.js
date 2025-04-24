@@ -1,7 +1,9 @@
 import { writable } from "svelte/store";
 import { productsPageStore } from "@store/pages/ProductsPageStore";
 
-const initialState = writable({
+const API_URL = "http://localhost:3000/api/products";
+
+const createInitialState = () => ({
   id: null,
   name: "",
   description: "",
@@ -10,10 +12,12 @@ const initialState = writable({
   image: "",
   updatedAt: null,
   isActive: true,
-
+  processMessage: "Cargando...",
   isLoading: true,
   isOpen: false,
 });
+
+const initialState = writable(createInitialState());
 
 class ProductDetailStore {
   constructor() {
@@ -25,39 +29,47 @@ class ProductDetailStore {
   }
 
   reset() {
-    this.store.set(initialState);
+    this.store.set(createInitialState());
   }
 
   #update(args) {
     this.store.update((state) => ({ ...state, ...args }));
   }
 
+  #setLoadingState(isLoading, message = "") {
+    const updates = { isLoading };
+    if (message) {
+      updates.processMessage = message;
+    }
+    this.#update(updates);
+  }
+
+  async #toggleActivation(id, activate) {
+    const action = activate ? "activate" : "deactivate";
+    const message = activate ? "Activando..." : "Desactivando...";
+
+    this.#setLoadingState(true, message);
+
+    await fetch(`${API_URL}/${id}/${action}`, {
+      method: "PUT",
+    });
+
+    this.#setLoadingState(false);
+    productsPageStore.updateProduct(id, { isActive: activate });
+    this.#update({ isActive: activate });
+  }
+
   async deactivate(id) {
-    const response = await fetch(
-      `http://localhost:3000/api/products/${id}/deactivate`,
-      {
-        method: "PUT",
-      },
-    );
-    productsPageStore.updateProduct(id, { isActive: false });
-    this.#update({ isActive: false });
+    await this.#toggleActivation(id, false);
   }
 
   async activate(id) {
-    const response = await fetch(
-      `http://localhost:3000/api/products/${id}/activate`,
-      {
-        method: "PUT",
-      },
-    );
-    const { data } = await response.json();
-    productsPageStore.updateProduct(id, { isActive: true });
-    this.#update({ isActive: true });
+    await this.#toggleActivation(id, true);
   }
 
   async fetchProductInfo(id) {
-    this.#update({ isLoading: true });
-    const response = await fetch(`http://localhost:3000/api/products/${id}`);
+    this.#setLoadingState(true);
+    const response = await fetch(`${API_URL}/${id}`);
     const { data } = await response.json();
 
     setTimeout(() => {
@@ -71,7 +83,6 @@ class ProductDetailStore {
 
   openProductDetail(id) {
     this.fetchProductInfo(id);
-
     this.#update({
       id,
       isOpen: true,

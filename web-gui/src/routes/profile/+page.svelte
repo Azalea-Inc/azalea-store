@@ -86,7 +86,7 @@
         </div>
 
         <div class="actions">
-            <button class="btn primary">Editar perfil</button>
+            <a class="btn primary" href="/profile/edit">Editar perfil</a>
             <button class="btn secondary">Cambiar contraseña</button>
         </div>
     </div>
@@ -94,102 +94,109 @@
 
 <style>
     .user-info-container {
-        max-width: 800px;
+        max-width: 1012px;
         margin: 0 auto;
-        padding: 20px;
-        font-family: Arial, sans-serif;
+        padding: 24px;
+        font-family:
+            -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+            sans-serif;
     }
 
     .user-profile {
         background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border: 1px solid #d0d7de;
+        border-radius: 10px;
         overflow: hidden;
     }
 
     .profile-header {
         display: flex;
         align-items: center;
-        padding: 20px;
-        background: #f5f5f5;
+        padding: 16px;
+        background: #f6f8fa;
+        border-bottom: 1px solid #d0d7de;
     }
 
     .profile-picture img {
-        width: 100px;
-        height: 100px;
+        width: 296px;
+        height: 296px;
         border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid white;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border: 1px solid #d0d7de;
     }
 
     .profile-name {
-        margin-left: 20px;
+        margin-left: 16px;
     }
 
     .profile-name h2 {
         margin: 0;
-        color: #333;
+        font-size: 24px;
+        line-height: 1.25;
+        color: #1f2328;
     }
 
     .username {
-        color: #666;
-        margin: 5px 0 0;
+        font-size: 20px;
+        font-weight: 300;
+        line-height: 24px;
+        color: #656d76;
     }
 
     .profile-details {
-        padding: 20px;
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
+        padding: 16px;
+        border-bottom: 1px solid #d0d7de;
     }
 
     .detail-item {
-        margin-bottom: 15px;
+        margin-bottom: 8px;
         display: flex;
+        font-size: 14px;
     }
 
     .label {
-        font-weight: bold;
+        font-weight: 600;
         width: 150px;
-        color: #555;
+        color: #24292f;
     }
 
     .value {
-        color: #333;
+        color: #1f2328;
     }
 
     .actions {
-        padding: 20px;
+        padding: 16px;
         display: flex;
-        gap: 10px;
+        gap: 8px;
         justify-content: flex-end;
     }
 
     .btn {
-        padding: 10px 15px;
-        border: none;
-        border-radius: 4px;
+        padding: 5px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        border-radius: 6px;
         cursor: pointer;
-        font-weight: bold;
-        transition: background 0.3s;
+        transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     }
 
     .primary {
-        background: #4caf50;
+        background: #2da44e;
         color: white;
+        border: 1px solid rgba(27, 31, 36, 0.15);
     }
 
     .secondary {
-        background: #f5f5f5;
-        color: #333;
-        border: 1px solid #ddd;
+        background: #f6f8fa;
+        color: #24292f;
+        border: 1px solid rgba(27, 31, 36, 0.15);
     }
 
     .primary:hover {
-        background: #43a047;
+        background: #2c974b;
     }
 
     .secondary:hover {
-        background: #e0e0e0;
+        background: #f3f4f6;
     }
 </style>

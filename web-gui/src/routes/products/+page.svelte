@@ -1,7 +1,5 @@
 <script>
     import AddProductModal from "@components/products/AddProductModal.svelte";
-    import Breadcrumb from "@components/Breadcrumb.svelte";
-
     import { productsPageStore } from "@store/pages/ProductsPageStore";
     import ProductDetail from "@components/products/ProductDetail.svelte";
     $: state = productsPageStore;
@@ -10,13 +8,12 @@
 </script>
 
 <div
-    class="flex-1 flex flex-col h-screen overflow-hidden px-8 py-4 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200"
+    class="flex-1 flex flex-col h-screen overflow-hidden px-6 py-5 bg-white border-b border-gray-200"
 >
-    <Breadcrumb />
     <AddProductModal {isOpen} on:close={() => (isOpen = false)} />
 
     <div class="flex items-center justify-between mb-4">
-        <h1 class="text-xl font-bold text-gray-800">Productos</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">Productos</h1>
         <div class="flex gap-4">
             <button
                 class="btn btn-primary flex items-center gap-2"
@@ -46,24 +43,27 @@
 <style>
     .btn {
         padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-size: 0.75rem;
-        font-weight: 400;
-        color: #fff;
-        background-color: #666;
-        border: none;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #24292f;
+        background-color: #f6f8fa;
+        border: 1px solid rgba(27, 31, 36, 0.15);
+        box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04);
         transition: all 0.2s ease;
         &:hover {
-            background-color: #555;
-            transform: translateY(-1px);
+            background-color: #f3f4f6;
+            border-color: rgba(27, 31, 36, 0.15);
         }
     }
 
     .btn-primary {
-        background-color: #22c55e;
+        color: #ffffff;
+        background-color: #2da44e;
+        border-color: rgba(27, 31, 36, 0.15);
         &:hover {
-            background-color: #16a34a;
+            background-color: #2c974b;
+            border-color: rgba(27, 31, 36, 0.15);
         }
     }
 </style>

@@ -81,7 +81,7 @@
     <Spinner />
 {:else if !$state.products.length}
     <div
-        class="flex flex-col items-center justify-center p-12 bg-white rounded-2xl shadow-sm"
+        class="flex flex-col items-center justify-center p-12 bg-gray-50 rounded-md border border-gray-200"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -97,31 +97,31 @@
                 d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
             />
         </svg>
-        <p class="text-lg font-medium text-center text-gray-600">
+        <p class="text-lg font-medium text-center text-gray-900">
             No hay productos disponibles
         </p>
-        <p class="text-sm text-center mt-2 text-gray-500">
+        <p class="text-sm text-center mt-2 text-gray-600">
             Agrega un nuevo producto utilizando el botón "Agregar"
         </p>
     </div>
 {:else}
     <div
-        class="overflow-hidden flex flex-col shadow-sm sm:rounded-2xl bg-white"
+        class="overflow-hidden flex flex-col border border-gray-200 rounded-md bg-white"
         transition={{ slide }}
     >
-        <div class="px-4 py-3">
+        <div class="px-4 py-3 border-b border-gray-200">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-2 flex-1 max-w-md">
                     <input
                         type="text"
                         bind:value={searchTerm}
                         placeholder="Buscar productos..."
-                        class="w-full px-3 py-2 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200"
+                        class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                         on:keydown={(e) => e.key === "Enter" && handleSearch()}
                     />
                     <button
                         on:click={handleSearch}
-                        class="px-4 py-2 text-xs text-white bg-gray-600 rounded-lg hover:bg-gray-700"
+                        class="px-3 py-1.5 text-sm text-white bg-[#2da44e] rounded-md hover:bg-[#2c974b] border border-[#288b46]"
                     >
                         Buscar
                     </button>
@@ -129,11 +129,11 @@
             </div>
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <span class="text-xs text-gray-600">Items por página:</span>
+                    <span class="text-sm text-gray-600">Items por página:</span>
                     <select
                         bind:value={$state.limit}
                         on:change={onItemsHandle}
-                        class="text-xs border rounded px-2 py-1"
+                        class="text-sm border border-gray-300 rounded-md px-2 py-1"
                     >
                         <option value={10}>10</option>
                         <option value={20}>20</option>
@@ -142,20 +142,20 @@
                     </select>
                 </div>
 
-                <div class="flex gap-2">
+                <div class="flex gap-1">
                     <button
                         on:click={handlePrevPage}
                         disabled={state.page === 1}
-                        class="px-2 py-1 border rounded hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-50 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >Anterior</button
                     >
                     {#if $state.totalPages <= 6}
                         {#each Array($state.totalPages) as _, i}
                             <button
                                 on:click={() => handlePageClick(i + 1)}
-                                class="px-2 py-1 {$state.page === i + 1
-                                    ? 'bg-gray-200'
-                                    : 'border'} rounded hover:bg-gray-50 text-xs"
+                                class="px-3 py-1.5 {$state.page === i + 1
+                                    ? 'bg-[#0969da] text-white border-[#0969da]'
+                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-sm"
                                 >{i + 1}</button
                             >
                         {/each}
@@ -163,9 +163,9 @@
                         {#each [1, 2, 3, 4, 5, $state.totalPages].filter((p, i, arr) => i === arr.indexOf(p) && p <= $state.totalPages && (p <= 3 || p >= $state.totalPages || p === $state.page || p === $state.page - 1 || p === $state.page + 1)) as page}
                             <button
                                 on:click={() => handlePageClick(page)}
-                                class="px-2 py-1 {$state.page === page
-                                    ? 'bg-gray-200'
-                                    : 'border'} rounded hover:bg-gray-50 text-xs"
+                                class="px-3 py-1.5 {$state.page === page
+                                    ? 'bg-[#0969da] text-white border-[#0969da]'
+                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-sm"
                                 >{page}</button
                             >
                         {/each}
@@ -173,11 +173,11 @@
                     <button
                         on:click={handleNextPage}
                         disabled={$state.page === $state.totalPages}
-                        class="px-2 py-1 border rounded hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-50 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                         >Siguiente</button
                     >
                 </div>
-                <span class="text-xs text-gray-600"
+                <span class="text-sm text-gray-600"
                     >Mostrando {($state.page - 1) * $state.limit + 1}-{Math.min(
                         $state.page * $state.limit,
                         $state.total,
@@ -186,12 +186,12 @@
             </div>
         </div>
         <div class="overflow-y-auto">
-            <table class="w-full text-xs text-left text-gray-700">
-                <thead class="text-2xs sticky top-0 bg-white">
+            <table class="w-full text-sm text-left text-gray-700">
+                <thead class="text-sm bg-gray-50 border-b border-gray-200">
                     <tr>
                         <th
                             scope="col"
-                            class="px-4 py-3 cursor-pointer"
+                            class="px-4 py-2 cursor-pointer hover:bg-gray-100"
                             on:click={() => handleSort("name")}
                         >
                             Nombre {sortField === "name"
@@ -200,10 +200,10 @@
                                     : "↓"
                                 : ""}
                         </th>
-                        <th scope="col" class="px-4 py-3">Descripción</th>
+                        <th scope="col" class="px-4 py-2">Descripción</th>
                         <th
                             scope="col"
-                            class="px-4 py-3 cursor-pointer"
+                            class="px-4 py-2 cursor-pointer hover:bg-gray-100"
                             on:click={() => handleSort("price")}
                         >
                             Precio {sortField === "price"
@@ -212,10 +212,10 @@
                                     : "↓"
                                 : ""}
                         </th>
-                        <th scope="col" class="px-4 py-3">Stock</th>
+                        <th scope="col" class="px-4 py-2">Stock</th>
                         <th
                             scope="col"
-                            class="px-4 py-3 cursor-pointer"
+                            class="px-4 py-2 cursor-pointer hover:bg-gray-100"
                             on:click={() => handleSort("code")}
                         >
                             Código {sortField === "code"
@@ -224,50 +224,48 @@
                                     : "↓"
                                 : ""}
                         </th>
-                        <th scope="col" class="px-4 py-3">Estado</th>
-                        <th scope="col" class="px-4 py-3">Actualización</th>
-                        <th scope="col" class="px-4 py-3">Acciones</th>
+                        <th scope="col" class="px-4 py-2">Estado</th>
+                        <th scope="col" class="px-4 py-2">Actualización</th>
+                        <th scope="col" class="px-4 py-2">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-gray-200">
                     {#each $state.products as product}
-                        <tr
-                            class="bg-white hover:bg-gray-100 border-b border-gray-200 transition-colors"
-                        >
+                        <tr class="bg-white hover:bg-gray-50 transition-colors">
                             <td
-                                class="px-4 py-3 font-medium whitespace-nowrap text-gray-900"
+                                class="px-4 py-2 font-medium whitespace-nowrap text-gray-900"
                             >
                                 {product.name}
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-2">
                                 {product.description}
                             </td>
-                            <td class="px-4 py-3 font-medium">
+                            <td class="px-4 py-2 font-medium">
                                 ${product.price}
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-2">
                                 {product.stock} unidades
                             </td>
-                            <td class="px-4 py-3 font-mono">
+                            <td class="px-4 py-2 font-mono">
                                 {product.code}
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-2">
                                 <span
-                                    class={`px-2 py-1 rounded-full text-2xs font-medium ${product.isActive ? STATUS.active.class : STATUS.inactive.class}`}
+                                    class={`px-2 py-1 rounded-full text-xs font-medium ${product.isActive ? STATUS.active.class : STATUS.inactive.class}`}
                                 >
                                     {product.isActive
                                         ? STATUS.active.text
                                         : STATUS.inactive.text}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 text-gray-500">
+                            <td class="px-4 py-2 text-gray-500">
                                 {new Date(
                                     product.updatedAt,
                                 ).toLocaleDateString()}
                             </td>
-                            <td class="px-4 py-3">
+                            <td class="px-4 py-2">
                                 <button
-                                    class="text-blue-600 hover:text-blue-800 cursor-pointer"
+                                    class="text-[#0969da] hover:underline"
                                     on:click={() =>
                                         state.openProductDetail(product.id)}
                                 >
@@ -285,56 +283,55 @@
 <style>
     .product-card {
         padding: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.05);
+        border-radius: 6px;
+        box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04);
         background-color: #fff;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.2s ease;
         cursor: pointer;
         &:hover {
-            background-color: #fafafa;
+            background-color: #f6f8fa;
         }
 
         font-size: 0.875rem;
-        color: #3e3e3e;
-        border-color: #f5f5f5;
-        border-width: 1px;
+        color: #24292f;
+        border: 1px solid #d0d7de;
     }
 
     .btn {
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.75rem;
-        font-size: 0.75rem;
-        font-weight: 600;
+        padding: 5px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
         color: #fff;
-        background-color: #666;
-        border: none;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        background-color: #2da44e;
+        border: 1px solid rgba(27, 31, 36, 0.15);
+        box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1);
         transition: all 0.2s ease;
         &:hover {
-            background-color: #555;
-            transform: translateY(-1px);
+            background-color: #2c974b;
         }
     }
 
     .btn-primary {
-        background-color: #666;
+        background-color: #2da44e;
         &:hover {
-            background-color: #555;
+            background-color: #2c974b;
         }
     }
 
     .btn-secondary {
-        background-color: transparent;
-        color: #666;
-        box-shadow: none;
+        background-color: #f6f8fa;
+        color: #24292f;
+        border: 1px solid rgba(27, 31, 36, 0.15);
         &:hover {
-            background-color: rgba(102, 102, 102, 0.1);
+            background-color: #f3f4f6;
+            border-color: rgba(27, 31, 36, 0.15);
         }
     }
 
     th {
         font-weight: 600;
-        font-size: 0.75rem;
-        color: #666;
+        font-size: 14px;
+        color: #24292f;
     }
 </style>

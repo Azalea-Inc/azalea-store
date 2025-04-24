@@ -16,7 +16,7 @@
                 href={item.href}
                 class="menu-item"
             >
-                <svelte:component this={item.icon} size={18} class="mr-2" />
+                <svelte:component this={item.icon} size={16} class="mr-2" />
                 <span>{item.title}</span>
                 {#if item.notifications > 0}
                     <span class="notification-badge">{item.notifications}</span>
@@ -27,7 +27,7 @@
 
     <div class="flex flex-col p-4 absolute bottom-10 w-full">
         <a href="/settings" class="menu-item flex gap-2">
-            <Settings size={18} />
+            <Settings size={16} />
             <span>Configuración</span>
         </a>
     </div>
@@ -35,7 +35,7 @@
 
 <style>
     .aside {
-        min-width: 180px;
+        min-width: 200px;
         position: sticky;
         top: 0;
         z-index: 10;
@@ -45,40 +45,40 @@
         justify-content: space-between;
         height: 100vh;
         overflow-y: auto;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        border-right: 1px solid #f0f0f0;
+        border-right: 1px solid #d0d7de;
     }
     .menu-item {
-        padding: 0.5rem 0.75rem;
-        margin-bottom: 0.5rem;
+        padding: 0.375rem 0.75rem;
+        margin-bottom: 0.125rem;
         text-decoration: none;
-        color: #666666;
-        transition: all 0.2s ease;
-        border-radius: 0.5rem;
+        color: #24292f;
+        transition: all 0.1s ease;
+        border-radius: 0.375rem;
         font-size: 0.875rem;
-        font-weight: 500;
+        font-weight: 400;
         display: flex;
         align-items: center;
         position: relative;
     }
     .menu-item:hover {
-        background-color: #f5f5f5;
-        transform: translateX(4px);
+        background-color: #f6f8fa;
+        transform: none;
     }
 
     .item-active {
-        background-color: #f8f8f8;
-        color: #333333;
-        /* font-weight: 600; */
+        background-color: #f6f8fa;
+        color: #24292f;
+        font-weight: 500;
     }
 
     .notification-badge {
         position: absolute;
         right: 1rem;
-        background: #ef4444;
+        background: #cf222e;
         color: white;
         border-radius: 9999px;
-        padding: 0.1rem 0.5rem;
+        padding: 0.125rem 0.375rem;
         font-size: 0.75rem;
+        font-weight: 500;
     }
 </style>

@@ -2,13 +2,13 @@
     import { userStore } from "@store/UserStore";
 </script>
 
-<div class="p-4">
+<div class="p-4 border-b border-gray-200 bg-gray-50">
     <div class="flex items-center">
         {#if $userStore.avatar}
             <img
                 src={$userStore.avatar}
                 alt="Imagen de usuario"
-                class="w-12 h-12 rounded-full mr-2 object-cover"
+                class="w-12 h-12 rounded-full mr-3 object-cover border-2 border-gray-200"
             />
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -18,7 +18,7 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="w-12 h-12 rounded-full mr-2 p-2 bg-gray-100 hidden"
+                class="w-12 h-12 rounded-full mr-3 p-2 bg-gray-200 hidden"
             >
                 <circle cx="12" cy="8" r="5" />
                 <path d="M20 21a8 8 0 0 0-16 0" />
@@ -32,15 +32,19 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="w-12 h-12 rounded-full mr-2 p-2 bg-gray-100"
+                class="w-12 h-12 rounded-full mr-3 p-2 bg-gray-200"
             >
                 <circle cx="12" cy="8" r="5" />
                 <path d="M20 21a8 8 0 0 0-16 0" />
             </svg>
         {/if}
         <div>
-            <h2 class="text-lg font-bold">{$userStore.name}</h2>
-            <a href="/profile" class="text-sm text-gray-500 hover:underline"
+            <h2 class="text-lg font-semibold text-gray-900">
+                {$userStore.name}
+            </h2>
+            <a
+                href="/profile"
+                class="text-sm text-blue-600 hover:text-blue-800 hover:underline"
                 >Ver perfil</a
             >
         </div>

@@ -5,30 +5,33 @@
 
     export let isOpen = false;
     export let title = "Modal";
-    export let size = "xl";
 
     function handleClose() {
         dispatch("close");
     }
 </script>
 
-<button
+<div
     class:hidden={!isOpen}
-    on:click|self={handleClose}
-    class="bg-[#000]/50 fixed left-0 top-0 right-0 bottom-0 z-10 flex justify-center items-center p-10 overflow-y-auto text-left"
+    class="fixed inset-0 z-10 flex items-center justify-center p-4 bg-[rgba(0,0,0,0.5)] backdrop-blur-sm"
 >
-    <div class="bg-white rounded-lg min-w-{size} p-4 self-baseline">
-        <div class="flex pb-6 items-center justify-between">
-            <h3 class="font-semibold text-2xl">{title}</h3>
+    <div
+        class="w-full max-w-2xl bg-white rounded-lg shadow-lg self-baseline mt-10"
+    >
+        <div
+            class="flex items-center justify-between px-4 py-3 border-b border-gray-200"
+        >
+            <h3 class="text-lg font-semibold text-gray-900">{title}</h3>
             <CircleX
-                class="text-red-500 hover:text-red-600 cursor-pointer"
+                class="w-5 h-5 text-gray-400 hover:text-gray-500 cursor-pointer transition-colors"
                 onclick={handleClose}
             />
         </div>
-
-        <slot></slot>
+        <div class="px-4 py-4">
+            <slot></slot>
+        </div>
     </div>
-</button>
+</div>
 
 <style>
     .hidden {
