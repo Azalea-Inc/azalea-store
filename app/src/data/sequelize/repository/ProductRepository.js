@@ -67,6 +67,18 @@ class ProductRepository {
     }
   }
 
+  async activateProduct(id) {
+    try {
+      const product = await this.model.findByPk(id);
+      if (!product) {
+        throw new Error("Product not found");
+      }
+      await this.model.update({ isActive: true }, { where: { id } });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async removeProduct(id) {
     try {
       const product = await this.model.findByPk(id);

@@ -73,6 +73,16 @@ class ProductRequest {
     });
   }
 
+  async activateProduct(req, res) {
+    await this.handleRequest(req, res, async () => {
+      await this.controller.activateProduct(req.params.id);
+      return {
+        status: 200,
+        data: { message: "Product activated successfully" },
+      };
+    });
+  }
+
   async removeProduct(req, res) {
     await this.handleRequest(req, res, async () => {
       await this.controller.removeProduct(req.params.id);
@@ -88,6 +98,7 @@ class ProductRequest {
     this.router.get("/", this.showProducts.bind(this));
     this.router.get("/:id", this.showProductDetail.bind(this));
     this.router.put("/:id/deactivate", this.deactivateProduct.bind(this));
+    this.router.put("/:id/activate", this.activateProduct.bind(this));
     this.router.delete("/:id", this.removeProduct.bind(this));
 
     new UpdateProductHandler().setup(this.router);
