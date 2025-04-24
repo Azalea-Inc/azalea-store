@@ -253,10 +253,11 @@
                             </td>
                             <td class="px-4 py-3">
                                 <span
-                                    class={`px-2 py-1 rounded-full text-2xs font-medium ${STATUS[product.status]?.class || STATUS.inactive.class}`}
+                                    class={`px-2 py-1 rounded-full text-2xs font-medium ${product.isActive ? STATUS.active.class : STATUS.inactive.class}`}
                                 >
-                                    {STATUS[product.status]?.text ||
-                                        STATUS.inactive.text}
+                                    {product.isActive
+                                        ? STATUS.active.text
+                                        : STATUS.inactive.text}
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-gray-500">
