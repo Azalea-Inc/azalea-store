@@ -41,6 +41,14 @@ class ProductsPageStore {
     this.set(this);
   }
 
+  updateProduct(id, data) {
+    const index = this.products.findIndex((product) => product.id === id);
+    if (index !== -1) {
+      this.products[index] = { ...this.products[index], ...data };
+      this.update();
+    }
+  }
+
   openProductDetail(id) {
     productDetailStore.openProductDetail(id);
   }

@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import { productsPageStore } from "@store/pages/ProductsPageStore";
 
 const initialState = writable({
   id: null,
@@ -8,6 +9,7 @@ const initialState = writable({
   quantity: 0,
   image: "",
   updatedAt: null,
+  isActive: true,
 
   isLoading: true,
   isOpen: false,
@@ -28,6 +30,29 @@ class ProductDetailStore {
 
   #update(args) {
     this.store.update((state) => ({ ...state, ...args }));
+  }
+
+  async deactivate(id) {
+    const response = await fetch(
+      `http://localhost:3000/api/products/${id}/deactivate`,
+      {
+        method: "PUT",
+      },
+    );
+    productsPageStore.updateProduct(id, { isActive: false });
+    this.#update({ isActive: false });
+  }
+
+  async activate(id) {
+    const response = await fetch(
+      `http://localhost:3000/api/products/${id}/activate`,
+      {
+        method: "PUT",
+      },
+    );
+    const { data } = await response.json();
+    productsPageStore.updateProduct(id, { isActive: true });
+    this.#update({ isActive: true });
   }
 
   async fetchProductInfo(id) {

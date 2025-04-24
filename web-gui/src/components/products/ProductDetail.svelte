@@ -22,6 +22,18 @@
             <p class="text-xl font-semibold text-purple-600">
                 Precio: {$state.price}€
             </p>
+
+            <button
+                class="px-4 py-2 text-white rounded {$state.isActive
+                    ? 'bg-red-500 hover:bg-red-600'
+                    : 'bg-green-500 hover:bg-green-600'}"
+                on:click={() =>
+                    state[$state.isActive ? "deactivate" : "activate"](
+                        $state.id,
+                    )}
+            >
+                {$state.isActive ? "Desactivar" : "Activar"}
+            </button>
         {/if}
     </div>
 </Modal>
