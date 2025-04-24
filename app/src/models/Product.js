@@ -7,6 +7,18 @@ class Product {
     this.price = price;
   }
 
+  setStatus(status) {
+    this.isActive = status;
+  }
+
+  deactivate() {
+    this.isActive = false;
+  }
+
+  activate() {
+    this.isActive = true;
+  }
+
   generateId() {
     this.id = randomUUID();
   }
@@ -23,6 +35,7 @@ class Product {
     const product = new Product(code, name, price);
     product.setDescription(description);
     product.generateId();
+    product.setStatus(true);
     return product;
   }
 
