@@ -3,6 +3,7 @@
     import Breadcrumb from "@components/Breadcrumb.svelte";
 
     import { productsPageStore } from "@store/pages/ProductsPageStore";
+    import ProductDetail from "@components/products/ProductDetail.svelte";
     $: state = productsPageStore;
 
     let isOpen = false;
@@ -39,6 +40,8 @@
     </div>
     <svelte:component this={$state.currentPage} />
 </div>
+
+<ProductDetail></ProductDetail>
 
 <style>
     .btn {

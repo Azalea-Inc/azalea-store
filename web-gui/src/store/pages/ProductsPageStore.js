@@ -1,8 +1,8 @@
 import InError from "@components/products/InError.svelte";
 import InSuccess from "@components/products/InSuccess.svelte";
 import ProductSearchList from "@components/products/ProductSearchList.svelte";
+import { productDetailStore } from "@store/products/ProductDetailStore";
 import { writable } from "svelte/store";
-import { Pi } from "lucide-svelte";
 
 class ProductsPageStore {
   constructor() {
@@ -39,6 +39,10 @@ class ProductsPageStore {
 
   update() {
     this.set(this);
+  }
+
+  openProductDetail(id) {
+    productDetailStore.openProductDetail(id);
   }
 
   async getProducts() {

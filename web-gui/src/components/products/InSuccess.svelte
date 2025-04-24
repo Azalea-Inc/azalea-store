@@ -265,12 +265,13 @@
                                 ).toLocaleDateString()}
                             </td>
                             <td class="px-4 py-3">
-                                <a
-                                    class="text-blue-600 hover:text-blue-800"
-                                    href={`/products/${product.id}`}
+                                <button
+                                    class="text-blue-600 hover:text-blue-800 cursor-pointer"
+                                    on:click={() =>
+                                        state.openProductDetail(product.id)}
                                 >
                                     Ver detalles
-                                </a>
+                                </button>
                             </td>
                         </tr>
                     {/each}

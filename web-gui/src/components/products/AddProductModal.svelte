@@ -60,7 +60,12 @@
     }
 </script>
 
-<Modal {isOpen} on:close={() => dispatch("close")} title="Nuevo Producto">
+<Modal
+    {isOpen}
+    on:close={() => dispatch("close")}
+    title="Nuevo Producto"
+    size="md"
+>
     <form on:submit|preventDefault={addProduct} class="flex flex-col gap-2">
         <label for="code">Código</label>
         <input
@@ -98,7 +103,7 @@
 
         <button
             type="submit"
-            class="btn btn-primary mt-4"
+            class="btn btn-primary my-4 self-end"
             disabled={isSubmitted}
         >
             {isSubmitted ? "Guardando..." : "Guardar"}
