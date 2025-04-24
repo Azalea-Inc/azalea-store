@@ -1,21 +1,9 @@
 <script>
-    import InError from "./InError.svelte";
-    import ProductList from "./ProductList.svelte";
-    import InLoading from "./InLoading.svelte";
     import AddProductModal from "@components/products/AddProductModal.svelte";
     import Breadcrumb from "@components/Breadcrumb.svelte";
 
-    import { newState } from "$lib/lib";
-    import { writable } from "svelte/store";
-
-    let { state } = newState(
-        {
-            loading: { component: InLoading, props: {} },
-            error: { component: InError, props: {} },
-            success: { component: ProductList, props: {} },
-        },
-        "loading",
-    );
+    import { productsPageStore } from "@store/pages/ProductsPageStore";
+    $: state = productsPageStore;
 
     let isOpen = false;
 </script>
@@ -49,7 +37,7 @@
             </button>
         </div>
     </div>
-    <svelte:component this={$state.component} {...$state.props} />
+    <svelte:component this={$state.currentPage} />
 </div>
 
 <style>

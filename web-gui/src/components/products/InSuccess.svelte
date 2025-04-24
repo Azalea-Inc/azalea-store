@@ -1,13 +1,14 @@
 <script>
-    import { goto } from "$app/navigation";
     import { slide } from "svelte/transition";
-    export let products = [];
+    import Spinner from "@components/Spinner.svelte";
+    import { productsPageStore } from "@store/pages/ProductsPageStore";
+    import { onMount, onDestroy } from "svelte";
 
-    export let actions;
-    export let page = 1;
-    export let limit = 20;
-    export let total = 0;
-    export let totalPages = 1;
+    const state = productsPageStore;
+
+    onMount(() => state.getProducts());
+    onDestroy(() => state.resetState());
+
     let searchTerm = "";
     let sortDirection = "asc";
     let sortField = "price";
@@ -23,24 +24,30 @@
         },
     };
 
+    function onItemsHandle() {
+        $state.page = 1;
+        state.getProducts();
+    }
+
     function handlePrevPage() {
-        if (page > 1) page--;
-        actions.setState("loading", { page, limit });
+        if ($state.page > 1) {
+            $state.page--;
+        }
+        state.getProducts();
     }
 
     function handleNextPage() {
-        if (page < totalPages) page++;
-        actions.setState("loading", { page, limit });
+        if ($state.page < $state.totalPages) $state.page++;
+        state.getProducts();
     }
 
     function handlePageClick(p) {
-        page = p;
-        actions.setState("loading", { page, limit });
+        $state.page = p;
+        state.getProducts();
     }
 
     function handleSearch() {
-        page = 1;
-        actions.setState("loading", { page, limit, search: searchTerm });
+        $state.page = 1;
     }
 
     function handleSort(field) {
@@ -51,7 +58,7 @@
             sortDirection = "asc";
         }
 
-        products = products.sort((a, b) => {
+        $state.products = $state.products.sort((a, b) => {
             const aValue =
                 field === "price" ? a[field] : String(a[field]).toLowerCase();
             const bValue =
@@ -70,7 +77,9 @@
     }
 </script>
 
-{#if !products.length}
+{#if $state.inLoading}
+    <Spinner />
+{:else if !$state.products.length}
     <div
         class="flex flex-col items-center justify-center p-12 bg-white rounded-2xl shadow-sm"
     >
@@ -122,9 +131,8 @@
                 <div class="flex items-center gap-2">
                     <span class="text-xs text-gray-600">Items por página:</span>
                     <select
-                        bind:value={limit}
-                        on:change={() =>
-                            actions.setState("loading", { page: 1, limit })}
+                        bind:value={$state.limit}
+                        on:change={onItemsHandle}
                         class="text-xs border rounded px-2 py-1"
                     >
                         <option value={10}>10</option>
@@ -137,31 +145,43 @@
                 <div class="flex gap-2">
                     <button
                         on:click={handlePrevPage}
-                        disabled={page === 1}
+                        disabled={state.page === 1}
                         class="px-2 py-1 border rounded hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                         >Anterior</button
                     >
-                    {#each Array(totalPages) as _, i}
-                        <button
-                            on:click={() => handlePageClick(i + 1)}
-                            class="px-2 py-1 {page === i + 1
-                                ? 'bg-gray-200'
-                                : 'border'} rounded hover:bg-gray-50 text-xs"
-                            >{i + 1}</button
-                        >
-                    {/each}
+                    {#if $state.totalPages <= 6}
+                        {#each Array($state.totalPages) as _, i}
+                            <button
+                                on:click={() => handlePageClick(i + 1)}
+                                class="px-2 py-1 {$state.page === i + 1
+                                    ? 'bg-gray-200'
+                                    : 'border'} rounded hover:bg-gray-50 text-xs"
+                                >{i + 1}</button
+                            >
+                        {/each}
+                    {:else}
+                        {#each [1, 2, 3, 4, 5, $state.totalPages].filter((p, i, arr) => i === arr.indexOf(p) && p <= $state.totalPages && (p <= 3 || p >= $state.totalPages || p === $state.page || p === $state.page - 1 || p === $state.page + 1)) as page}
+                            <button
+                                on:click={() => handlePageClick(page)}
+                                class="px-2 py-1 {$state.page === page
+                                    ? 'bg-gray-200'
+                                    : 'border'} rounded hover:bg-gray-50 text-xs"
+                                >{page}</button
+                            >
+                        {/each}
+                    {/if}
                     <button
                         on:click={handleNextPage}
-                        disabled={page === totalPages}
+                        disabled={$state.page === $state.totalPages}
                         class="px-2 py-1 border rounded hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                         >Siguiente</button
                     >
                 </div>
                 <span class="text-xs text-gray-600"
-                    >Mostrando {(page - 1) * limit + 1}-{Math.min(
-                        page * limit,
-                        total,
-                    )} de {total} resultados</span
+                    >Mostrando {($state.page - 1) * $state.limit + 1}-{Math.min(
+                        $state.page * $state.limit,
+                        $state.total,
+                    )} de {$state.total} resultados</span
                 >
             </div>
         </div>
@@ -210,7 +230,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {#each products as product}
+                    {#each $state.products as product}
                         <tr
                             class="bg-white hover:bg-gray-100 border-b border-gray-200 transition-colors"
                         >

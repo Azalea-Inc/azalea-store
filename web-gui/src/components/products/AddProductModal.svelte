@@ -1,6 +1,9 @@
 <script>
     import Modal from "@components/Modal.svelte";
     import { createEventDispatcher } from "svelte";
+    import { productsPageStore } from "@store/pages/ProductsPageStore";
+
+    const state = productsPageStore;
 
     const API_URL = "http://localhost:3000/api/products";
     const CONTENT_TYPE_JSON = "application/json";
@@ -48,6 +51,7 @@
             await saveProduct();
             resetProduct();
             dispatch("close");
+            state.getProducts();
         } catch (error) {
             console.error(error);
         } finally {

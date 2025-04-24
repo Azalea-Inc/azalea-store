@@ -1,9 +1,14 @@
 <script>
-    export let errorMessage = "Error del servidor";
+    import { onDestroy } from "svelte";
+    import { productsPageStore } from "@store/pages/ProductsPageStore";
+
+    const state = productsPageStore;
+
+    onDestroy(() => state.resetState());
 </script>
 
 <div class="error-message">
-    <p>{errorMessage}</p>
+    <p>{$state.errorMessage}</p>
 </div>
 
 <style>
