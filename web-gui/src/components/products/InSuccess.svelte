@@ -81,11 +81,11 @@
     <Spinner />
 {:else if !$state.products.length}
     <div
-        class="flex flex-col items-center justify-center p-12 bg-gray-50 rounded-md border border-gray-200"
+        class="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-md border border-gray-200"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-16 w-16 text-gray-400 mb-4"
+            class="h-12 w-12 text-gray-400 mb-3"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -97,10 +97,10 @@
                 d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
             />
         </svg>
-        <p class="text-lg font-medium text-center text-gray-900">
+        <p class="text-base font-medium text-center text-gray-900">
             No hay productos disponibles
         </p>
-        <p class="text-sm text-center mt-2 text-gray-600">
+        <p class="text-xs text-center mt-1 text-gray-600">
             Agrega un nuevo producto utilizando el botón "Agregar"
         </p>
     </div>
@@ -109,31 +109,31 @@
         class="overflow-hidden flex flex-col border border-gray-200 rounded-md bg-white"
         transition={{ slide }}
     >
-        <div class="px-4 py-3 border-b border-gray-200">
+        <div class="px-3 py-2 border-b border-gray-200">
             <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-2 flex-1 max-w-md">
+                <div class="flex items-center gap-2 flex-1 max-w-lg">
                     <input
                         type="text"
                         bind:value={searchTerm}
                         placeholder="Buscar productos..."
-                        class="w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                         on:keydown={(e) => e.key === "Enter" && handleSearch()}
                     />
                     <button
                         on:click={handleSearch}
-                        class="px-3 py-1.5 text-sm text-white bg-[#2da44e] rounded-md hover:bg-[#2c974b] border border-[#288b46]"
+                        class="px-3 py-2 text-sm text-white bg-[#2da44e] rounded-md hover:bg-[#2c974b] border border-[#288b46]"
                     >
                         Buscar
                     </button>
                 </div>
             </div>
             <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <span class="text-sm text-gray-600">Items por página:</span>
+                <div class="flex items-center gap-1">
+                    <span class="text-xs text-gray-600">Items por página:</span>
                     <select
                         bind:value={$state.limit}
                         on:change={onItemsHandle}
-                        class="text-sm border border-gray-300 rounded-md px-2 py-1"
+                        class="text-xs border border-gray-300 rounded-md px-1 py-0.5"
                     >
                         <option value={10}>10</option>
                         <option value={20}>20</option>
@@ -142,20 +142,20 @@
                     </select>
                 </div>
 
-                <div class="flex gap-1">
+                <div class="flex gap-0.5">
                     <button
                         on:click={handlePrevPage}
                         disabled={state.page === 1}
-                        class="px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-50 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                         >Anterior</button
                     >
                     {#if $state.totalPages <= 6}
                         {#each Array($state.totalPages) as _, i}
                             <button
                                 on:click={() => handlePageClick(i + 1)}
-                                class="px-3 py-1.5 {$state.page === i + 1
+                                class="px-2 py-1 {$state.page === i + 1
                                     ? 'bg-[#0969da] text-white border-[#0969da]'
-                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-sm"
+                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-xs"
                                 >{i + 1}</button
                             >
                         {/each}
@@ -163,9 +163,9 @@
                         {#each [1, 2, 3, 4, 5, $state.totalPages].filter((p, i, arr) => i === arr.indexOf(p) && p <= $state.totalPages && (p <= 3 || p >= $state.totalPages || p === $state.page || p === $state.page - 1 || p === $state.page + 1)) as page}
                             <button
                                 on:click={() => handlePageClick(page)}
-                                class="px-3 py-1.5 {$state.page === page
+                                class="px-2 py-1 {$state.page === page
                                     ? 'bg-[#0969da] text-white border-[#0969da]'
-                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-sm"
+                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-xs"
                                 >{page}</button
                             >
                         {/each}
@@ -173,11 +173,11 @@
                     <button
                         on:click={handleNextPage}
                         disabled={$state.page === $state.totalPages}
-                        class="px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-50 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                         >Siguiente</button
                     >
                 </div>
-                <span class="text-sm text-gray-600"
+                <span class="text-xs text-gray-600"
                     >Mostrando {($state.page - 1) * $state.limit + 1}-{Math.min(
                         $state.page * $state.limit,
                         $state.total,
@@ -186,12 +186,12 @@
             </div>
         </div>
         <div class="overflow-y-auto">
-            <table class="w-full text-sm text-left text-gray-700">
-                <thead class="text-sm bg-gray-50 border-b border-gray-200">
+            <table class="w-full text-xs text-left text-gray-700">
+                <thead class="text-xs bg-gray-50 border-b border-gray-200">
                     <tr>
                         <th
                             scope="col"
-                            class="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
                             on:click={() => handleSort("name")}
                         >
                             Nombre {sortField === "name"
@@ -200,10 +200,10 @@
                                     : "↓"
                                 : ""}
                         </th>
-                        <th scope="col" class="px-4 py-2">Descripción</th>
+                        <th scope="col" class="px-3 py-1.5">Descripción</th>
                         <th
                             scope="col"
-                            class="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
                             on:click={() => handleSort("price")}
                         >
                             Precio {sortField === "price"
@@ -212,10 +212,10 @@
                                     : "↓"
                                 : ""}
                         </th>
-                        <th scope="col" class="px-4 py-2">Stock</th>
+                        <th scope="col" class="px-3 py-1.5">Stock</th>
                         <th
                             scope="col"
-                            class="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
                             on:click={() => handleSort("code")}
                         >
                             Código {sortField === "code"
@@ -224,48 +224,48 @@
                                     : "↓"
                                 : ""}
                         </th>
-                        <th scope="col" class="px-4 py-2">Estado</th>
-                        <th scope="col" class="px-4 py-2">Actualización</th>
-                        <th scope="col" class="px-4 py-2">Acciones</th>
+                        <th scope="col" class="px-3 py-1.5">Estado</th>
+                        <th scope="col" class="px-3 py-1.5">Actualización</th>
+                        <th scope="col" class="px-3 py-1.5">Acciones</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
+                <tbody class="divide-y divide-gray-200 text-xs">
                     {#each $state.products as product}
                         <tr class="bg-white hover:bg-gray-50 transition-colors">
                             <td
-                                class="px-4 py-2 font-medium whitespace-nowrap text-gray-900"
+                                class="px-3 py-1.5 font-medium whitespace-nowrap text-gray-900"
                             >
                                 {product.name}
                             </td>
-                            <td class="px-4 py-2">
+                            <td class="px-3 py-1.5">
                                 {product.description}
                             </td>
-                            <td class="px-4 py-2 font-medium">
+                            <td class="px-3 py-1.5 font-medium">
                                 ${product.price}
                             </td>
-                            <td class="px-4 py-2">
+                            <td class="px-3 py-1.5">
                                 {product.stock} unidades
                             </td>
-                            <td class="px-4 py-2 font-mono">
+                            <td class="px-3 py-1.5 font-mono">
                                 {product.code}
                             </td>
-                            <td class="px-4 py-2">
+                            <td class="px-3 py-1.5">
                                 <span
-                                    class={`px-2 py-1 rounded-full text-xs font-medium ${product.isActive ? STATUS.active.class : STATUS.inactive.class}`}
+                                    class={`px-1.5 py-0.5 rounded-full text-2xs font-medium ${product.isActive ? STATUS.active.class : STATUS.inactive.class}`}
                                 >
                                     {product.isActive
                                         ? STATUS.active.text
                                         : STATUS.inactive.text}
                                 </span>
                             </td>
-                            <td class="px-4 py-2 text-gray-500">
+                            <td class="px-3 py-1.5 text-gray-500">
                                 {new Date(
                                     product.updatedAt,
                                 ).toLocaleDateString()}
                             </td>
-                            <td class="px-4 py-2">
+                            <td class="px-3 py-1.5">
                                 <button
-                                    class="text-[#0969da] hover:underline"
+                                    class="text-[#0969da] hover:underline text-xs"
                                     on:click={() =>
                                         state.openProductDetail(product.id)}
                                 >
@@ -282,7 +282,7 @@
 
 <style>
     .product-card {
-        padding: 1rem;
+        padding: 0.75rem;
         border-radius: 6px;
         box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04);
         background-color: #fff;
@@ -292,15 +292,15 @@
             background-color: #f6f8fa;
         }
 
-        font-size: 0.875rem;
+        font-size: 0.75rem;
         color: #24292f;
         border: 1px solid #d0d7de;
     }
 
     .btn {
-        padding: 5px 16px;
-        border-radius: 6px;
-        font-size: 14px;
+        padding: 4px 12px;
+        border-radius: 5px;
+        font-size: 12px;
         font-weight: 500;
         color: #fff;
         background-color: #2da44e;
@@ -331,7 +331,11 @@
 
     th {
         font-weight: 600;
-        font-size: 14px;
+        font-size: 12px;
         color: #24292f;
+    }
+
+    :global(.text-2xs) {
+        font-size: 0.625rem;
     }
 </style>
