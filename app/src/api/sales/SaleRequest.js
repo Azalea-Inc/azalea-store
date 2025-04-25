@@ -38,10 +38,20 @@ class SaleRequest {
     }
   }
 
+  async printTicket(req, res) {
+    try {
+      await this.controller.printTicket(req.params.id);
+      res.status(200).json({ message: "Ticket retrieved successfully" });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
-    router.post("/sales", this.addSale.bind(this));
-    router.get("/sales/:id", this.showSale.bind(this));
-    router.get("/sales/:id/all", this.showSales.bind(this));
+    this.router.post("/", this.addSale.bind(this));
+    this.router.get("/:id", this.showSale.bind(this));
+    this.router.get("/:id/all", this.showSales.bind(this));
+    this.router.post("/:id/print", this.printTicket.bind(this));
 
     router.use("/sales", this.router);
   }

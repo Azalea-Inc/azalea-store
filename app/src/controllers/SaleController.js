@@ -1,4 +1,5 @@
 const Sale = require("../models/Sale");
+const Ticket = require("../models/Ticket");
 const SaleRepository = require("../data/sequelize/repository/SaleRepository");
 
 class SaleController {
@@ -28,6 +29,16 @@ class SaleController {
     } catch (error) {
       throw new Error(error.message);
     }
+  }
+
+  async printTicket(id) {
+    const sale = await this.respository.showSale(id);
+    const ticket = Ticket.build({
+      sale,
+      message: "Sale retrieved successfully",
+    });
+    console.log(sale);
+    console.log(ticket.print());
   }
 }
 
