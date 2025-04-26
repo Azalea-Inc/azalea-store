@@ -47,11 +47,23 @@ class SaleRequest {
     }
   }
 
+  async removeSale(req, res) {
+    try {
+      const sale = await this.controller.removeSale(req.params.id);
+      res
+        .status(200)
+        .json({ message: "Sale removed successfully", data: sale });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.addSale.bind(this));
     this.router.get("/:id", this.showSale.bind(this));
     this.router.get("/:id/all", this.showSales.bind(this));
     this.router.post("/:id/print", this.printTicket.bind(this));
+    this.router.delete("/:id", this.removeSale.bind(this));
 
     router.use("/sales", this.router);
   }

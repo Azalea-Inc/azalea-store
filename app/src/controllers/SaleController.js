@@ -40,6 +40,15 @@ class SaleController {
     console.log(sale);
     console.log(ticket.print());
   }
+
+  async removeSale(id) {
+    try {
+      const sale = await this.respository.removeSale(id);
+      return sale;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 }
 
 module.exports = SaleController;
