@@ -10,6 +10,7 @@ module.exports = () => {
   ProductEntity.hasOne(InventoryEntity, {
     foreignKey: "productId",
     as: "inventory",
+    onDelete: "CASCADE",
   });
   InventoryEntity.belongsTo(ProductEntity, {
     foreignKey: "productId",
@@ -19,6 +20,7 @@ module.exports = () => {
   CashBoxEntity.hasMany(CashBoxRegistryEntity, {
     foreignKey: "cashBoxId",
     as: "registries",
+    onDelete: "CASCADE",
   });
   CashBoxRegistryEntity.belongsTo(CashBoxEntity, {
     foreignKey: "cashBoxId",
@@ -28,6 +30,7 @@ module.exports = () => {
   CashBoxRegistryEntity.hasOne(SaleEntity, {
     foreignKey: "cashBoxRegistryId",
     as: "sale",
+    onDelete: "CASCADE",
   });
 
   // SaleEntity.hasMany(InventoryEntity, {
@@ -49,6 +52,7 @@ module.exports = () => {
   CashBoxRegistryEntity.hasMany(CashBoxMovementEntity, {
     foreignKey: "registryId",
     as: "movements",
+    onDelete: "CASCADE",
   });
 
   CashBoxMovementEntity.belongsTo(CashBoxRegistryEntity, {
@@ -59,6 +63,7 @@ module.exports = () => {
   InventoryEntity.hasMany(MovementEntity, {
     foreignKey: "inventoryId",
     as: "movements",
+    onDelete: "CASCADE",
   });
 
   MovementEntity.belongsTo(InventoryEntity, {

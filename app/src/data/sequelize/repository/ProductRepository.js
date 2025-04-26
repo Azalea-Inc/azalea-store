@@ -13,6 +13,16 @@ class ProductRepository {
     }
   }
 
+  async addProductAndInventory(productData, inventoryData) {
+    try {
+      const product = await this.model.create(productData);
+      await product.createInventory(inventoryData);
+      return product;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getProducts(page = 1, limit = 10) {
     try {
       const offset = (page - 1) * limit;

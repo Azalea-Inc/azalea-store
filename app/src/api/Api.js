@@ -20,18 +20,18 @@ class Api {
     new ApiRouterBuilder(this.router).build();
   }
 
-  setupDatabase() {
-    SequelizeDB.connect();
+  async setupDatabase() {
+    await SequelizeDB.connect();
   }
 
-  syncDatabase() {
-    SequelizeDB.sync();
+  async syncDatabase() {
+    await SequelizeDB.sync();
   }
 
-  start() {
-    this.setupDatabase();
+  async start() {
+    await this.setupDatabase();
     this.setupRoutes();
-    this.syncDatabase();
+    await this.syncDatabase();
     this.app.listen(3000, () => {
       console.log("Server started on port 3000");
     });

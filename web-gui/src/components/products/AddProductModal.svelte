@@ -17,6 +17,8 @@
         code: "",
         name: "",
         price: 0,
+        stock: 0,
+        minStock: 0,
     };
 
     let product = { ...initialProductState };
@@ -149,7 +151,7 @@
                     type="number"
                     name="salePrice"
                     placeholder="Ingrese el precio de venta"
-                    bind:value={product.minPrice}
+                    bind:value={product.saleprice}
                     min="0"
                     required={product.hasInventory}
                 />

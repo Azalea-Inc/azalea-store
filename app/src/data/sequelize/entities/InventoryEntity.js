@@ -27,6 +27,7 @@ const InventoryEntity = sequelize.define(
         model: "Products",
         key: "id",
       },
+      onDelete: "CASCADE",
     },
     isActive: {
       type: DataTypes.BOOLEAN,
