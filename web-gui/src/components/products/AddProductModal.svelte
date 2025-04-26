@@ -102,6 +102,60 @@
             />
         </div>
 
+        <div class="form-group">
+            <label class="flex items-center gap-2">
+                <input type="checkbox" bind:checked={product.hasInventory} />
+                <span>Gestionar inventario</span>
+            </label>
+        </div>
+
+        {#if product.hasInventory}
+            <div class="form-group">
+                <label for="stock" class="form-label"
+                    >Cantidad en inventario</label
+                >
+                <input
+                    id="stock"
+                    class="form-control"
+                    type="number"
+                    name="stock"
+                    placeholder="Ingrese la cantidad disponible"
+                    bind:value={product.stock}
+                    min="0"
+                    required={product.hasInventory}
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="minStock" class="form-label">Cantidad mínima</label>
+                <input
+                    id="minStock"
+                    class="form-control"
+                    type="number"
+                    name="minStock"
+                    placeholder="Ingrese la cantidad mínima"
+                    bind:value={product.minStock}
+                    min="0"
+                    required={product.hasInventory}
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="salePrice" class="form-label">Precio de venta</label
+                >
+                <input
+                    id="salePrice"
+                    class="form-control"
+                    type="number"
+                    name="salePrice"
+                    placeholder="Ingrese el precio de venta"
+                    bind:value={product.minPrice}
+                    min="0"
+                    required={product.hasInventory}
+                />
+            </div>
+        {/if}
+
         <button
             type="submit"
             class="btn btn-primary my-4 self-end"
@@ -114,7 +168,7 @@
 
 <style>
     .form-group {
-        margin-bottom: 1rem;
+        margin-bottom: 0.25rem;
     }
 
     .form-label {
