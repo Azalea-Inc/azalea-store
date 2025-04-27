@@ -24,7 +24,13 @@
 </script>
 
 <div class="user-info-container flex-1">
-    <h1 class="pb-6 text-2xl font-bold">Información del Usuario</h1>
+    <div class="header-container">
+        <h1 class="text-2xl font-bold">Información del Usuario</h1>
+        <div class="actions">
+            <a class="btn primary" href="/profile/edit">Editar perfil</a>
+            <button class="btn secondary">Cambiar contraseña</button>
+        </div>
+    </div>
 
     <div class="user-profile">
         <div class="profile-header">
@@ -84,11 +90,6 @@
                 <span class="value">{user.role}</span>
             </div>
         </div>
-
-        <div class="actions">
-            <a class="btn primary" href="/profile/edit">Editar perfil</a>
-            <button class="btn secondary">Cambiar contraseña</button>
-        </div>
     </div>
 </div>
 
@@ -100,6 +101,13 @@
         font-family:
             -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
             sans-serif;
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
     }
 
     .user-profile {
@@ -164,10 +172,8 @@
     }
 
     .actions {
-        padding: 16px;
         display: flex;
         gap: 8px;
-        justify-content: flex-end;
     }
 
     .btn {
