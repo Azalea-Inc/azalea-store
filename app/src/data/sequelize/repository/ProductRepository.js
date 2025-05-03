@@ -47,7 +47,8 @@ class ProductRepository {
 
   async getProductById(id) {
     try {
-      return await this.model.findByPk(id);
+      const product = await this.model.findByPk(id);
+      return product;
     } catch (error) {
       throw error;
     }

@@ -5,6 +5,7 @@ const CashBoxRegistryEntity = require("./entities/CashBoxRegistryEntity");
 const CashBoxMovementEntity = require("./entities/CashBoxMovementEntity");
 const SaleEntity = require("./entities/SaleEntity");
 const MovementEntity = require("./entities/MovementEntity");
+const ProductsSalesEntity = require("./entities/ProductsSalesEntity");
 
 module.exports = () => {
   ProductEntity.hasOne(InventoryEntity, {
@@ -33,21 +34,22 @@ module.exports = () => {
     onDelete: "CASCADE",
   });
 
-  // SaleEntity.hasMany(InventoryEntity, {
-  //   foreignKey: "saleId",
-  //   as: "inventories",
-  // });
-
   SaleEntity.belongsTo(CashBoxRegistryEntity, {
     foreignKey: "cashBoxRegistryId",
     as: "registry",
   });
 
-  // InventoryEntity.belongsTo(SaleEntity, {
-  //   foreignKey: "saleId",
-  //   as: "sale",
-  // });
-  //
+  SaleEntity.belongsToMany(ProductEntity, {
+    through: ProductsSalesEntity,
+    foreignKey: "productId",
+    as: "product",
+  });
+
+  ProductEntity.belongsToMany(SaleEntity, {
+    through: ProductsSalesEntity,
+    foreignKey: "saleId",
+    as: "sale",
+  });
 
   CashBoxRegistryEntity.hasMany(CashBoxMovementEntity, {
     foreignKey: "registryId",

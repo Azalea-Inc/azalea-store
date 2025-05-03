@@ -10,6 +10,11 @@ const CashBoxRegistryEntity = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
+    isOpen: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true,
+    },
     openDate: {
       type: DataTypes.DATE,
       allowNull: false,

@@ -1,21 +1,22 @@
 const Sale = require("../models/Sale");
 const Ticket = require("../models/Ticket");
 const SaleRepository = require("../data/sequelize/repository/SaleRepository");
+const ProductRepository = require("../data/sequelize/repository/ProductRepository");
 
 class SaleController {
   constructor() {
-    this.respository = new SaleRepository();
+    this.repository = new SaleRepository();
   }
 
   async addSale(data) {
     const sale = Sale.build(data);
-    const createdSale = await this.respository.addSale(sale);
+    const createdSale = await this.repository.addSale(sale);
     return createdSale;
   }
 
   async showSale(id) {
     try {
-      const sale = await this.respository.showSale(id);
+      const sale = await this.repository.showSale(id);
       return sale;
     } catch (error) {
       throw new Error(error.message);
@@ -23,16 +24,22 @@ class SaleController {
   }
 
   async showSales(id) {
-    try {
-      const sales = await this.respository.showSales(id);
-      return sales;
-    } catch (error) {
-      throw new Error(error.message);
-    }
+    const sales = await this.repository.showSales(id);
+    return sales;
+  }
+
+  async addProduct(id, data) {
+    const productRepository = new ProductRepository();
+    const product = await productRepository.getProductById(data.productId);
+    return this.repository.addProduct(id, product);
+  }
+
+  async showProductsForSale(id) {
+    return this.repository.showProductsForSale(id);
   }
 
   async printTicket(id) {
-    const sale = await this.respository.showSale(id);
+    const sale = await this.repository.showSale(id);
     const ticket = Ticket.build({
       sale,
       message: "Sale retrieved successfully",
@@ -43,7 +50,7 @@ class SaleController {
 
   async removeSale(id) {
     try {
-      const sale = await this.respository.removeSale(id);
+      const sale = await this.repository.removeSale(id);
       return sale;
     } catch (error) {
       throw new Error(error.message);

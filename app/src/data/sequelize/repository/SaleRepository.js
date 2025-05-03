@@ -1,9 +1,13 @@
+const e = require("express");
 const CashBoxRegistryEntity = require("../entities/CashBoxRegistryEntity");
 const SaleEntity = require("../entities/SaleEntity");
+const ProductsSalesEntity = require("../entities/ProductsSalesEntity");
+const ProductEntity = require("../entities/ProductEntity");
 
 class SaleRepository {
   constructor() {
     this.model = SaleEntity;
+    this.productsSalesModel = ProductsSalesEntity;
   }
 
   async addSale(sale) {
@@ -31,6 +35,32 @@ class SaleRepository {
         where: { CashBoxRegistryId: id },
       });
       return sales;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
+  async addProduct(id, product) {
+    try {
+      const sale = await this.model.findByPk(id);
+      if (!sale) throw new Error(`Sale with id ${id} not found`);
+      return await this.productsSalesModel.create({
+        saleId: sale.id,
+        productId: product.id,
+      });
+    } catch (error) {
+      console.log(error);
+      throw new Error(`Error adding product to sale: ${error.message}`);
+    }
+  }
+
+  async showProductsForSale(id) {
+    try {
+      const products = await this.productsSalesModel.findAll({
+        where: { saleId: id },
+        include: "Products",
+      });
+      return products;
     } catch (error) {
       throw new Error(error.message);
     }
