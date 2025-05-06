@@ -2,16 +2,14 @@
     import { cashboxesPageStore } from "@store/cashboxes/cashboxesPageStore";
     import Modal from "../Modal.svelte";
     import { createEventDispatcher } from "svelte";
+
     const dispatch = createEventDispatcher();
     const store = cashboxesPageStore;
-
     export let isOpen = false;
-
     let cashbox = {
         name: "",
         location: "",
     };
-
     let isSubmitting = false;
 
     async function createCashbox() {
