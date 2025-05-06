@@ -15,9 +15,7 @@
     class:hidden={!isOpen}
     class="fixed h-screen inset-0 z-10 overflow-y-auto flex flex-col p-10 bg-[rgba(0,0,0,0.5)] backdrop-blur-sm"
 >
-    <div
-        class="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-lg self-baseline"
-    >
+    <div class="w-auto mx-auto bg-white rounded-lg shadow-lg self-baseline">
         <div
             class="flex items-center justify-between px-4 py-3 border-b border-gray-200"
         >

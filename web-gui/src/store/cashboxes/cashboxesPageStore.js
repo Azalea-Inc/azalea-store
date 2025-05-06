@@ -15,6 +15,25 @@ class CashboxesPageStore {
     return this.store.subscribe(subscriber);
   }
 
+  async addCashbox(cashbox) {
+    try {
+      this.store.update((state) => ({ ...state, loading: true }));
+      const response = await fetch("/api/cashbox", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cashbox),
+      });
+      const { data } = await response.json();
+      this.store.update((state) => ({
+        ...state,
+        cashboxes: [...state.cashboxes, data],
+        loading: false,
+      }));
+    } catch (error) {
+      this.store.update((state) => ({ ...state, error, loading: false }));
+    }
+  }
+
   async getBoxes() {
     try {
       this.store.update((state) => ({ ...state, loading: true }));

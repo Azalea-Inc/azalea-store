@@ -20,23 +20,10 @@
         isSubmitting = true;
 
         try {
-            const response = await fetch("http://localhost:3000/api/cashbox", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(cashbox),
-            });
-
-            if (!response.ok) {
-                throw new Error("Error al agregar la caja");
-            }
-
+            await store.addCashbox(cashbox);
             cashbox.name = "";
             cashbox.location = "";
-
             store.getBoxes();
-
             dispatch("close");
         } catch (error) {
             console.error(error);
@@ -47,7 +34,10 @@
 </script>
 
 <Modal {isOpen} on:close={() => dispatch("close")} title="Nueva Caja">
-    <form on:submit|preventDefault={createCashbox} class="form-container">
+    <form
+        on:submit|preventDefault={createCashbox}
+        class="form-container w-md mx-auto"
+    >
         <div class="form-group">
             <label for="name" class="form-label">Nombre</label>
             <input
@@ -73,9 +63,11 @@
             />
         </div>
 
-        <button class="btn btn-primary" disabled={isSubmitting}>
-            {isSubmitting ? "Guardando..." : "Guardar"}
-        </button>
+        <div class="flex justify-end pt-4">
+            <button class="btn btn-primary" disabled={isSubmitting}>
+                {isSubmitting ? "Guardando..." : "Guardar"}
+            </button>
+        </div>
     </form>
 </Modal>
 
@@ -116,9 +108,8 @@
     }
 
     .btn {
-        padding: 5px 16px;
+        padding: 0.5rem 16px;
         font-size: 14px;
-        font-weight: 600;
         line-height: 20px;
         white-space: nowrap;
         border-radius: 6px;

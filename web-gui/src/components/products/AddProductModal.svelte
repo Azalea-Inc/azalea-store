@@ -63,7 +63,10 @@
 </script>
 
 <Modal {isOpen} on:close={() => dispatch("close")} title="Nuevo Producto">
-    <form on:submit|preventDefault={addProduct} class="flex flex-col gap-4">
+    <form
+        on:submit|preventDefault={addProduct}
+        class="flex flex-col gap-4 w-lg"
+    >
         <div class="form-group">
             <label for="code" class="form-label">Código</label>
             <input
