@@ -1,7 +1,10 @@
 <script>
+    import { cashboxesPageStore } from "@store/cashboxes/cashboxesPageStore";
     import Modal from "../Modal.svelte";
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
+    const store = cashboxesPageStore;
+
     export let isOpen = false;
 
     let cashbox = {
@@ -33,6 +36,8 @@
 
             cashbox.name = "";
             cashbox.location = "";
+
+            store.getBoxes();
 
             dispatch("close");
         } catch (error) {

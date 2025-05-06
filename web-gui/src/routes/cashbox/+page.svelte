@@ -1,20 +1,17 @@
 <script>
     import { onMount } from "svelte";
+    import { cashboxesPageStore } from "@store/cashboxes/cashboxesPageStore";
     import Breadcrumb from "@components/Breadcrumb.svelte";
-
-    const host = "http://localhost:3000/api";
     import AddBoxModal from "@components/cashbox/AddBoxModal.svelte";
+    import Spinner from "@components/Spinner.svelte";
+
+    const store = cashboxesPageStore;
 
     let isOpen = false;
-    let boxes = [];
 
-    async function getBoxes() {
-        const response = await fetch(`${host}/cashbox`);
-        const { data } = await response.json();
-        boxes = data;
-    }
-
-    onMount(getBoxes);
+    onMount(async () => {
+        await store.getBoxes();
+    });
 </script>
 
 <AddBoxModal {isOpen} on:close={() => (isOpen = false)} />
@@ -45,8 +42,12 @@
             </div>
         </div>
 
+        {#if $store.loading}
+            <Spinner />
+        {/if}
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {#each boxes as box}
+            {#each $store.cashboxes as box}
                 <div
                     class="bg-white border border-gray-200 rounded-md p-4 hover:border-gray-300"
                 >
