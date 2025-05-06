@@ -6,6 +6,7 @@ import {
   Box,
   Settings,
   NotebookPen,
+  User,
 } from "lucide-svelte";
 
 const initialState = {
@@ -32,6 +33,12 @@ const initialState = {
       title: "Cajas",
       href: "/cashbox",
       icon: Box,
+      notifications: 0,
+    },
+    {
+      title: "Usuarios",
+      href: "/users",
+      icon: User,
       notifications: 0,
     },
   ],
