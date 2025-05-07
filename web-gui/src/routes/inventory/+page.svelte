@@ -33,9 +33,9 @@
     });
 </script>
 
-<div class="flex-1 flex flex-col h-screen bg-gray-50">
+<div class="flex-1 flex flex-col h-screen bg-gray-100">
     <header
-        class="flex justify-between items-center p-4 bg-white border-b border-gray-200 sticky top-0 z-10"
+        class="flex justify-between items-center p-4 bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm"
     >
         <h1 class="text-2xl font-bold text-gray-900">Registro de Inventario</h1>
         <div class="flex items-center gap-4">
@@ -44,7 +44,7 @@
                     type="text"
                     bind:value={searchQuery}
                     placeholder="Buscar producto..."
-                    class="pl-8 pr-4 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                    class="pl-8 pr-4 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 shadow-sm"
                 />
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@
                 </svg>
             </div>
             <button
-                class="px-3 py-1.5 bg-green-600 text-white text-sm rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors flex items-center gap-1"
+                class="px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors flex items-center gap-1 shadow-sm"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -83,12 +83,12 @@
         </div>
     </header>
 
-    <main class="p-4 overflow-auto flex-1">
+    <main class="p-6 overflow-auto flex-1">
         {#if loading}
             <Spinner></Spinner>
         {:else if filteredInventory.length === 0}
             <div
-                class="flex flex-col items-center justify-center h-64 text-gray-600 bg-white border border-gray-200 rounded-md shadow-sm p-6"
+                class="flex flex-col items-center justify-center h-64 text-gray-600 bg-white border border-gray-200 rounded-lg shadow-sm p-8"
                 in:fade
             >
                 <svg
@@ -118,7 +118,7 @@
             </div>
         {:else}
             <div
-                class="bg-white border border-gray-200 rounded-md shadow-sm overflow-hidden"
+                class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden"
             >
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
@@ -177,11 +177,11 @@
                                         delay: i * 30,
                                         duration: 200,
                                     }}
-                                    class="hover:bg-gray-50"
+                                    class="hover:bg-gray-50 border-l-2 border-transparent hover:border-l-blue-500 transition-all duration-200"
                                 >
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div
-                                            class="text-sm font-medium text-gray-900"
+                                            class="text-sm font-mono text-gray-900"
                                         >
                                             {item.product.code}
                                         </div>
@@ -221,12 +221,12 @@
                                         </div>
                                     </td>
                                     <td
-                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                                     >
                                         ${item.product.price.toFixed(2)}
                                     </td>
                                     <td
-                                        class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                                     >
                                         ${item.price.toFixed(2)}
                                     </td>
@@ -235,7 +235,7 @@
                                     >
                                         <div class="flex justify-end space-x-3">
                                             <button
-                                                class="text-blue-600 hover:text-blue-900 flex items-center gap-1"
+                                                class="text-blue-600 hover:text-blue-900 flex items-center gap-1 hover:bg-blue-50 px-2 py-1 rounded-md transition-colors"
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -260,7 +260,7 @@
                                                 Ver
                                             </button>
                                             <button
-                                                class="text-gray-600 hover:text-gray-900 flex items-center gap-1"
+                                                class="text-gray-600 hover:text-gray-900 flex items-center gap-1 hover:bg-gray-50 px-2 py-1 rounded-md transition-colors"
                                             >
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"

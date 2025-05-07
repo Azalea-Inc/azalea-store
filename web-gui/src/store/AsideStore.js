@@ -7,6 +7,7 @@ import {
   Settings,
   NotebookPen,
   User,
+  CircleDollarSign,
 } from "lucide-svelte";
 
 const initialState = {
@@ -32,7 +33,7 @@ const initialState = {
     {
       title: "Cajas",
       href: "/cashbox",
-      icon: Box,
+      icon: CircleDollarSign,
       notifications: 0,
     },
     {

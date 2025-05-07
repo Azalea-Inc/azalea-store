@@ -25,7 +25,7 @@
         {/each}
     </div>
 
-    <div class="flex flex-col p-4 absolute bottom-10 w-full">
+    <div class="flex flex-col p-4 flex-1 justify-end w-full">
         <a href="/settings" class="menu-item flex gap-2">
             <Settings size={16} />
             <span>Configuración</span>

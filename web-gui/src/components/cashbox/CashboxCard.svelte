@@ -12,43 +12,69 @@
 </script>
 
 <div
-    class="bg-white border border-gray-200 rounded-md p-4 hover:border-gray-300"
+    class="bg-white border border-gray-200 rounded-lg p-5 shadow hover:shadow-md transition-all duration-200"
 >
-    <div class="flex items-center justify-between">
-        <h2 class="text-lg font-semibold text-gray-900">
+    <div class="flex items-center justify-between mb-3">
+        <h2 class="text-lg font-semibold text-gray-900 flex items-center">
+            <svg
+                class="w-5 h-5 mr-2 text-blue-600"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+            >
+                <path
+                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM3.5 8a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0z"
+                />
+            </svg>
             {box.name}
         </h2>
         <span
-            class="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800"
+            class="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full bg-green-100 text-green-800 border border-green-200"
         >
             Activa
         </span>
     </div>
-    <p class="mt-2 text-sm text-gray-500 flex items-center">
-        <svg class="w-4 h-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+    <p class="mt-2 text-sm text-gray-600 flex items-center">
+        <svg
+            class="w-4 h-4 mr-1.5 text-gray-500"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+        >
             <path
                 fill-rule="evenodd"
-                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                d="M11.536 3.464a5 5 0 010 7.072L8 14.07l-3.536-3.535a5 5 0 117.072-7.072v.001zm-1.06 1.06a3.5 3.5 0 00-4.95 0 3.5 3.5 0 000 4.95L8 12.01l2.475-2.475a3.5 3.5 0 000-4.95v-.01zM8 9a1 1 0 100-2 1 1 0 000 2z"
                 clip-rule="evenodd"
             />
         </svg>
         {box.location}
     </p>
-    <div class="mt-4 flex items-center justify-between">
+    <div
+        class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between"
+    >
         <a
             href={`/cashbox/${box.id}`}
-            class="text-sm font-medium text-blue-600 hover:text-blue-800"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
         >
-            Ver detalles →
+            Ver detalles
+            <svg class="ml-1.5 w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
+                <path
+                    fill-rule="evenodd"
+                    d="M8.22 2.97a.75.75 0 011.06 0l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06-1.06l2.97-2.97H3.75a.75.75 0 010-1.5h7.44L8.22 4.03a.75.75 0 010-1.06z"
+                    clip-rule="evenodd"
+                />
+            </svg>
         </a>
         <button
             on:click={handleDelete}
-            class="text-sm font-medium text-red-600 hover:text-red-800 flex items-center"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md border border-gray-300 hover:bg-gray-200 transition-colors"
         >
-            <svg class="w-4 h-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <svg
+                class="w-4 h-4 mr-1.5 text-gray-500"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+            >
                 <path
                     fill-rule="evenodd"
-                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                    d="M6.5 1.75a.25.25 0 01.25-.25h2.5a.25.25 0 01.25.25V3h-3V1.75zm4.5 0V3h2.25a.75.75 0 010 1.5H2.75a.75.75 0 010-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75zM4.496 6.675a.75.75 0 10-1.492.15l.66 6.6A1.75 1.75 0 005.405 15h5.19c.9 0 1.652-.681 1.741-1.576l.66-6.6a.75.75 0 00-1.492-.149l-.66 6.6a.25.25 0 01-.249.225h-5.19a.25.25 0 01-.249-.225l-.66-6.6z"
                     clip-rule="evenodd"
                 />
             </svg>

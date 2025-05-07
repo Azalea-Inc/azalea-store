@@ -24,6 +24,7 @@ export const translations = {
     register: "Registrarse",
     logout: "Cerrar Sesión",
     cashbox: "Cajas",
+    edit: "Editar",
   },
   en: {
     home: "Home",
