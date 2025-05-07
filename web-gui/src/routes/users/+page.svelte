@@ -11,6 +11,15 @@
     const store = usersPageStore;
 
     let isOpen = false;
+    let searchQuery = "";
+
+    $: filteredUsers = searchQuery
+        ? $store.users.filter(
+              (user) =>
+                  user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  user.email.toLowerCase().includes(searchQuery.toLowerCase()),
+          )
+        : $store.users;
 
     onMount(async () => {
         await store.getUsers();
@@ -29,18 +38,44 @@
                 </p>
             </div>
 
-            <button class="btn btn-primary" on:click={() => (isOpen = true)}>
-                <svg
-                    class="w-4 h-4 mr-1"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                >
-                    <path
-                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+            <HorizontalList>
+                <div class="flex items-center gap-2 flex-1 max-w-md relative">
+                    <input
+                        bind:value={searchQuery}
+                        type="text"
+                        placeholder="Buscar..."
+                        class="w-full bg-white pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
-                </svg>
-                Agregar Usuario
-            </button>
+                    <svg
+                        class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                    on:click={() => (isOpen = true)}
+                >
+                    <svg
+                        class="w-4 h-4 mr-1"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+                        />
+                    </svg>
+                    Agregar Usuario
+                </button>
+            </HorizontalList>
         </HorizontalList>
     </HeaderContainer>
 
@@ -48,7 +83,7 @@
         {#if $store.loading}
             <Spinner />
         {:else}
-            {#if $store.users.length == 0}
+            {#if filteredUsers.length == 0}
                 <EmptyState
                     title="No se encontraron resultados"
                     description="No hay usuarios que coincidan con los criterios de búsqueda actuales."
@@ -70,7 +105,7 @@
                 </EmptyState>
             {/if}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {#each $store.users as user}
+                {#each filteredUsers as user}
                     <UserCard
                         {user}
                         on:delete={() => store.removeUser(user.id)}

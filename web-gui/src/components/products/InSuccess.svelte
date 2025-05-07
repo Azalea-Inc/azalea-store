@@ -89,78 +89,62 @@
     </EmptyState>
 {:else}
     <div class="overflow-hidden flex flex-col box" transition={{ slide }}>
-        <div class="px-3 py-2 border-b border-gray-200">
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-2 flex-1 max-w-lg">
-                    <input
-                        type="text"
-                        bind:value={searchTerm}
-                        placeholder="Buscar productos..."
-                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                        on:keydown={(e) => e.key === "Enter" && handleSearch()}
-                    />
-                    <button on:click={handleSearch} class="btn btn-primary">
-                        Buscar
-                    </button>
-                </div>
+        <div class="flex items-center justify-between pb-4">
+            <div class="flex items-center gap-1">
+                <span class="text-xs text-gray-600">Items por página:</span>
+                <select
+                    bind:value={$state.limit}
+                    on:change={onItemsHandle}
+                    class="text-xs border border-gray-300 rounded-md px-1 py-0.5"
+                >
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                </select>
             </div>
-            <div class="flex items-center justify-between">
-                <div class="flex items-center gap-1">
-                    <span class="text-xs text-gray-600">Items por página:</span>
-                    <select
-                        bind:value={$state.limit}
-                        on:change={onItemsHandle}
-                        class="text-xs border border-gray-300 rounded-md px-1 py-0.5"
-                    >
-                        <option value={10}>10</option>
-                        <option value={20}>20</option>
-                        <option value={50}>50</option>
-                        <option value={100}>100</option>
-                    </select>
-                </div>
 
-                <div class="flex gap-0.5">
-                    <button
-                        on:click={handlePrevPage}
-                        disabled={state.page === 1}
-                        class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
-                        >Anterior</button
-                    >
-                    {#if $state.totalPages <= 6}
-                        {#each Array($state.totalPages) as _, i}
-                            <button
-                                on:click={() => handlePageClick(i + 1)}
-                                class="px-2 py-1 {$state.page === i + 1
-                                    ? 'bg-[#0969da] text-white border-[#0969da]'
-                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-xs"
-                                >{i + 1}</button
-                            >
-                        {/each}
-                    {:else}
-                        {#each [1, 2, 3, 4, 5, $state.totalPages].filter((p, i, arr) => i === arr.indexOf(p) && p <= $state.totalPages && (p <= 3 || p >= $state.totalPages || p === $state.page || p === $state.page - 1 || p === $state.page + 1)) as page}
-                            <button
-                                on:click={() => handlePageClick(page)}
-                                class="px-2 py-1 {$state.page === page
-                                    ? 'bg-[#0969da] text-white border-[#0969da]'
-                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-xs"
-                                >{page}</button
-                            >
-                        {/each}
-                    {/if}
-                    <button
-                        on:click={handleNextPage}
-                        disabled={$state.page === $state.totalPages}
-                        class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
-                        >Siguiente</button
-                    >
-                </div>
-                <span class="text-xs text-gray-600"
-                    >Mostrando {($state.page - 1) * $state.limit + 1}-{Math.min(
-                        $state.page * $state.limit,
-                        $state.total,
-                    )} de {$state.total} resultados</span
+            <div class="flex gap-2">
+                <button
+                    on:click={handlePrevPage}
+                    disabled={state.page === 1}
+                    class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                    >Anterior</button
+                >
+                {#if $state.totalPages <= 6}
+                    {#each Array($state.totalPages) as _, i}
+                        <button
+                            on:click={() => handlePageClick(i + 1)}
+                            class="px-2 py-1 {$state.page === i + 1
+                                ? 'bg-[#0969da] text-white border-[#0969da]'
+                                : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-xs"
+                            >{i + 1}</button
+                        >
+                    {/each}
+                {:else}
+                    {#each [1, 2, 3, 4, 5, $state.totalPages].filter((p, i, arr) => i === arr.indexOf(p) && p <= $state.totalPages && (p <= 3 || p >= $state.totalPages || p === $state.page || p === $state.page - 1 || p === $state.page + 1)) as page}
+                        <button
+                            on:click={() => handlePageClick(page)}
+                            class="px-2 py-1 {$state.page === page
+                                ? 'bg-[#0969da] text-white border-[#0969da]'
+                                : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-xs"
+                            >{page}</button
+                        >
+                    {/each}
+                {/if}
+                <button
+                    on:click={handleNextPage}
+                    disabled={$state.page === $state.totalPages}
+                    class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                    >Siguiente</button
                 >
             </div>
+            <span class="text-xs text-gray-600"
+                >Mostrando {($state.page - 1) * $state.limit + 1}-{Math.min(
+                    $state.page * $state.limit,
+                    $state.total,
+                )} de {$state.total} resultados</span
+            >
         </div>
         <div class="overflow-y-auto">
             <table class="w-full text-xs text-left text-gray-700">
