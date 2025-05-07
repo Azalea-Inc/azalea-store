@@ -44,6 +44,19 @@ class UsersPageStore {
       this.setState({ error, loading: false });
     }
   }
+
+  async removeUser(id) {
+    try {
+      this.setState({ loading: true });
+      await fetch(`/api/users/${id}`, { method: "DELETE" });
+      this.store.update((state) => ({
+        users: state.users.filter((user) => user.id !== id),
+        loading: false,
+      }));
+    } catch (error) {
+      this.setState({ error, loading: false });
+    }
+  }
 }
 
 export const usersPageStore = new UsersPageStore();

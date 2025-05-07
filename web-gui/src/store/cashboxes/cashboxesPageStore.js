@@ -48,6 +48,23 @@ class CashboxesPageStore {
       this.store.update((state) => ({ ...state, error, loading: false }));
     }
   }
+
+  async removeCashbox(id) {
+    try {
+      this.store.update((state) => ({ ...state, loading: true }));
+      const response = await fetch(`/api/cashbox/${id}`, {
+        method: "DELETE",
+      });
+      const { data } = await response.json();
+      this.store.update((state) => ({
+        ...state,
+        cashboxes: state.cashboxes.filter((box) => box.id !== id),
+        loading: false,
+      }));
+    } catch (error) {
+      this.store.update((state) => ({ ...state, error, loading: false }));
+    }
+  }
 }
 
 export const cashboxesPageStore = new CashboxesPageStore();

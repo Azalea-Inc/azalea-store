@@ -40,7 +40,10 @@
             {/if}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {#each $store.users as user}
-                    <UserCard {user} />
+                    <UserCard
+                        {user}
+                        on:delete={() => store.removeUser(user.id)}
+                    />
                 {/each}
             </div>
         {/if}

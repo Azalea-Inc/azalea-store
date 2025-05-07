@@ -47,7 +47,10 @@
         {:else}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {#each $store.cashboxes as box}
-                    <CashboxCard {box} />
+                    <CashboxCard
+                        {box}
+                        on:delete={() => store.removeCashbox(box.id)}
+                    />
                 {/each}
             </div>
         {/if}
