@@ -5,6 +5,7 @@
     import AddBoxModal from "@components/cashbox/AddBoxModal.svelte";
     import Spinner from "@components/Spinner.svelte";
     import CashboxCard from "@components/cashbox/CashboxCard.svelte";
+    import EmptyState from "@components/EmptyState.svelte";
     import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
@@ -44,8 +45,6 @@
 <AddBoxModal {isOpen} on:close={() => (isOpen = false)} />
 <div class="min-h-screen bg-gray-50 flex flex-col flex-1">
     <div class="p-4 px-8">
-        <Breadcrumb />
-
         <div class="border-b border-gray-200 pb-4 mb-4">
             <div class="flex items-center justify-between">
                 <h1 class="text-2xl font-semibold text-gray-900">
@@ -73,7 +72,7 @@
                         </svg>
                     </div>
                     <button
-                        class="btn btn-primary inline-flex items-center"
+                        class="btn btn-primary"
                         on:click={() => (isOpen = true)}
                     >
                         <svg
@@ -94,47 +93,26 @@
         {#if $store.loading || isLoading}
             <Spinner />
         {:else if filteredBoxes.length === 0}
-            <div class="text-center py-10">
-                <svg
-                    class="mx-auto h-12 w-12 text-gray-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+            <EmptyState
+                title="No se encontaron resultados"
+                description="No hay registros que coincidan con los criterios de búsqueda actuales."
+            >
+                <button
+                    class="btn btn-primary"
+                    on:click={() => (isOpen = true)}
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 2a10 10 0 110 20 10 10 0 010-20z"
-                    />
-                </svg>
-                <h3 class="mt-2 text-sm font-medium text-gray-900">
-                    No hay cajas disponibles
-                </h3>
-                <p class="mt-1 text-sm text-gray-500">
-                    {searchTerm
-                        ? "No se encontraron resultados para tu búsqueda."
-                        : "Comienza agregando una nueva caja registradora."}
-                </p>
-                <div class="mt-6">
-                    <button
-                        type="button"
-                        class="btn btn-primary inline-flex items-center"
-                        on:click={() => (isOpen = true)}
+                    <svg
+                        class="w-4 h-4 mr-1"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
                     >
-                        <svg
-                            class="w-4 h-4 mr-1"
-                            viewBox="0 0 16 16"
-                            fill="currentColor"
-                        >
-                            <path
-                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                            />
-                        </svg>
-                        Agregar caja
-                    </button>
-                </div>
-            </div>
+                        <path
+                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+                        />
+                    </svg>
+                    Agregar caja
+                </button>
+            </EmptyState>
         {:else}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {#each filteredBoxes as box (box.id)}

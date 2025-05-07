@@ -1,3 +1,8 @@
+<script>
+    export let title = "Empty Files";
+    export let description = "Dont Files";
+</script>
+
 <div class="empty-state">
     <svg
         class="empty-state-icon"
@@ -14,10 +19,11 @@
         <path d="M9 9h.01"></path>
         <path d="M15 9h.01"></path>
     </svg>
-    <h3 class="empty-state-title">No se encontraron resultados</h3>
+    <h3 class="empty-state-title">{title}</h3>
     <p class="empty-state-description">
-        No hay usuarios que coincidan con los criterios de búsqueda actuales.
+        {description}
     </p>
+    <slot></slot>
 </div>
 
 <style>
@@ -50,5 +56,6 @@
         font-size: 0.875rem;
         color: #57606a;
         max-width: 400px;
+        padding-bottom: 1rem;
     }
 </style>
