@@ -106,33 +106,4 @@
         outline: none;
         box-shadow: inset 0 0 0 1px #0969da;
     }
-
-    .btn {
-        padding: 0.5rem 16px;
-        font-size: 14px;
-        line-height: 20px;
-        white-space: nowrap;
-        border-radius: 6px;
-        border: 1px solid;
-        appearance: none;
-        cursor: pointer;
-        transition: 80ms cubic-bezier(0.33, 1, 0.68, 1);
-    }
-
-    .btn-primary {
-        color: #ffffff;
-        background-color: #2da44e;
-        border-color: rgba(27, 31, 36, 0.15);
-    }
-
-    .btn-primary:hover {
-        background-color: #2c974b;
-    }
-
-    .btn:disabled {
-        color: rgba(255, 255, 255, 0.8);
-        background-color: #94d3a2;
-        border-color: rgba(27, 31, 36, 0.1);
-        cursor: not-allowed;
-    }
 </style>

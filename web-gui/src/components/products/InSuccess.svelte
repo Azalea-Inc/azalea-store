@@ -1,6 +1,7 @@
 <script>
     import { slide } from "svelte/transition";
     import Spinner from "@components/Spinner.svelte";
+    import EmptyState from "@components/EmptyState.svelte";
     import { productsPageStore } from "@store/pages/ProductsPageStore";
     import { onMount, onDestroy } from "svelte";
 
@@ -80,35 +81,14 @@
 {#if $state.inLoading}
     <Spinner />
 {:else if !$state.products.length}
-    <div
-        class="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-md border border-gray-200"
+    <EmptyState
+        title="No hay productos disponibles"
+        description="Aún no se han agregado productos"
     >
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-12 w-12 text-gray-400 mb-3"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-        >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-            />
-        </svg>
-        <p class="text-base font-medium text-center text-gray-900">
-            No hay productos disponibles
-        </p>
-        <p class="text-xs text-center mt-1 text-gray-600">
-            Agrega un nuevo producto utilizando el botón "Agregar"
-        </p>
-    </div>
+        <button class="btn btn-primary">Agregar producto</button>
+    </EmptyState>
 {:else}
-    <div
-        class="overflow-hidden flex flex-col border border-gray-200 rounded-md bg-white"
-        transition={{ slide }}
-    >
+    <div class="overflow-hidden flex flex-col box" transition={{ slide }}>
         <div class="px-3 py-2 border-b border-gray-200">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-2 flex-1 max-w-lg">
@@ -119,10 +99,7 @@
                         class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                         on:keydown={(e) => e.key === "Enter" && handleSearch()}
                     />
-                    <button
-                        on:click={handleSearch}
-                        class="px-3 py-2 text-sm text-white bg-[#2da44e] rounded-md hover:bg-[#2c974b] border border-[#288b46]"
-                    >
+                    <button on:click={handleSearch} class="btn btn-primary">
                         Buscar
                     </button>
                 </div>
@@ -281,54 +258,6 @@
 {/if}
 
 <style>
-    .product-card {
-        padding: 0.75rem;
-        border-radius: 6px;
-        box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04);
-        background-color: #fff;
-        transition: background-color 0.2s ease;
-        cursor: pointer;
-        &:hover {
-            background-color: #f6f8fa;
-        }
-
-        font-size: 0.75rem;
-        color: #24292f;
-        border: 1px solid #d0d7de;
-    }
-
-    .btn {
-        padding: 4px 12px;
-        border-radius: 5px;
-        font-size: 12px;
-        font-weight: 500;
-        color: #fff;
-        background-color: #2da44e;
-        border: 1px solid rgba(27, 31, 36, 0.15);
-        box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1);
-        transition: all 0.2s ease;
-        &:hover {
-            background-color: #2c974b;
-        }
-    }
-
-    .btn-primary {
-        background-color: #2da44e;
-        &:hover {
-            background-color: #2c974b;
-        }
-    }
-
-    .btn-secondary {
-        background-color: #f6f8fa;
-        color: #24292f;
-        border: 1px solid rgba(27, 31, 36, 0.15);
-        &:hover {
-            background-color: #f3f4f6;
-            border-color: rgba(27, 31, 36, 0.15);
-        }
-    }
-
     th {
         font-weight: 600;
         font-size: 12px;

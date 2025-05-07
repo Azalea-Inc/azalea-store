@@ -4,6 +4,9 @@
     import EmptyState from "@components/EmptyState.svelte";
     import UserCard from "@components/users/UserCard.svelte";
     import AddUserModal from "@components/users/AddUserModal.svelte";
+    import Container from "@components/Container.svelte";
+    import HeaderContainer from "@components/HeaderContainer.svelte";
+    import HorizontalList from "@components/HorizontalList.svelte";
     import { usersPageStore } from "@store/users/UsersPageStore";
     const store = usersPageStore;
 
@@ -15,9 +18,9 @@
 </script>
 
 <AddUserModal {isOpen} on:close={() => (isOpen = false)} />
-<div class="flex-1 p-6 bg-gray-50">
-    <header class="flex flex-col border-b border-gray-200 pb-4">
-        <div class="flex justify-between items-center">
+<Container>
+    <HeaderContainer>
+        <HorizontalList>
             <div class="flex flex-col">
                 <h1 class="text-primary">Usuarios</h1>
 
@@ -25,22 +28,43 @@
                     Administra los usuarios de tu plataforma.
                 </p>
             </div>
-            <button class="btn btn-primary" on:click={() => (isOpen = true)}>
-                <svg
-                    class="w-4 h-4 mr-1"
-                    viewBox="0 0 16 16"
-                    fill="currentColor"
-                >
-                    <path
-                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                    />
-                </svg>
-                Agregar Usuario
-            </button>
-        </div>
-    </header>
 
-    <main class="mt-4">
+            <HorizontalList>
+                <button
+                    class="btn btn-primary"
+                    on:click={() => (isOpen = true)}
+                >
+                    <svg
+                        class="w-4 h-4 mr-1"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+                        />
+                    </svg>
+                    Agregar Usuario
+                </button>
+                <button
+                    class="btn btn-primary"
+                    on:click={() => (isOpen = true)}
+                >
+                    <svg
+                        class="w-4 h-4 mr-1"
+                        viewBox="0 0 16 16"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+                        />
+                    </svg>
+                    Agregar Usuario
+                </button>
+            </HorizontalList>
+        </HorizontalList>
+    </HeaderContainer>
+
+    <main class="p-6">
         {#if $store.loading}
             <Spinner />
         {:else}
@@ -75,7 +99,7 @@
             </div>
         {/if}
     </main>
-</div>
+</Container>
 
 <style>
     .text-primary {

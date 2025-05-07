@@ -11,9 +11,7 @@
     export let user;
 </script>
 
-<div
-    class="user-card border border-gray-300 rounded-lg p-4 my-3 hover:border-gray-400 transition-all duration-200 bg-white shadow-sm"
->
+<div class="card">
     <div class="flex items-center mb-4">
         <div
             class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center mr-3 text-white"
@@ -35,8 +33,7 @@
             Administrador
         </div>
         <div class="flex space-x-2 mt-3">
-            <button
-                class="px-3 py-1.5 text-xs font-medium bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 text-gray-700 transition-colors flex-1 flex items-center justify-center"
+            <button class="btn btn-primary"
                 ><svg
                     class="w-3 h-3 mr-1"
                     fill="currentColor"
@@ -47,9 +44,7 @@
                     ></path></svg
                 >Editar</button
             >
-            <button
-                on:click={handleDelete}
-                class="px-3 py-1.5 text-xs font-medium bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 text-gray-700 transition-colors flex-1 flex items-center justify-center"
+            <button on:click={handleDelete} class="btn"
                 ><svg
                     class="w-3 h-3 mr-1"
                     fill="currentColor"

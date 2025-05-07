@@ -163,7 +163,7 @@
 
         <button
             type="submit"
-            class="btn btn-primary my-4 self-end"
+            class="btn btn-primary self-end"
             disabled={isSubmitted}
         >
             {isSubmitted ? "Guardando..." : "Guardar"}
@@ -200,31 +200,5 @@
         border-color: #0969da;
         outline: none;
         box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.3);
-    }
-
-    .btn {
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        font-size: 0.875rem;
-        font-weight: 500;
-        border: 1px solid rgba(27, 31, 36, 0.15);
-        box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04);
-        transition: all 0.2s ease;
-        &:hover {
-            background-color: #f3f4f6;
-        }
-        &:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-    }
-
-    .btn-primary {
-        color: #ffffff;
-        background-color: #2da44e;
-        border-color: rgba(27, 31, 36, 0.15);
-        &:hover:not(:disabled) {
-            background-color: #2c974b;
-        }
     }
 </style>

@@ -11,9 +11,7 @@
     }
 </script>
 
-<div
-    class="bg-white border border-gray-200 rounded-lg p-5 shadow hover:shadow-md transition-all duration-200"
->
+<div class="card">
     <div class="flex items-center justify-between mb-3">
         <h2 class="text-lg font-semibold text-gray-900 flex items-center">
             <svg
@@ -50,10 +48,7 @@
     <div
         class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between"
     >
-        <a
-            href={`/cashbox/${box.id}`}
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
-        >
+        <a href={`/cashbox/${box.id}`} class="btn btn-primary">
             Ver detalles
             <svg class="ml-1.5 w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
                 <path
@@ -63,10 +58,7 @@
                 />
             </svg>
         </a>
-        <button
-            on:click={handleDelete}
-            class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md border border-gray-300 hover:bg-gray-200 transition-colors"
-        >
+        <button on:click={handleDelete} class="btn">
             <svg
                 class="w-4 h-4 mr-1.5 text-gray-500"
                 viewBox="0 0 16 16"

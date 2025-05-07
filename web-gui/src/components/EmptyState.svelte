@@ -37,7 +37,6 @@
         background-color: #f6f8fa;
         border: 1px solid #d0d7de;
         border-radius: 6px;
-        margin: 1.5rem 0;
     }
     .empty-state-icon {
         width: 48px;
