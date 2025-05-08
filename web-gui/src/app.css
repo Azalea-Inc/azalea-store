@@ -19,6 +19,64 @@ body {
     @apply bg-green-500 text-white hover:bg-green-600 border-transparent;
 }
 
+.text-primary {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f172a;
+    letter-spacing: 0.01em;
+}
+
+.text-secondary {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #1e293b;
+    letter-spacing: 0.01em;
+}
+
+.text-tertiary {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #334155;
+    letter-spacing: 0.01em;
+}
+
+.text-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f1f50;
+    letter-spacing: 0.02em;
+}
+
+.text-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0f1f50;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+}
+
+.text-small {
+    font-size: 0.75rem;
+    color: #1e293b;
+    letter-spacing: 0.01em;
+}
+
+.text-description {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #4b5563;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+}
+
+.text-generic {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #1f2937;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+}
+
 .btn {
     display: inline-flex;
     align-items: center;

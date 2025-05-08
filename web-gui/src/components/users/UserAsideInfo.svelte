@@ -2,7 +2,7 @@
     import { userStore } from "@store/UserStore";
 </script>
 
-<div class="p-4 border-b border-gray-200 bg-gray-50">
+<div class="p-4">
     <div class="flex items-center">
         {#if $userStore.avatar}
             <img
