@@ -18,7 +18,7 @@
             <div class="flex flex-col">
                 <h1 class="text-2xl font-semibold text-gray-900">Productos</h1>
                 <p class="text-sm text-gray-600 mt-1">
-                    Administra los usuarios de tu plataforma.
+                    Administra los productos de tu plataforma.
                 </p>
             </div>
             <div class="inline-flex gap-4 items-center">
