@@ -8,6 +8,7 @@ import {
   NotebookPen,
   User,
   CircleDollarSign,
+  Users,
 } from "lucide-svelte";
 
 const initialState = {
@@ -45,7 +46,7 @@ const initialState = {
     {
       title: "Clientes",
       href: "/clients",
-      icon: Box,
+      icon: Users,
       notifications: 0,
     },
   ],
