@@ -36,7 +36,6 @@ class ClientRepository {
 
   async getByEmail(email) {
     const client = await this.model.findOne({ where: { email } });
-    if (!client) throw new Error("Client not found");
     return client;
   }
 

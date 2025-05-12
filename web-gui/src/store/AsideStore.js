@@ -42,6 +42,12 @@ const initialState = {
       icon: User,
       notifications: 0,
     },
+    {
+      title: "Clientes",
+      href: "/clients",
+      icon: Box,
+      notifications: 0,
+    },
   ],
 };
 

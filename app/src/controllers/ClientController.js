@@ -20,7 +20,9 @@ class ClientController {
   }
 
   async getClientById(id) {
-    return await this.repository.getById(id);
+    const client = await this.repository.getById(id);
+    if (!client) throw new Error("Cliente no encontrado");
+    return client;
   }
 
   async getClientByEmail(email) {
