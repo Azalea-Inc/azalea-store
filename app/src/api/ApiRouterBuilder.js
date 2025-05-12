@@ -4,6 +4,7 @@ const UserRequest = require("./UserRequest");
 const CashBoxRequest = require("./cashBox/CashBoxRequest");
 const SaleRequest = require("./sales/SaleRequest");
 const RegistryRequest = require("./RegistryRequest");
+const ClientRequest = require("./ClientRequest");
 
 class ApiRouterBuilder {
   constructor(router) {
@@ -17,6 +18,7 @@ class ApiRouterBuilder {
     new CashBoxRequest().setupRoutes(this.router);
     new SaleRequest().setupRoutes(this.router);
     new RegistryRequest().setupRoutes(this.router);
+    new ClientRequest().setupRoutes(this.router);
   }
 }
 
