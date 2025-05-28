@@ -45,9 +45,7 @@
         </svg>
         {box.location}
     </p>
-    <div
-        class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between"
-    >
+    <div class="mt-5 pt-4 border-t border-gray-100 flex items-center space-x-2">
         <a href={`/cashbox/${box.id}`} class="btn btn-primary">
             Ver detalles
             <svg class="ml-1.5 w-4 h-4" viewBox="0 0 16 16" fill="currentColor">
