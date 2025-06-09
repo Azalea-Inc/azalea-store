@@ -1,4 +1,5 @@
 const ProductEntity = require("../entities/ProductEntity");
+const InventoryEntity = require("../entities/InventoryEntity");
 
 class ProductRepository {
   constructor() {
@@ -30,6 +31,7 @@ class ProductRepository {
         limit,
         offset,
         order: [["createdAt", "DESC"]],
+        include: ["inventory"],
       });
     } catch (error) {
       console.error("Error getting all products:", error);

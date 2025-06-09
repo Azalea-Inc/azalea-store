@@ -21,12 +21,18 @@ const ProductEntity = sequelize.define("Product", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  price: {
+  costPrice: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
   description: {
     type: DataTypes.TEXT,
+  },
+  productType: DataTypes.ENUM("unit", "bulk", "kit"),
+  unitOfMeasure: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: "piece",
   },
 });
 

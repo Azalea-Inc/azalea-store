@@ -15,7 +15,7 @@ class ProductController {
     if (data.hasInventory) {
       const inventory = Inventory.build({
         productId: product.id,
-        price: data.salePrice,
+        salePrice: data.salePrice,
         ...data,
       });
       return await this.#repository.addProductAndInventory(product, inventory);
