@@ -1,7 +1,5 @@
-<div
-    class="box self-baseline w-sm rounded-lg border border-gray-300 bg-white shadow-md"
->
-    <div class="bg-gray-100 p-3 rounded-t-lg border-b border-gray-200">
+<div class="self-baseline w-sm">
+    <div class="px-3 py-3 border rounded-lg bg-white border-gray-200">
         <div class="flex justify-between items-center text-sm text-gray-600">
             <div class="flex items-center">
                 <svg
@@ -39,7 +37,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col p-2 space-y-1">
+    <div class="flex flex-col py-2 space-y-1">
         <button
             class="flex items-center justify-between rounded-md px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors duration-200 border border-transparent hover:border-gray-300"
         >

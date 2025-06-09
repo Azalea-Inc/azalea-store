@@ -3,6 +3,7 @@
     import { page } from "$app/stores";
     import { asideStore } from "@store/AsideStore";
     import { Settings } from "lucide-svelte";
+    import { userStore } from "@store/UserStore";
 </script>
 
 <aside class="min-h-screen aside border-r flex flex-col overflow-hidden">
@@ -30,12 +31,37 @@
             <Settings size={16} />
             <span>Configuración</span>
         </a>
+
+        {#if $userStore.isLogged}
+            <a
+                href="/logout"
+                class="menu-item flex gap-2 mt-2 border border-gray-200 pt-2 text-red-600 hover:text-red-700"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-log-out"
+                >
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Cerrar sesión</span>
+            </a>
+        {/if}
     </div>
 </aside>
 
 <style>
     .aside {
-        min-width: 200px;
+        min-width: 160px;
         position: sticky;
         top: 0;
         z-index: 10;
@@ -54,7 +80,7 @@
         color: #24292f;
         transition: all 0.1s ease;
         border-radius: 0.375rem;
-        font-size: 0.875rem;
+        font-size: 0.9rem;
         font-weight: 400;
         display: flex;
         align-items: center;

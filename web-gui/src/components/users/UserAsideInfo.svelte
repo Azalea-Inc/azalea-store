@@ -2,7 +2,7 @@
     import { userStore } from "@store/UserStore";
 </script>
 
-<div class="p-4">
+<div class="p-4 pb-0">
     <div class="flex items-center">
         {#if $userStore.avatar}
             <img
@@ -39,7 +39,7 @@
             </svg>
         {/if}
         <div>
-            <h2 class="text-lg font-semibold text-gray-900">
+            <h2 class="text-[0.875rem] font-semibold text-gray-900">
                 {$userStore.name}
             </h2>
             <a

@@ -9,6 +9,7 @@
     import Container from "@components/Container.svelte";
     import HeaderContainer from "@components/HeaderContainer.svelte";
     import HorizontalList from "@components/HorizontalList.svelte";
+    import Button from "@components/Button.svelte";
     import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
@@ -23,7 +24,6 @@
             await store.getBoxes();
             dispatch("logEvent", { type: "load", success: true });
         } catch (error) {
-            console.error("Error al cargar cajas:", error);
             dispatch("logEvent", {
                 type: "load",
                 success: false,
@@ -50,19 +50,16 @@
     <HeaderContainer>
         <HorizontalList>
             <div class="flex flex-col">
-                <h1 class="text-2xl font-semibold text-gray-900">
+                <h1 class="text-xl font-semibold text-gray-800">
                     Cajas registradoras
                 </h1>
-                <p class="text-sm text-gray-600 mt-1 max-w-md">
-                    Administra todas tus cajas registradoras
-                </p>
             </div>
-            <HorizontalList>
+            <HorizontalList align="center" gap="2">
                 <div class="flex items-center gap-2 flex-1 max-w-md relative">
                     <input
                         type="text"
                         placeholder="Buscar..."
-                        class="w-full bg-white pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                        class="w-full bg-white pl-10 pr-3 py-[0.3rem] text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                         bind:value={searchTerm}
                     />
                     <svg
@@ -78,26 +75,34 @@
                         />
                     </svg>
                 </div>
-                <button
-                    class="btn btn-primary"
-                    on:click={() => (isOpen = true)}
+                <Button
+                    buttonType="primary"
+                    showTooltip={true}
+                    tooltipText="Agregar producto"
+                    tooltipAlign="right"
+                    onClick={() => {
+                        isOpen = true;
+                    }}
                 >
                     <svg
-                        class="w-4 h-4 mr-1"
-                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4"
+                        viewBox="0 0 20 20"
                         fill="currentColor"
+                        aria-label="Agregar producto"
                     >
                         <path
-                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+                            fill-rule="evenodd"
+                            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                            clip-rule="evenodd"
                         />
                     </svg>
-                    Agregar caja
-                </button>
+                </Button>
             </HorizontalList>
         </HorizontalList>
     </HeaderContainer>
 
-    <main class="p-6">
+    <main class="px-6 pb-4">
         {#if $store.loading || isLoading}
             <Spinner />
         {:else if filteredBoxes.length === 0}

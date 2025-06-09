@@ -3,7 +3,7 @@ const { REAL } = require("sequelize");
 class CashBoxRepository {
   constructor() {
     this.model = require("../entities/CashBoxEntity");
-    this.modelRegistry = require("../entities/CashBoxRegistryEntity");
+    this.modelTurn = require("../entities/CashBoxRegistryEntity");
     this.modelMovement = require("../entities/CashBoxMovementEntity");
   }
 
@@ -50,66 +50,66 @@ class CashBoxRepository {
     await cashBox.destroy();
   }
 
-  async openCashBox(cashBoxRegistry) {
-    return await this.modelRegistry.create(cashBoxRegistry);
+  async openTurn(turn) {
+    return await this.modelTurn.create(turn);
   }
 
-  async closeCashBox(id, closeAmount) {
-    const cashBoxRegistry = await this.modelRegistry.findByPk(id);
-    if (!cashBoxRegistry) throw new Error("Cash box registry not found");
+  async closeTurn(id, closeAmount) {
+    const openTurn = await this.modelTurn.findByPk(id);
+    if (!openTurn) throw new Error("Open turn not found");
 
-    cashBoxRegistry.closeAmount = closeAmount;
-    cashBoxRegistry.closeDate = new Date();
-    await cashBoxRegistry.save();
+    openTurn.closeAmount = closeAmount;
+    openTurn.closeDate = new Date();
+    await openTurn.save();
   }
 
-  async showCashBoxRegistries(id) {
+  async showCashBoxTurns(id) {
     try {
       const cashBox = await this.model.findByPk(id);
       if (!cashBox) throw new Error("Cash box not found");
       return await cashBox.getRegistries();
     } catch (error) {
-      throw new Error("Failed to get cash box registry");
+      throw new Error("Failed to get cash box turns");
     }
   }
 
-  async showRegistries() {
+  async showTurns() {
     try {
-      return await this.modelRegistry.findAll({
+      return await this.modelTurn.findAll({
         include: "cashBox",
       });
     } catch (error) {
-      throw new Error("Failed to get registries");
+      throw new Error("Failed to get turns");
     }
   }
 
-  async showRegistry(id) {
+  async showTurn(id) {
     try {
-      const registry = await this.modelRegistry.findByPk(id, {
+      const turn = await this.modelTurn.findByPk(id, {
         include: "cashBox",
       });
-      if (!registry) throw new Error("Registry not found");
-      return registry;
+      if (!turn) throw new Error("Turn not found");
+      return turn;
     } catch (error) {
-      throw new Error("Failed to get registry");
+      throw new Error("Failed to get turn");
     }
   }
 
   async createMovement(id, movement) {
     try {
-      const registry = await this.modelRegistry.findByPk(id);
-      if (!registry) throw new Error("Cash box not found");
-      return await registry.createMovement(movement);
+      const turn = await this.modelTurn.findByPk(id);
+      if (!turn) throw new Error("Turn not found");
+      return await turn.createMovement(movement);
     } catch (error) {
       throw new Error("Failed to create movement");
     }
   }
 
-  async showMovementsByRegistry(id) {
+  async showMovementsByTurn(id) {
     try {
-      const registry = await this.modelRegistry.findByPk(id);
-      if (!registry) throw new Error("Registry not found");
-      return await registry.getMovements();
+      const turn = await this.modelTurn.findByPk(id);
+      if (!turn) throw new Error("Turn not found");
+      return await turn.getMovements();
     } catch (error) {
       throw new Error("Failed to get movements");
     }

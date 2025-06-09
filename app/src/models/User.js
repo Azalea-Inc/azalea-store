@@ -45,6 +45,10 @@ class User {
     this.encryptedPassword(newPassword);
   }
 
+  comparePassword(password) {
+    return this.password === this.#generateHash(password);
+  }
+
   setPassword(password) {
     this.password = password;
   }

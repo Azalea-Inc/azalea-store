@@ -81,15 +81,164 @@
 {#if $state.inLoading}
     <Spinner />
 {:else if !$state.products.length}
-    <EmptyState
-        title="No hay productos disponibles"
-        description="Aún no se han agregado productos"
-    >
-        <button class="btn btn-primary">Agregar producto</button>
-    </EmptyState>
+    <div class="px-6 pb-4">
+        <EmptyState
+            title="No hay productos disponibles"
+            description="Aún no se han agregado productos"
+        >
+            <button class="btn btn-primary">Agregar producto</button>
+        </EmptyState>
+    </div>
 {:else}
-    <div class="overflow-hidden flex flex-col box" transition={{ slide }}>
-        <div class="flex items-center justify-between pb-4">
+    <div
+        class="flex flex-col flex-1 px-6 pb-4 overflow-hidden z-10"
+        transition={{ slide }}
+    >
+        <div class="overflow-y-auto box-table">
+            <table
+                class="w-full text-xs text-left text-gray-700 border-collapse"
+            >
+                <thead
+                    class="text-xs bg-gray-50 border-b border-black sticky top-0 z-20"
+                >
+                    <tr>
+                        <th
+                            scope="col"
+                            class="px-3 py-2 cursor-pointer hover:bg-gray-100 border-b"
+                            on:click={() => handleSort("name")}
+                        >
+                            Nombre {sortField === "name"
+                                ? sortDirection === "asc"
+                                    ? "↑"
+                                    : "↓"
+                                : ""}
+                        </th>
+                        <th scope="col" class="px-3 py-1.5">Descripción</th>
+                        <th
+                            scope="col"
+                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
+                            on:click={() => handleSort("price")}
+                        >
+                            Precio {sortField === "price"
+                                ? sortDirection === "asc"
+                                    ? "↑"
+                                    : "↓"
+                                : ""}
+                        </th>
+                        <th scope="col" class="px-3 py-1.5">Stock</th>
+                        <th
+                            scope="col"
+                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
+                            on:click={() => handleSort("code")}
+                        >
+                            Código {sortField === "code"
+                                ? sortDirection === "asc"
+                                    ? "↑"
+                                    : "↓"
+                                : ""}
+                        </th>
+                        <th scope="col" class="px-3 py-1.5">Estado</th>
+                        <th scope="col" class="px-3 py-1.5">Actualización</th>
+                        <th scope="col" class="px-3 py-1.5"></th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 text-xs">
+                    {#each $state.products as product}
+                        <tr class="hover:bg-white transition-colors">
+                            <td
+                                class="px-3 py-1.5 font-medium whitespace-nowrap text-gray-900"
+                            >
+                                {product.name}
+                            </td>
+                            <td class="px-3 py-1.5">
+                                {product.description}
+                            </td>
+                            <td class="px-3 py-1.5 font-medium">
+                                ${product.price}
+                            </td>
+                            <td class="px-3 py-1.5">
+                                {product.stock} unidades
+                            </td>
+                            <td class="px-3 py-1.5 font-mono">
+                                {product.code}
+                            </td>
+                            <td class="px-3 py-1.5">
+                                <span
+                                    class={`px-1.5 py-0.5 rounded-full text-2xs font-medium ${product.isActive ? STATUS.active.class : STATUS.inactive.class}`}
+                                >
+                                    {product.isActive
+                                        ? STATUS.active.text
+                                        : STATUS.inactive.text}
+                                </span>
+                            </td>
+                            <td class="px-3 py-1.5 text-gray-500">
+                                {new Date(
+                                    product.updatedAt,
+                                ).toLocaleDateString()}
+                            </td>
+                            <td class="px-3 py-1.5">
+                                <div class="relative group">
+                                    <div
+                                        class="text-gray-600 hover:text-[#0969da] text-xs"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-4 w-4"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                                            />
+                                        </svg>
+                                    </div>
+                                    <div
+                                        class="absolute right-4 w-36 bg-white shadow-lg rounded-md border border-gray-200 invisible group-hover:visible {$state.products.indexOf(
+                                            product,
+                                        ) >=
+                                        $state.products.length - 3
+                                            ? 'bottom-0'
+                                            : ''}"
+                                    >
+                                        <ul class="py-1">
+                                            <li>
+                                                <button
+                                                    class="w-full text-left px-4 py-1.5 text-xs text-gray-700 hover:bg-gray-100"
+                                                    on:click={() =>
+                                                        state.openProductDetail(
+                                                            product.id,
+                                                        )}
+                                                >
+                                                    Ver detalles
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    class="w-full text-left px-4 py-1.5 text-xs text-red-600 hover:bg-gray-100"
+                                                    on:click={() =>
+                                                        state.deleteProduct(
+                                                            product.id,
+                                                        )}
+                                                >
+                                                    Eliminar
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex items-center justify-between py-4">
             <div class="flex items-center gap-1">
                 <span class="text-xs text-gray-600">Items por página:</span>
                 <select
@@ -145,98 +294,6 @@
                     $state.total,
                 )} de {$state.total} resultados</span
             >
-        </div>
-        <div class="overflow-y-auto">
-            <table class="w-full text-xs text-left text-gray-700">
-                <thead class="text-xs bg-gray-50 border-b border-gray-200">
-                    <tr>
-                        <th
-                            scope="col"
-                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
-                            on:click={() => handleSort("name")}
-                        >
-                            Nombre {sortField === "name"
-                                ? sortDirection === "asc"
-                                    ? "↑"
-                                    : "↓"
-                                : ""}
-                        </th>
-                        <th scope="col" class="px-3 py-1.5">Descripción</th>
-                        <th
-                            scope="col"
-                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
-                            on:click={() => handleSort("price")}
-                        >
-                            Precio {sortField === "price"
-                                ? sortDirection === "asc"
-                                    ? "↑"
-                                    : "↓"
-                                : ""}
-                        </th>
-                        <th scope="col" class="px-3 py-1.5">Stock</th>
-                        <th
-                            scope="col"
-                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
-                            on:click={() => handleSort("code")}
-                        >
-                            Código {sortField === "code"
-                                ? sortDirection === "asc"
-                                    ? "↑"
-                                    : "↓"
-                                : ""}
-                        </th>
-                        <th scope="col" class="px-3 py-1.5">Estado</th>
-                        <th scope="col" class="px-3 py-1.5">Actualización</th>
-                        <th scope="col" class="px-3 py-1.5">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 text-xs">
-                    {#each $state.products as product}
-                        <tr class="bg-white hover:bg-gray-50 transition-colors">
-                            <td
-                                class="px-3 py-1.5 font-medium whitespace-nowrap text-gray-900"
-                            >
-                                {product.name}
-                            </td>
-                            <td class="px-3 py-1.5">
-                                {product.description}
-                            </td>
-                            <td class="px-3 py-1.5 font-medium">
-                                ${product.price}
-                            </td>
-                            <td class="px-3 py-1.5">
-                                {product.stock} unidades
-                            </td>
-                            <td class="px-3 py-1.5 font-mono">
-                                {product.code}
-                            </td>
-                            <td class="px-3 py-1.5">
-                                <span
-                                    class={`px-1.5 py-0.5 rounded-full text-2xs font-medium ${product.isActive ? STATUS.active.class : STATUS.inactive.class}`}
-                                >
-                                    {product.isActive
-                                        ? STATUS.active.text
-                                        : STATUS.inactive.text}
-                                </span>
-                            </td>
-                            <td class="px-3 py-1.5 text-gray-500">
-                                {new Date(
-                                    product.updatedAt,
-                                ).toLocaleDateString()}
-                            </td>
-                            <td class="px-3 py-1.5">
-                                <button
-                                    class="text-[#0969da] hover:underline text-xs"
-                                    on:click={() =>
-                                        state.openProductDetail(product.id)}
-                                >
-                                    Ver detalles
-                                </button>
-                            </td>
-                        </tr>
-                    {/each}
-                </tbody>
-            </table>
         </div>
     </div>
 {/if}

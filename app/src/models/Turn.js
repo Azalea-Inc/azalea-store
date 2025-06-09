@@ -1,6 +1,6 @@
 const { randomUUID } = require("crypto");
 
-class CashBoxRegistry {
+class Turn {
   constructor(openAmount, cashBoxId) {
     if (!openAmount || !cashBoxId) throw new Error("Invalid parameters");
 
@@ -19,10 +19,10 @@ class CashBoxRegistry {
 
   static build(data) {
     const { openAmount, cashBoxId } = data;
-    const cashBoxRegistry = new CashBoxRegistry(openAmount, cashBoxId);
-    cashBoxRegistry.generateId();
-    return cashBoxRegistry;
+    const turn = new Turn(openAmount, cashBoxId);
+    turn.generateId();
+    return turn;
   }
 }
 
-module.exports = CashBoxRegistry;
+module.exports = Turn;

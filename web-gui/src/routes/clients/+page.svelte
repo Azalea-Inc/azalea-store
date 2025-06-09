@@ -36,12 +36,7 @@
         <HorizontalList>
             <div class="flex flex-col">
                 <h1 class="text-primary">Clientes</h1>
-
-                <p class="text-sm text-gray-600 mt-1">
-                    Administra los clientes de tu plataforma.
-                </p>
             </div>
-
             <HorizontalList>
                 <div class="flex items-center gap-2 flex-1 max-w-md relative">
                     <input
@@ -65,6 +60,25 @@
                 </div>
 
                 <button
+                    class="btn btn-secondary flex items-center gap-2"
+                    on:click={() => alert("Cargar Excel")}
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                    Cargar Excel
+                </button>
+
+                <button
                     class="btn btn-primary"
                     on:click={() => (isOpen = true)}
                 >
@@ -83,7 +97,7 @@
         </HorizontalList>
     </HeaderContainer>
 
-    <main class="p-6">
+    <main class="px-6 pb-4">
         {#if $store.loading}
             <Spinner />
         {:else}

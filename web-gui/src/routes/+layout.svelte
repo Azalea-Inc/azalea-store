@@ -1,12 +1,14 @@
 <script>
-    import Aside from "@components/Aside.svelte";
     import "../app.css";
+    import Aside from "@components/Aside.svelte";
+    import { MainContainer } from "@components";
 
+    import { page } from "$app/stores";
     let { children } = $props();
+
+    let isLoginPage = $page && $page.route && $page.route.id === "/login";
 </script>
 
-<div class="flex">
-    <Aside></Aside>
-
+<MainContainer menu={!isLoginPage ? Aside : null}>
     {@render children()}
-</div>
+</MainContainer>

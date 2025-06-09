@@ -8,15 +8,15 @@
 <div class="profile-container flex-1 px-10 pt-4">
     <Breadcrumb></Breadcrumb>
 
-    <div class="flex gap-10 justify-between">
-        <div class="profile-sidebar max-w-lg">
+    <div class="flex justify-between">
+        <div class="w-1/4 flex flex-col items-center">
             <div class="avatar-wrapper">
                 <img src={$state.avatar} alt="Profile Avatar" class="avatar" />
                 <button class="change-avatar-btn">Change picture</button>
             </div>
         </div>
 
-        <div class="profile-main bg-red-10 flex-1 flex justify-center">
+        <div class="profile-main flex-1 flex justify-center">
             <form class="profile-form w-xl">
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -64,7 +64,6 @@
         flex-direction: column;
         gap: 2rem;
         margin: 0 auto;
-        background: #f8f9fa;
     }
 
     .avatar-wrapper {
@@ -99,11 +98,7 @@
     }
 
     .profile-form {
-        background: #fff;
-        border: 1px solid #e1e4e8;
         border-radius: 6px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .form-group {

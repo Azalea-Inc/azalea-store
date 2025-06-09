@@ -3,6 +3,20 @@
         { id: 1, nombre: "Producto 1", cantidad: 2, precio: 24.99 },
         { id: 2, nombre: "Producto 2", cantidad: 1, precio: 18.5 },
         { id: 3, nombre: "Producto 3", cantidad: 3, precio: 36.75 },
+        { id: 4, nombre: "Producto 4", cantidad: 1, precio: 12.99 },
+        { id: 5, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 6, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 7, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 8, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 9, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 10, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 11, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 12, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 13, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 14, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 15, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 16, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
+        { id: 17, nombre: "Producto 5", cantidad: 1, precio: 10.99 },
     ];
 
     function removeProduct(id) {
@@ -28,10 +42,8 @@
     }
 </script>
 
-<div
-    class="box flex-1 bg-white rounded-md border border-gray-200 shadow-sm p-4"
->
-    <div class="mt-4 flex flex-col gap-3">
+<div class="flex-1 box overflow-y-auto flex flex-col">
+    <div class="mt-4 flex-1 flex flex-col gap-3">
         {#if cart.length === 0}
             <div
                 class="flex flex-col items-center justify-center py-8 text-center"

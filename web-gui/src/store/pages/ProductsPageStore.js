@@ -22,7 +22,7 @@ class ProductsPageStore {
     this.products = [];
     this.currentPage = InSuccess;
     this.page = 1;
-    this.limit = 10;
+    this.limit = 50;
     this.total = 0;
     this.totalPages = 0;
     this.inLoading = true;
@@ -51,6 +51,21 @@ class ProductsPageStore {
 
   openProductDetail(id) {
     productDetailStore.openProductDetail(id);
+  }
+
+  async deleteProduct(id) {
+    if (!confirm("Are you sure you want to delete this product?")) {
+      return;
+    }
+    try {
+      await fetch(`${this.host}/api/products/${id}`, { method: "DELETE" });
+      this.products = this.products.filter((product) => product.id !== id);
+      this.update();
+    } catch (error) {
+      this.errorMessage = error.message;
+      this.currentPage = InError;
+      this.update();
+    }
   }
 
   async getProducts() {

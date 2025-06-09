@@ -32,10 +32,6 @@
         <HorizontalList>
             <div class="flex flex-col">
                 <h1 class="text-primary">Usuarios</h1>
-
-                <p class="text-sm text-gray-600 mt-1">
-                    Administra los usuarios de tu plataforma.
-                </p>
             </div>
 
             <HorizontalList>
@@ -79,7 +75,7 @@
         </HorizontalList>
     </HeaderContainer>
 
-    <main class="p-6">
+    <main class="px-6 pb-4">
         {#if $store.loading}
             <Spinner />
         {:else}

@@ -4,6 +4,7 @@
     import HorizontalList from "@components/HorizontalList.svelte";
     import SalesCart from "@components/sales/SalesCart.svelte";
     import SaleControl from "@components/sales/SaleControl.svelte";
+    import Button from "@components/Button.svelte";
     import { barcodeScanner } from "$lib/scanner.js";
 
     let searchbar;
@@ -37,7 +38,7 @@
     }
 </script>
 
-<Container>
+<Container overflowHidden>
     <HeaderContainer>
         <HorizontalList>
             <div class="flex flex-col gap-2">
@@ -81,6 +82,7 @@
                             />
                         </svg>Nueva venta</button
                     >
+                    <Button>Iniciar Turno</Button>
                 {:else}
                     <div
                         use:barcodeScanner={{ onScan: handleScan }}
@@ -92,7 +94,7 @@
                             bind:this={searchbar}
                             type="text"
                             placeholder="Buscar..."
-                            class="w-full bg-white pl-10 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                            class="w-full bg-white pl-10 pr-3 py-[0.3rem] text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                         />
                         <svg
                             class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
@@ -129,9 +131,9 @@
         </HorizontalList>
     </HeaderContainer>
 
-    <main class="p-6 flex-1 flex flex-col">
+    <main class="px-6 pb-4 flex-1 flex flex-col overflow-hidden">
         {#if !hasActiveSale}
-            <div class="empty-state mb-6">
+            <div class="empty-state">
                 <div
                     class="flex flex-col items-center justify-center p-8 rounded-lg text-center"
                 >
@@ -181,7 +183,7 @@
                 </div>
             </div>
         {:else}
-            <div class="flex gap-6 flex-1">
+            <div class="flex flex-row gap-6 flex-1 overflow-hidden">
                 <SalesCart></SalesCart>
                 <SaleControl></SaleControl>
             </div>

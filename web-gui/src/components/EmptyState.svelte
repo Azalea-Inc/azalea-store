@@ -33,10 +33,6 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 3rem;
-        background-color: #f6f8fa;
-        border: 1px solid #d0d7de;
-        border-radius: 6px;
     }
     .empty-state-icon {
         width: 48px;
