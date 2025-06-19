@@ -29,13 +29,13 @@ module.exports = () => {
   });
 
   CashBoxRegistryEntity.hasOne(SaleEntity, {
-    foreignKey: "cashBoxRegistryId",
+    foreignKey: "turnId",
     as: "sale",
     onDelete: "CASCADE",
   });
 
   SaleEntity.belongsTo(CashBoxRegistryEntity, {
-    foreignKey: "cashBoxRegistryId",
+    foreignKey: "turnId",
     as: "registry",
   });
 

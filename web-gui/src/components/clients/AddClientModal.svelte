@@ -40,12 +40,12 @@
         class="form-container w-md mx-auto"
     >
         <div class="form-group">
-            <label for="name" class="form-label">Nombre</label>
+            <label for="client-name" class="form-label">Nombre</label>
             <input
-                id="name"
+                id="client-name"
                 class="form-input"
                 type="text"
-                name="name"
+                name="client-name"
                 placeholder="Ingrese el nombre"
                 bind:value={client.name}
                 required

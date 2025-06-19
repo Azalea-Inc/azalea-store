@@ -1,192 +1,313 @@
 <script>
+    import { onMount } from "svelte";
+    import Chart from "chart.js/auto";
     import Container from "@components/Container.svelte";
-    import HeaderContainer from "@components/HeaderContainer.svelte";
-    import HorizontalList from "@components/HorizontalList.svelte";
-    import SalesCart from "@components/sales/SalesCart.svelte";
-    import SaleControl from "@components/sales/SaleControl.svelte";
-    import Button from "@components/Button.svelte";
-    import { barcodeScanner } from "$lib/scanner.js";
 
-    let searchbar;
+    let userName = "Joan";
+    let totalItems = 1520;
+    let lowStockItems = 17;
+    let categories = 12;
 
-    let hasActiveSale = false;
-    let query = "";
+    let turnoActivo = true;
+    let encargadoTurno = "Luis Méndez";
+    let ultimaVenta = "14 junio 2025, 12:35 PM";
+    let ultimoIngreso = "14 junio 2025, 11:10 AM";
+    let proximaTarea = "Auditoría mensual - 20 junio 2025";
+    let enMantenimiento = false;
 
-    function handleScan(code) {
-        query = code;
-        searchbar.focus();
-        addProduct();
-    }
+    let productosChart;
+    let stockChart;
 
-    function cancelSale() {
-        hasActiveSale = false;
-        query = "";
-    }
+    let productosChartCanvas;
+    let stockChartCanvas;
 
-    function handleEnter(event) {
-        if (event.key === "Enter") {
-            addProduct();
-        }
+    onMount(() => {
+        productosChart = new Chart(productosChartCanvas, {
+            type: "line",
+            data: {
+                labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun"],
+                datasets: [
+                    {
+                        label: "Productos registrados",
+                        data: [1000, 1100, 1200, 1300, 1450, totalItems],
+                        borderColor: "#0969da",
+                        backgroundColor: "rgba(9,105,218,0.1)",
+                        fill: true,
+                        tension: 0.3,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "top",
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
 
-        if (event.key === "Escape") {
-            query = "";
-        }
-    }
-
-    function addProduct() {
-        console.log("Add product");
-    }
+        stockChart = new Chart(stockChartCanvas, {
+            type: "bar",
+            data: {
+                labels: [
+                    "Electrónica",
+                    "Ropa",
+                    "Hogar",
+                    "Juguetes",
+                    "Alimentos",
+                    "Otros",
+                ],
+                datasets: [
+                    {
+                        label: "Stock bajo",
+                        data: [4, 2, 3, 1, 5, 2],
+                        backgroundColor: "#d32f2f",
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                        },
+                    },
+                },
+            },
+        });
+    });
 </script>
 
-<Container overflowHidden>
-    <HeaderContainer>
-        <HorizontalList>
-            <div class="flex flex-col gap-2">
-                <h1 class="text-title">Bienvenido a Azalea</h1>
-            </div>
+<Container className="p-10 pt-6">
+    <header class="header flex justify-between items-start">
+        <div class="flex flex-col">
+            <h1>Bienvenido, {userName}</h1>
+            <p class="subtitle">
+                Este es tu panel general del sistema de inventario.
+            </p>
+        </div>
 
-            <HorizontalList>
-                {#if !hasActiveSale}
-                    <button class="btn btn-secondary"
-                        ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 mr-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                            />
-                        </svg>Continuar venta</button
-                    >
+        <section class="actions flex items-center">
+            <button on:click={() => alert("Agregar producto")} class="button">
+                + Agregar producto
+            </button>
+            <a href="/reportes" class="link">Ver reportes →</a>
+        </section>
+    </header>
 
-                    <button
-                        class="btn btn-primary"
-                        on:click={() => (hasActiveSale = true)}
-                        ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 mr-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M12 4v16m8-8H4"
-                            />
-                        </svg>Nueva venta</button
-                    >
-                    <Button>Iniciar Turno</Button>
-                {:else}
-                    <div
-                        use:barcodeScanner={{ onScan: handleScan }}
-                        class="flex items-center gap-2 flex-1 max-w-md relative"
-                    >
-                        <input
-                            bind:value={query}
-                            on:keydown={handleEnter}
-                            bind:this={searchbar}
-                            type="text"
-                            placeholder="Buscar..."
-                            class="w-full bg-white pl-10 pr-3 py-[0.3rem] text-sm border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                        />
-                        <svg
-                            class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                clip-rule="evenodd"
-                            />
-                        </svg>
-                    </div>
+    <section class="stats">
+        <div class="card">
+            <h2>{totalItems}</h2>
+            <p>Productos registrados</p>
+        </div>
+        <div class="card warning">
+            <h2>{lowStockItems}</h2>
+            <p>Stock bajo</p>
+        </div>
+        <div class="card">
+            <h2>{categories}</h2>
+            <p>Categorías</p>
+        </div>
+    </section>
 
-                    <button class="btn btn-outline-danger" on:click={cancelSale}
-                        ><svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 mr-2"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>Cancelar venta</button
-                    >
-                {/if}
-            </HorizontalList>
-        </HorizontalList>
-    </HeaderContainer>
+    <section class="info">
+        <div class="info-row">
+            <strong>Turno:</strong>
+            {#if turnoActivo}
+                <span class="turno activo">Activo ({encargadoTurno})</span>
+            {:else}
+                <span class="turno inactivo">Sin turno activo</span>
+            {/if}
+        </div>
+        <div class="info-row">
+            <strong>Último ingreso:</strong>
+            {ultimoIngreso}
+        </div>
+        <div class="info-row">
+            <strong>Última venta:</strong>
+            {ultimaVenta}
+        </div>
+        <div class="info-row">
+            <strong>Próxima tarea:</strong>
+            {proximaTarea}
+        </div>
+        <div class="info-row">
+            <strong>Estado del sistema:</strong>
+            {#if enMantenimiento}
+                <span class="estado error">Mantenimiento</span>
+            {:else}
+                <span class="estado ok">Operativo</span>
+            {/if}
+        </div>
+    </section>
 
-    <main class="px-6 pb-4 flex-1 flex flex-col overflow-hidden">
-        {#if !hasActiveSale}
-            <div class="empty-state">
-                <div
-                    class="flex flex-col items-center justify-center p-8 rounded-lg text-center"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-16 w-16 text-gray-400 mb-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                        />
-                    </svg>
-                    <h2 class="text-lg font-semibold mb-2">
-                        No hay venta activa
-                    </h2>
-                    <p class="text-gray-600 mb-4">
-                        Para comenzar, crea una nueva venta o continúa una venta
-                        anterior.
-                    </p>
-                    <div class="flex gap-4">
-                        <button
-                            class="btn btn-primary"
-                            on:click={() => (hasActiveSale = true)}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 mr-2"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 4v16m8-8H4"
-                                />
-                            </svg>
-                            Nueva venta
-                        </button>
-                    </div>
-                </div>
-            </div>
-        {:else}
-            <div class="flex flex-row gap-6 flex-1 overflow-hidden">
-                <SalesCart></SalesCart>
-                <SaleControl></SaleControl>
-            </div>
-        {/if}
-    </main>
+    <section class="charts">
+        <div class="chart-card">
+            <h3>Evolución productos registrados</h3>
+            <canvas bind:this={productosChartCanvas}></canvas>
+        </div>
+        <div class="chart-card">
+            <h3>Stock bajo por categoría</h3>
+            <canvas bind:this={stockChartCanvas}></canvas>
+        </div>
+    </section>
 </Container>
+
+<style>
+    .header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+        color: #57606a;
+        margin-bottom: 2rem;
+    }
+
+    .stats {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    }
+
+    .card {
+        background: #ffffff;
+        border: 1px solid #d0d7de;
+        border-radius: 8px;
+        padding: 1.5rem;
+        flex: 1 1 200px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .card h2 {
+        font-size: 2rem;
+        margin: 0 0 0.5rem;
+        color: #24292f;
+    }
+
+    .card p {
+        margin: 0;
+        color: #57606a;
+    }
+
+    .card.warning h2 {
+        color: #d32f2f;
+    }
+
+    .info {
+        background: #f6f8fa;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        padding: 1.25rem;
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+    }
+
+    .info-row {
+        margin-bottom: 0.5rem;
+    }
+
+    .turno {
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-left: 6px;
+    }
+
+    .turno.activo {
+        background: #dff7df;
+        color: #097f07;
+    }
+
+    .turno.inactivo {
+        background: #fbeaec;
+        color: #a40e26;
+    }
+
+    .estado.ok {
+        color: #116329;
+        font-weight: 600;
+    }
+
+    .estado.error {
+        color: #d32f2f;
+        font-weight: 600;
+    }
+
+    .charts {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+    }
+
+    .chart-card {
+        background: #fff;
+        border: 1px solid #d0d7de;
+        border-radius: 8px;
+        padding: 1rem;
+        flex: 1 1 400px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .chart-card h3 {
+        margin-bottom: 1rem;
+        font-weight: 600;
+        color: #24292f;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: 250px !important;
+    }
+
+    .actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .button {
+        background-color: #0969da;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .button:hover {
+        background-color: #035fc4;
+    }
+
+    .link {
+        font-size: 1rem;
+        color: #0969da;
+        text-decoration: none;
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+    }
+
+    .link:hover {
+        background-color: #f0f4f8;
+    }
+</style>

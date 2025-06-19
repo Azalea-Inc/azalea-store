@@ -7,6 +7,7 @@ const config = {
       "@store": "src/store",
       "@components": "src/components",
       "@utils": "src/lib/utils",
+      "@controllers": "src/controllers",
     },
     adapter: adapter(),
   },

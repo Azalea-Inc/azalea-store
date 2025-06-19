@@ -1,17 +1,21 @@
 <script>
+    import Tooltip from "@components/Tooltip.svelte";
+    export let tooltipText = "";
     export let buttonType;
     export let onClick;
     export let isCircular = false;
 </script>
 
-<button
-    class="relative group cursor-pointer flex gap-1 items-center justify-center btn
+<Tooltip text={tooltipText}>
+    <button
+        class="relative group cursor-pointer flex gap-1 items-center justify-center btn
         {buttonType ? `btn-${buttonType}` : ''}
         {isCircular ? 'circle' : ''}"
-    on:click={onClick}
->
-    <slot></slot>
-</button>
+        on:click={onClick}
+    >
+        <slot></slot>
+    </button>
+</Tooltip>
 
 <style>
     .circle {

@@ -81,6 +81,7 @@ class CashBoxRequest {
 
   async closeCashBox(req, res) {
     try {
+      console.log(req.params.id);
       await this.controller.closeCashBox(req.params.id, req.body.closeAmount);
       res.status(200).json({ message: "Box closed successfully" });
     } catch (error) {

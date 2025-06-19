@@ -2,6 +2,7 @@
     import Modal from "@components/Modal.svelte";
     import { createEventDispatcher } from "svelte";
     import { productsPageStore } from "@store/pages/ProductsPageStore";
+    import HorizontalList from "@components/HorizontalList.svelte";
 
     const state = productsPageStore;
 
@@ -16,9 +17,11 @@
     const initialProductState = {
         code: "",
         name: "",
-        price: 0,
+        costPrice: 0,
         stock: 0,
         minStock: 0,
+        productType: "",
+        unitOfMeasure: "",
     };
 
     let product = { ...initialProductState };
@@ -81,27 +84,67 @@
         </div>
 
         <div class="form-group">
-            <label for="name" class="form-label">Nombre</label>
+            <label for="product-name" class="form-label">Nombre</label>
             <input
-                id="name"
+                id="product-name"
                 class="form-control"
                 type="text"
-                name="name"
+                name="product-name"
                 placeholder="Ingrese el nombre"
                 bind:value={product.name}
                 required
             />
         </div>
 
+        <HorizontalList>
+            <div class="form-group w-full">
+                <label for="productType" class="form-label"
+                    >Tipo de producto</label
+                >
+                <select
+                    id="productType"
+                    class="form-control"
+                    name="productType"
+                    bind:value={product.productType}
+                    required
+                >
+                    <option value="" disabled selected
+                        >Seleccione un tipo</option
+                    >
+                    <option value="unit">Unitario</option>
+                    <option value="bulk">Granel</option>
+                </select>
+            </div>
+
+            <div class="form-group w-full">
+                <label for="unitOfMeasure" class="form-label"
+                    >Unidad de medida</label
+                >
+                <select
+                    id="unitOfMeasure"
+                    class="form-control"
+                    name="unitOfMeasure"
+                    bind:value={product.unitOfMeasure}
+                    required
+                >
+                    <option value="" disabled selected
+                        >Seleccione una unidad</option
+                    >
+                    <option value="Kg">Kg</option>
+                    <option value="Piece">Pieza</option>
+                </select>
+            </div>
+        </HorizontalList>
+
         <div class="form-group">
-            <label for="price" class="form-label">Precio</label>
+            <label for="price" class="form-label">Precio de Compra</label>
             <input
                 id="price"
                 class="form-control"
                 type="number"
                 name="price"
                 placeholder="Ingrese el precio"
-                bind:value={product.price}
+                bind:value={product.costPrice}
                 min="0"
                 required
             />
@@ -115,35 +158,39 @@
         </div>
 
         {#if product.hasInventory}
-            <div class="form-group">
-                <label for="stock" class="form-label"
-                    >Cantidad en inventario</label
-                >
-                <input
-                    id="stock"
-                    class="form-control"
-                    type="number"
-                    name="stock"
-                    placeholder="Ingrese la cantidad disponible"
-                    bind:value={product.stock}
-                    min="0"
-                    required={product.hasInventory}
-                />
-            </div>
+            <HorizontalList>
+                <div class="form-group w-full">
+                    <label for="stock" class="form-label"
+                        >Cantidad en inventario</label
+                    >
+                    <input
+                        id="stock"
+                        class="form-control"
+                        type="number"
+                        name="stock"
+                        placeholder="Ingrese la cantidad disponible"
+                        bind:value={product.stock}
+                        min="0"
+                        required={product.hasInventory}
+                    />
+                </div>
 
-            <div class="form-group">
-                <label for="minStock" class="form-label">Cantidad mínima</label>
-                <input
-                    id="minStock"
-                    class="form-control"
-                    type="number"
-                    name="minStock"
-                    placeholder="Ingrese la cantidad mínima"
-                    bind:value={product.minStock}
-                    min="0"
-                    required={product.hasInventory}
-                />
-            </div>
+                <div class="form-group w-full">
+                    <label for="minStock" class="form-label"
+                        >Cantidad mínima</label
+                    >
+                    <input
+                        id="minStock"
+                        class="form-control"
+                        type="number"
+                        name="minStock"
+                        placeholder="Ingrese la cantidad mínima"
+                        bind:value={product.minStock}
+                        min="0"
+                        required={product.hasInventory}
+                    />
+                </div>
+            </HorizontalList>
 
             <div class="form-group">
                 <label for="salePrice" class="form-label">Precio de venta</label
@@ -154,7 +201,7 @@
                     type="number"
                     name="salePrice"
                     placeholder="Ingrese el precio de venta"
-                    bind:value={product.saleprice}
+                    bind:value={product.salePrice}
                     min="0"
                     required={product.hasInventory}
                 />

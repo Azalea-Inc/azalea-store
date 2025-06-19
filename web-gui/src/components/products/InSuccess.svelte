@@ -1,9 +1,11 @@
 <script>
     import { slide } from "svelte/transition";
+    import { flip } from "svelte/animate";
     import Spinner from "@components/Spinner.svelte";
     import EmptyState from "@components/EmptyState.svelte";
     import { productsPageStore } from "@store/pages/ProductsPageStore";
     import { onMount, onDestroy } from "svelte";
+    import Dropdown from "@components/Dropdown.svelte";
 
     const state = productsPageStore;
 
@@ -91,17 +93,28 @@
     </div>
 {:else}
     <div
-        class="flex flex-col flex-1 px-6 pb-4 overflow-hidden z-10"
+        class="flex flex-col flex-1 px-6 pb-4 overflow-hidden"
         transition={{ slide }}
     >
-        <div class="overflow-y-auto box-table">
+        <div class="overflow-y-auto box-table flex-1">
             <table
                 class="w-full text-xs text-left text-gray-700 border-collapse"
             >
                 <thead
-                    class="text-xs bg-gray-50 border-b border-black sticky top-0 z-20"
+                    class="text-xs bg-gray-50 border-b border-black sticky top-0"
                 >
                     <tr>
+                        <th
+                            scope="col"
+                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
+                            on:click={() => handleSort("code")}
+                        >
+                            Código {sortField === "code"
+                                ? sortDirection === "asc"
+                                    ? "↑"
+                                    : "↓"
+                                : ""}
+                        </th>
                         <th
                             scope="col"
                             class="px-3 py-2 cursor-pointer hover:bg-gray-100 border-b"
@@ -117,34 +130,34 @@
                         <th
                             scope="col"
                             class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
-                            on:click={() => handleSort("price")}
+                            on:click={() => handleSort("costPrice")}
+                            >Precio compra</th
                         >
-                            Precio {sortField === "price"
+                        <th
+                            scope="col"
+                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
+                            on:click={() => handleSort("salePrice")}
+                        >
+                            Precio venta {sortField === "salePrice"
                                 ? sortDirection === "asc"
                                     ? "↑"
                                     : "↓"
                                 : ""}
                         </th>
                         <th scope="col" class="px-3 py-1.5">Stock</th>
-                        <th
-                            scope="col"
-                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
-                            on:click={() => handleSort("code")}
-                        >
-                            Código {sortField === "code"
-                                ? sortDirection === "asc"
-                                    ? "↑"
-                                    : "↓"
-                                : ""}
-                        </th>
                         <th scope="col" class="px-3 py-1.5">Estado</th>
-                        <th scope="col" class="px-3 py-1.5">Actualización</th>
                         <th scope="col" class="px-3 py-1.5"></th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 text-xs">
-                    {#each $state.products as product}
-                        <tr class="hover:bg-white transition-colors">
+                    {#each $state.products as product (product.id)}
+                        <tr
+                            class="hover:bg-gray-100 transition-colors"
+                            animate:flip={{ duration: 300 }}
+                        >
+                            <td class="px-3 py-1.5 font-mono">
+                                {product.code}
+                            </td>
                             <td
                                 class="px-3 py-1.5 font-medium whitespace-nowrap text-gray-900"
                             >
@@ -154,13 +167,15 @@
                                 {product.description}
                             </td>
                             <td class="px-3 py-1.5 font-medium">
-                                ${product.price}
+                                ${product.costPrice}
+                            </td>
+
+                            <td class="px-3 py-1.5 font-medium">
+                                ${product.salePrice}
                             </td>
                             <td class="px-3 py-1.5">
-                                {product.stock} unidades
-                            </td>
-                            <td class="px-3 py-1.5 font-mono">
-                                {product.code}
+                                {product.stock}
+                                {product.unitOfMeasure}
                             </td>
                             <td class="px-3 py-1.5">
                                 <span
@@ -171,65 +186,36 @@
                                         : STATUS.inactive.text}
                                 </span>
                             </td>
-                            <td class="px-3 py-1.5 text-gray-500">
-                                {new Date(
-                                    product.updatedAt,
-                                ).toLocaleDateString()}
-                            </td>
                             <td class="px-3 py-1.5">
-                                <div class="relative group">
-                                    <div
-                                        class="text-gray-600 hover:text-[#0969da] text-xs"
+                                <Dropdown>
+                                    <button
+                                        slot="trigger"
+                                        class="w-7 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full"
+                                        aria-label="Opciones de usuario"
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
-                                            class="h-4 w-4"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
+                                            viewBox="0 0 20 20"
+                                            fill="currentColor"
+                                            class="w-6 h-5"
                                         >
                                             <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                                                d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
                                             />
                                         </svg>
+                                    </button>
+
+                                    <div class="w-full flex flex-col gap-1">
+                                        <button class="btn">Editar</button>
+
+                                        <button
+                                            class="btn btn-danger"
+                                            on:click={() =>
+                                                state.deleteProduct(product.id)}
+                                            >Eliminar</button
+                                        >
                                     </div>
-                                    <div
-                                        class="absolute right-4 w-36 bg-white shadow-lg rounded-md border border-gray-200 invisible group-hover:visible {$state.products.indexOf(
-                                            product,
-                                        ) >=
-                                        $state.products.length - 3
-                                            ? 'bottom-0'
-                                            : ''}"
-                                    >
-                                        <ul class="py-1">
-                                            <li>
-                                                <button
-                                                    class="w-full text-left px-4 py-1.5 text-xs text-gray-700 hover:bg-gray-100"
-                                                    on:click={() =>
-                                                        state.openProductDetail(
-                                                            product.id,
-                                                        )}
-                                                >
-                                                    Ver detalles
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <button
-                                                    class="w-full text-left px-4 py-1.5 text-xs text-red-600 hover:bg-gray-100"
-                                                    on:click={() =>
-                                                        state.deleteProduct(
-                                                            product.id,
-                                                        )}
-                                                >
-                                                    Eliminar
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                </Dropdown>
                             </td>
                         </tr>
                     {/each}

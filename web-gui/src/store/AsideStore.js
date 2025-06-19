@@ -9,13 +9,20 @@ import {
   User,
   CircleDollarSign,
   Users,
+  Home,
 } from "lucide-svelte";
 
 const initialState = {
   menu: [
     {
-      title: "Ventas",
+      title: "Inicio",
       href: "/",
+      icon: Home,
+      notifications: 0,
+    },
+    {
+      title: "Ventas",
+      href: "/sales",
       icon: ShoppingCart,
       notifications: 0,
     },

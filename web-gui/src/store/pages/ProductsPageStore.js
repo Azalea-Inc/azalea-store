@@ -58,7 +58,7 @@ class ProductsPageStore {
       return;
     }
     try {
-      await fetch(`${this.host}/api/products/${id}`, { method: "DELETE" });
+      // await fetch(`${this.host}/api/products/${id}`, { method: "DELETE" });
       this.products = this.products.filter((product) => product.id !== id);
       this.update();
     } catch (error) {
@@ -79,10 +79,8 @@ class ProductsPageStore {
       this.total = pagination.total;
       this.totalPages = pagination.totalPages;
 
-      setTimeout(() => {
-        this.inLoading = false;
-        this.update();
-      }, 150);
+      this.inLoading = false;
+      this.update();
     } catch (error) {
       this.inLoading = false;
       this.errorMessage = error.message;

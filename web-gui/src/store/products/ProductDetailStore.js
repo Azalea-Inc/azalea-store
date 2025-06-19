@@ -71,10 +71,7 @@ class ProductDetailStore {
     this.#setLoadingState(true);
     const response = await fetch(`${API_URL}/${id}`);
     const { data } = await response.json();
-
-    setTimeout(() => {
-      this.#update({ ...data, isLoading: false });
-    }, 200);
+    this.#update({ ...data, isLoading: false });
   }
 
   close() {

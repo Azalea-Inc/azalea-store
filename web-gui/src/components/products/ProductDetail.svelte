@@ -26,6 +26,7 @@
     isOpen={$state.isOpen}
     on:close={() => state.close()}
     title="Información del producto"
+    className="w-full max-w-md"
     size="xl"
 >
     <div class="flex flex-col items-start p-6 space-y-4">

@@ -123,7 +123,7 @@
                 </EmptyState>
             {/if}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {#each filteredClients as client}
+                {#each filteredClients as client (client.id)}
                     <ClientCard
                         {client}
                         on:delete={() => store.removeClient(client.id)}

@@ -5,6 +5,9 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [tailwindcss(), sveltekit()],
   server: {
+    watch: {
+      ignored: ["**/node_modules/**"],
+    },
     proxy: {
       "/api": {
         target: "http://localhost:3000/api",

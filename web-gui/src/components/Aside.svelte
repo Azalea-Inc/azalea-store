@@ -4,33 +4,63 @@
     import { asideStore } from "@store/AsideStore";
     import { Settings } from "lucide-svelte";
     import { userStore } from "@store/UserStore";
+    import Tooltip from "@components/Tooltip.svelte";
 </script>
 
-<aside class="min-h-screen aside border-r flex flex-col overflow-hidden">
-    <UserAsideInfo />
-
+<aside
+    class="min-h-screen aside z-[200] border-r bg-red-200 border-gray-200 flex flex-col overflow-hidden"
+>
     <div class="flex flex-col p-4 flex-1">
         {#each $asideStore.menu as item}
-            <a
-                class:item-active={item.href === $page.url.pathname ||
-                    $page.url.pathname.startsWith(item.href + "/")}
-                href={item.href}
-                class="menu-item"
+            <Tooltip
+                text={item.title}
+                tooltipDirection="right"
+                background="#3e3e3e"
+                color="#ffffff"
+                padding="8px 14px"
+                borderRadius="6px"
+                fontSize="0.8rem"
             >
-                <svelte:component this={item.icon} size={16} class="mr-2" />
-                <span>{item.title}</span>
-                {#if item.notifications > 0}
-                    <span class="notification-badge">{item.notifications}</span>
-                {/if}
-            </a>
+                <a
+                    class:item-active={item.href === $page.url.pathname ||
+                        $page.url.pathname.startsWith(item.href + "/")}
+                    href={item.href}
+                    class="menu-item"
+                >
+                    <svelte:component
+                        this={item.icon}
+                        size={20}
+                        class="text-gray-700 icon"
+                    />
+                    <!-- <span>{item.title}</span> -->
+                    {#if item.notifications > 0}
+                        <span class="notification-badge"
+                            >{item.notifications}</span
+                        >
+                    {/if}
+                </a>
+            </Tooltip>
         {/each}
     </div>
 
     <div class="flex flex-col p-4 flex-1 justify-end w-full">
-        <a href="/settings" class="menu-item flex gap-2">
-            <Settings size={16} />
-            <span>Configuración</span>
-        </a>
+        <Tooltip
+            text="Settings"
+            tooltipDirection="right"
+            background="#3e3e3e"
+            color="#ffffff"
+            padding="8px 14px"
+            borderRadius="6px"
+        >
+            <a
+                class:item-active={"/settings" === $page.url.pathname ||
+                    $page.url.pathname.startsWith("/settings" + "/")}
+                href="/settings"
+                class="menu-item flex gap-2"
+            >
+                <Settings size={20} class="icon" />
+            </a>
+        </Tooltip>
 
         {#if $userStore.isLogged}
             <a
@@ -61,11 +91,9 @@
 
 <style>
     .aside {
-        min-width: 160px;
         position: sticky;
         top: 0;
-        z-index: 10;
-        background-color: #ffffff;
+        background-color: #f6f8fa; /* GitHub sidebar gray */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -73,28 +101,32 @@
         overflow-y: auto;
         border-right: 1px solid #d0d7de;
     }
+
     .menu-item {
-        padding: 0.375rem 0.75rem;
-        margin-bottom: 0.125rem;
+        padding: 0.5rem 0.75rem;
+        margin-bottom: 0.25rem;
         text-decoration: none;
         color: #24292f;
-        transition: all 0.1s ease;
-        border-radius: 0.375rem;
-        font-size: 0.9rem;
-        font-weight: 400;
+        transition: background-color 0.1s ease;
+        border-radius: 0px 6px 6px 0px;
+        font-weight: 500;
         display: flex;
         align-items: center;
         position: relative;
+        gap: 0.5rem;
     }
+
     .menu-item:hover {
-        background-color: #f6f8fa;
-        transform: none;
+        background-color: #eaeef2;
+        color: #1f2328;
     }
 
     .item-active {
-        background-color: #f6f8fa;
-        color: #24292f;
-        font-weight: 500;
+        background-color: #dbefff;
+        color: #0969da;
+        font-weight: 600;
+        border-left: 3px solid #0969da;
+        padding-left: calc(0.75rem - 3px);
     }
 
     .notification-badge {
@@ -103,8 +135,21 @@
         background: #cf222e;
         color: white;
         border-radius: 9999px;
-        padding: 0.125rem 0.375rem;
+        padding: 0.125rem 0.5rem;
         font-size: 0.75rem;
-        font-weight: 500;
+        font-weight: 600;
+    }
+
+    a[href="/logout"] {
+        color: #cf222e;
+        border: 1px solid transparent;
+        transition: all 0.15s ease;
+        border-radius: 6px;
+    }
+
+    a[href="/logout"]:hover {
+        background-color: #fbeaec;
+        color: #a40e26;
+        border-color: #f5c2c7;
     }
 </style>

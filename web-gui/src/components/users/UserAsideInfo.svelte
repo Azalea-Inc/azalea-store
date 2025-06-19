@@ -8,7 +8,7 @@
             <img
                 src={$userStore.avatar}
                 alt="Imagen de usuario"
-                class="w-12 h-12 rounded-full mr-3 object-cover border-2 border-gray-200"
+                class="w-8 h-8 rounded-full mr-3 object-cover border-2 border-gray-200"
             />
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -39,13 +39,10 @@
             </svg>
         {/if}
         <div>
-            <h2 class="text-[0.875rem] font-semibold text-gray-900">
-                {$userStore.name}
-            </h2>
             <a
                 href="/profile"
-                class="text-sm text-blue-600 hover:text-blue-800 hover:underline"
-                >Ver perfil</a
+                class="text-xs text-blue-600 hover:text-blue-800 hover:underline"
+                >{$userStore.name}</a
             >
         </div>
     </div>

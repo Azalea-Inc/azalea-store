@@ -21,7 +21,7 @@ const SaleEntity = sequelize.define("Sale", {
       min: 0,
     },
   },
-  cashBoxRegistryId: {
+  turnId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {

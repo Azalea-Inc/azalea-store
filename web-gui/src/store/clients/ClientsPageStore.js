@@ -49,8 +49,7 @@ class ClientsPageStore {
 
   async removeClient(id) {
     try {
-      this.setState({ loading: true });
-      await fetch(`/api/clients/${id}`, { method: "DELETE" });
+      // await fetch(`/api/clients/${id}`, { method: "DELETE" });
       this.store.update((state) => ({
         clients: state.clients.filter((client) => client.id !== id),
         loading: false,

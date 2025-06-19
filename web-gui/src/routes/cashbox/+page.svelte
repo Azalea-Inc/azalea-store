@@ -9,7 +9,9 @@
     import Container from "@components/Container.svelte";
     import HeaderContainer from "@components/HeaderContainer.svelte";
     import HorizontalList from "@components/HorizontalList.svelte";
+    import HStack from "@components/HStack.svelte";
     import Button from "@components/Button.svelte";
+    import ButtonIcon from "@components/ButtonIcon.svelte";
     import { createEventDispatcher } from "svelte";
 
     const dispatch = createEventDispatcher();
@@ -50,9 +52,7 @@
     <HeaderContainer>
         <HorizontalList>
             <div class="flex flex-col">
-                <h1 class="text-xl font-semibold text-gray-800">
-                    Cajas registradoras
-                </h1>
+                <h1 class="text-xl text-gray-800">Cajas registradoras</h1>
             </div>
             <HorizontalList align="center" gap="2">
                 <div class="flex items-center gap-2 flex-1 max-w-md relative">
@@ -75,11 +75,9 @@
                         />
                     </svg>
                 </div>
-                <Button
+                <ButtonIcon
                     buttonType="primary"
-                    showTooltip={true}
                     tooltipText="Agregar producto"
-                    tooltipAlign="right"
                     onClick={() => {
                         isOpen = true;
                     }}
@@ -97,7 +95,7 @@
                             clip-rule="evenodd"
                         />
                     </svg>
-                </Button>
+                </ButtonIcon>
             </HorizontalList>
         </HorizontalList>
     </HeaderContainer>

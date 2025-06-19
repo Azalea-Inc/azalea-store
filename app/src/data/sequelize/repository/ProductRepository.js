@@ -1,5 +1,4 @@
 const ProductEntity = require("../entities/ProductEntity");
-const InventoryEntity = require("../entities/InventoryEntity");
 
 class ProductRepository {
   constructor() {
@@ -27,11 +26,30 @@ class ProductRepository {
   async getProducts(page = 1, limit = 10) {
     try {
       const offset = (page - 1) * limit;
-      return await this.model.findAll({
+      const products = await this.model.findAll({
         limit,
         offset,
         order: [["createdAt", "DESC"]],
         include: ["inventory"],
+      });
+
+      return products.map((e) => {
+        const data = e.get({ plain: true });
+        const inventory = data.inventory;
+
+        if (!inventory) return data;
+        delete data.inventory;
+        const product = {
+          ...data,
+          salePrice: inventory.salePrice,
+          stock: inventory.stock,
+          inventoryId: inventory.id,
+          inventoryIsActive: inventory.isActive,
+          inventoryCreatedAt: inventory.createdAt,
+          inventoryUpdatedAt: inventory.updatedAt,
+        };
+
+        return product;
       });
     } catch (error) {
       console.error("Error getting all products:", error);

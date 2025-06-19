@@ -2,92 +2,118 @@
     let errorCode = 404;
     let errorMessage = "Página no encontrada";
     let description =
-        "Lo sentimos, la página que estás buscando no existe o ha sido movida.";
+        "No pudimos encontrar la página que estás buscando. Es posible que haya sido eliminada, renombrada o nunca haya existido.";
 </script>
 
-<div class="error-container flex-1">
-    <div class="error-content">
+<div class="error-wrapper flex-1">
+    <div class="error-box">
         <h1 class="error-code">{errorCode}</h1>
         <h2 class="error-title">{errorMessage}</h2>
         <p class="error-description">{description}</p>
-        <button class="back-button" on:click={() => window.history.back()}>
-            Regresar
-        </button>
-        <a href="/" class="home-link">Ir al inicio</a>
+
+        <div class="actions">
+            <button class="button" on:click={() => window.history.back()}>
+                ← Regresar
+            </button>
+            <a class="link" href="/">Ir al inicio →</a>
+        </div>
     </div>
 </div>
 
 <style>
-    .error-container {
+    .error-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f6f8fa;
+        padding: 2rem;
+        font-family:
+            system-ui,
+            -apple-system,
+            "Segoe UI",
+            Roboto,
+            sans-serif;
     }
 
-    .error-content {
-        text-align: center;
-        background: white;
+    .error-box {
+        background-color: #ffffff;
         padding: 3rem;
-        border-radius: 1rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        max-width: 500px;
-        width: 90%;
+        border: 1px solid #d0d7de;
+        border-radius: 12px;
+        max-width: 480px;
+        width: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        text-align: center;
     }
 
     .error-code {
-        font-size: 8rem;
-        margin: 0;
-        background: linear-gradient(90deg, #1e88e5, #64b5f6);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        line-height: 1;
+        font-size: 5rem;
+        font-weight: 700;
+        color: #d32f2f;
+        margin: 0 0 0.5rem 0;
     }
 
     .error-title {
-        font-size: 2rem;
-        margin: 1rem 0;
-        color: #333;
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+        color: #24292f;
     }
 
     .error-description {
-        color: #666;
+        color: #57606a;
+        font-size: 1rem;
         margin-bottom: 2rem;
         line-height: 1.6;
     }
 
-    .back-button {
-        background: linear-gradient(90deg, #1e88e5, #64b5f6);
-        color: white;
+    .actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .button {
+        background-color: #0969da;
+        color: #ffffff;
         border: none;
-        padding: 0.8rem 2rem;
+        padding: 0.75rem 1.5rem;
         font-size: 1rem;
-        border-radius: 2rem;
+        border-radius: 6px;
         cursor: pointer;
-        margin-right: 1rem;
-        transition:
-            transform 0.2s,
-            box-shadow 0.2s;
+        transition: background-color 0.2s;
     }
 
-    .back-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(30, 136, 229, 0.4);
+    .button:hover {
+        background-color: #035fc4;
     }
 
-    .home-link {
+    .link {
         display: inline-block;
-        color: #1e88e5;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        color: #0969da;
         text-decoration: none;
-        font-weight: 500;
-        padding: 0.8rem 0;
-        transition: color 0.2s;
+        border-radius: 6px;
+        transition: background-color 0.2s;
     }
 
-    .home-link:hover {
-        color: #64b5f6;
+    .link:hover {
+        background-color: #f0f4f8;
+    }
+
+    @media (max-width: 480px) {
+        .error-code {
+            font-size: 3.5rem;
+        }
+
+        .error-title {
+            font-size: 1.5rem;
+        }
+
+        .error-box {
+            padding: 2rem;
+        }
     }
 </style>
