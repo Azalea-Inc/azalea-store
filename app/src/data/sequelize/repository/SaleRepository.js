@@ -1,5 +1,3 @@
-const e = require("express");
-const CashBoxRegistryEntity = require("../entities/CashBoxRegistryEntity");
 const SaleEntity = require("../entities/SaleEntity");
 const ProductsSalesEntity = require("../entities/ProductsSalesEntity");
 const ProductEntity = require("../entities/ProductEntity");
@@ -44,12 +42,25 @@ class SaleRepository {
     try {
       const sale = await this.model.findByPk(id);
       if (!sale) throw new Error(`Sale with id ${id} not found`);
+
+      const existingProductSale = await this.productsSalesModel.findOne({
+        where: {
+          saleId: sale.id,
+          productId: product.id,
+        },
+      });
+
+      if (existingProductSale) {
+        existingProductSale.quantity =
+          (existingProductSale.quantity || 1) + (product.quantity || 1);
+        await existingProductSale.save();
+      }
+
       return await this.productsSalesModel.create({
         saleId: sale.id,
         productId: product.id,
       });
     } catch (error) {
-      console.log(error);
       throw new Error(`Error adding product to sale: ${error.message}`);
     }
   }

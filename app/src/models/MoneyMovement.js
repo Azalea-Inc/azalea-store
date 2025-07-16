@@ -1,14 +1,14 @@
 const { randomUUID } = require("crypto");
 
-class CashBoxMovement {
+class MoneyMovement {
   constructor(amount, type) {
     this.amount = amount;
     this.type = type;
     this.date = new Date();
   }
 
-  setRegistryId(id) {
-    this.registryId = id;
+  setTurnId(id) {
+    this.turnId = id;
   }
 
   generateId() {
@@ -17,11 +17,11 @@ class CashBoxMovement {
 
   static build(data) {
     const { amount, type, registryId } = data;
-    const movement = new CashBoxMovement(amount, type);
+    const movement = new MoneyMovement(amount, type);
     movement.generateId();
-    movement.setRegistryId(registryId);
+    movement.setTurnId(registryId);
     return movement;
   }
 }
 
-module.exports = CashBoxMovement;
+module.exports = MoneyMovement;

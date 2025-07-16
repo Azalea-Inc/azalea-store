@@ -3,6 +3,9 @@ import InSuccess from "@components/products/InSuccess.svelte";
 import ProductSearchList from "@components/products/ProductSearchList.svelte";
 import { productDetailStore } from "@store/products/ProductDetailStore";
 import { writable } from "svelte/store";
+import { toast } from "svelte-sonner";
+import { modals } from "@components/Modals";
+import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
 
 class ProductsPageStore {
   constructor() {
@@ -53,12 +56,20 @@ class ProductsPageStore {
     productDetailStore.openProductDetail(id);
   }
 
+  deleteProductHandler(id) {
+    modals.push(ConfirmModal, {
+      title: "Eliminar Producto",
+      message: "¿Estás seguro de que deseas eliminar este producto?",
+      onConfirm: () => {
+        this.deleteProduct(id);
+      },
+    });
+  }
+
   async deleteProduct(id) {
-    if (!confirm("Are you sure you want to delete this product?")) {
-      return;
-    }
     try {
-      // await fetch(`${this.host}/api/products/${id}`, { method: "DELETE" });
+      await fetch(`${this.host}/api/products/${id}`, { method: "DELETE" });
+      toast.success("Producto eliminado exitosamente");
       this.products = this.products.filter((product) => product.id !== id);
       this.update();
     } catch (error) {

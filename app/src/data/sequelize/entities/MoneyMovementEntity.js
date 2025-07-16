@@ -2,8 +2,8 @@ const { DataTypes } = require("sequelize");
 const SequelizeDB = require("../SequelizeDB");
 const sequelize = SequelizeDB.getInstance().sequelize;
 
-const CashBoxMovementEntity = sequelize.define(
-  "CashBoxMovement",
+const MoneyMovementEntity = sequelize.define(
+  "MoneyMovement",
   {
     id: {
       type: DataTypes.UUID,
@@ -26,10 +26,10 @@ const CashBoxMovementEntity = sequelize.define(
       defaultValue: "entry",
       values: ["open_register", "entry", "exit", "other"],
     },
-    registryId: {
+    turnId: {
       type: DataTypes.UUID,
       references: {
-        model: "CashBoxRegistries",
+        model: "Turns",
         key: "id",
       },
     },
@@ -39,4 +39,4 @@ const CashBoxMovementEntity = sequelize.define(
   },
 );
 
-module.exports = CashBoxMovementEntity;
+module.exports = MoneyMovementEntity;

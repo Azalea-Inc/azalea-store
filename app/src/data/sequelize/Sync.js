@@ -1,8 +1,8 @@
 const InventoryEntity = require("./entities/InventoryEntity");
 const ProductEntity = require("./entities/ProductEntity");
 const CashBoxEntity = require("./entities/CashBoxEntity");
-const CashBoxRegistryEntity = require("./entities/CashBoxRegistryEntity");
-const CashBoxMovementEntity = require("./entities/CashBoxMovementEntity");
+const TurnEntity = require("./entities/TurnEntity");
+const MoneyMovementEntity = require("./entities/MoneyMovementEntity");
 const SaleEntity = require("./entities/SaleEntity");
 const MovementEntity = require("./entities/MovementEntity");
 const ProductsSalesEntity = require("./entities/ProductsSalesEntity");
@@ -18,25 +18,26 @@ module.exports = () => {
     as: "product",
   });
 
-  CashBoxEntity.hasMany(CashBoxRegistryEntity, {
+  CashBoxEntity.hasMany(TurnEntity, {
     foreignKey: "cashBoxId",
-    as: "registries",
+    as: "turns",
     onDelete: "CASCADE",
   });
-  CashBoxRegistryEntity.belongsTo(CashBoxEntity, {
+
+  TurnEntity.belongsTo(CashBoxEntity, {
     foreignKey: "cashBoxId",
     as: "cashBox",
   });
 
-  CashBoxRegistryEntity.hasOne(SaleEntity, {
+  TurnEntity.hasOne(SaleEntity, {
     foreignKey: "turnId",
     as: "sale",
     onDelete: "CASCADE",
   });
 
-  SaleEntity.belongsTo(CashBoxRegistryEntity, {
+  SaleEntity.belongsTo(TurnEntity, {
     foreignKey: "turnId",
-    as: "registry",
+    as: "turn",
   });
 
   SaleEntity.belongsToMany(ProductEntity, {
@@ -51,15 +52,15 @@ module.exports = () => {
     as: "sale",
   });
 
-  CashBoxRegistryEntity.hasMany(CashBoxMovementEntity, {
-    foreignKey: "registryId",
+  TurnEntity.hasMany(MoneyMovementEntity, {
+    foreignKey: "turnId",
     as: "movements",
     onDelete: "CASCADE",
   });
 
-  CashBoxMovementEntity.belongsTo(CashBoxRegistryEntity, {
-    foreignKey: "registryId",
-    as: "registry",
+  MoneyMovementEntity.belongsTo(TurnEntity, {
+    foreignKey: "turnId",
+    as: "turn",
   });
 
   InventoryEntity.hasMany(MovementEntity, {

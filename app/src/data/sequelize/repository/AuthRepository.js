@@ -7,7 +7,6 @@ class AuthRepository {
   }
 
   async login(email, password) {
-    console.log(email);
     const userData = await this.model.findOne({ where: { email } });
     const user = User.buildToData(userData);
 

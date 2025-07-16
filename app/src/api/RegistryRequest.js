@@ -64,14 +64,11 @@ class RegistryRequest {
   }
 
   setupRoutes(router) {
-    router.get("/registries", this.showRegistries.bind(this));
-    router.post("/registries/:id/movement", this.createMovement.bind(this));
-    router.get("/registries/:id", this.showRegistry.bind(this));
-    router.get(
-      "/registries/:id/movements",
-      this.showMovementsByRegistry.bind(this),
-    );
-    router.use("/registries", this.router);
+    this.router.get("/", this.showRegistries.bind(this));
+    this.router.post("/:id/movement", this.createMovement.bind(this));
+    this.router.get("/:id", this.showRegistry.bind(this));
+    this.router.get("/:id/movements", this.showMovementsByRegistry.bind(this));
+    router.use("/turns", this.router);
   }
 }
 

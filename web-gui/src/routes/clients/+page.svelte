@@ -8,6 +8,8 @@
     import HorizontalList from "@components/HorizontalList.svelte";
     import AddClientModal from "@components/clients/AddClientModal.svelte";
     import { clientsPageStore } from "@store/clients/ClientsPageStore";
+    import { modals } from "@components/Modals/modals";
+    import ExcelUploader from "@components/ExcelUploader.svelte";
     const store = clientsPageStore;
 
     let isOpen = false;
@@ -61,7 +63,9 @@
 
                 <button
                     class="btn btn-secondary flex items-center gap-2"
-                    on:click={() => alert("Cargar Excel")}
+                    on:click={() => {
+                        modals.push(ExcelUploader);
+                    }}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -133,11 +137,3 @@
         {/if}
     </main>
 </Container>
-
-<style>
-    .text-primary {
-        color: #2a373e;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-</style>

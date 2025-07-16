@@ -29,6 +29,20 @@ class ClientController {
     return await this.repository.getByEmail(email);
   }
 
+  async updateClient(id, client) {
+    const existingClient = await this.repository.getById(id);
+    if (!existingClient) {
+      throw new Error("Cliente no encontrado");
+    }
+
+    const existingEmail = await this.repository.getByEmail(client.email);
+    if (existingEmail && existingEmail.id !== id) {
+      throw new Error("Un cliente con este email ya existe");
+    }
+
+    return await this.repository.update(id, client);
+  }
+
   async deleteClient(id) {
     return await this.repository.delete(id);
   }

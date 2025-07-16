@@ -90,6 +90,7 @@ class ClientRequest {
     this.router.post("/", this.addClient.bind(this));
     this.router.get("/", this.getClients.bind(this));
     this.router.get("/:id", this.getClientById.bind(this));
+    this.router.put("/:id", this.updateClient.bind(this));
     this.router.get("/email/:email", this.getClientByEmail.bind(this));
     this.router.delete("/:id", this.deleteClient.bind(this));
 

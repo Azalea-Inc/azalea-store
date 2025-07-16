@@ -111,11 +111,3 @@
         {/if}
     </main>
 </Container>
-
-<style>
-    .text-primary {
-        color: #2a373e;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-</style>

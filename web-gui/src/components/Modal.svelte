@@ -23,7 +23,10 @@
         <div
             class="flex items-center justify-between px-4 py-3 border-b border-gray-200"
         >
-            <h3 class="text-lg font-semibold text-gray-900">{title}</h3>
+            <div class="flex flex-col">
+                <h3 class="text-lg font-semibold text-gray-900">{title}</h3>
+                <slot name="subtitle"></slot>
+            </div>
 
             <slot name="header"></slot>
 

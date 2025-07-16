@@ -52,7 +52,7 @@
     <HeaderContainer>
         <HorizontalList>
             <div class="flex flex-col">
-                <h1 class="text-xl text-gray-800">Cajas registradoras</h1>
+                <h1 class="text-primary">Cajas registradoras</h1>
             </div>
             <HorizontalList align="center" gap="2">
                 <div class="flex items-center gap-2 flex-1 max-w-md relative">

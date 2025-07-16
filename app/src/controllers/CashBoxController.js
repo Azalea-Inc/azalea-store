@@ -1,6 +1,6 @@
 const CashBox = require("../models/CashBox");
 const Turn = require("../models/Turn");
-const CashBoxMovement = require("../models/CashBoxMovement");
+const MoneyMovement = require("../models/MoneyMovement");
 const CashBoxRepository = require("../data/sequelize/repository/CashBoxRepository");
 
 class CashBoxController {
@@ -19,6 +19,10 @@ class CashBoxController {
 
   async showCashBoxInfo(id) {
     return await this.repository.showCashBoxInfo(id);
+  }
+
+  async updateCashBox(id, cashBox) {
+    return await this.repository.updateCashBox(id, cashBox);
   }
 
   async renameCashBox(id, name) {
@@ -51,7 +55,7 @@ class CashBoxController {
   }
 
   async createMovement(registryId, data) {
-    const movement = CashBoxMovement.build({ registryId, ...data });
+    const movement = MoneyMovement.build({ registryId, ...data });
     return await this.repository.createMovement(registryId, movement);
   }
 

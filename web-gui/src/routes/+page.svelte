@@ -9,7 +9,7 @@
     let categories = 12;
 
     let turnoActivo = true;
-    let encargadoTurno = "Luis Méndez";
+    let encargadoTurno = "Joan Coronado";
     let ultimaVenta = "14 junio 2025, 12:35 PM";
     let ultimoIngreso = "14 junio 2025, 11:10 AM";
     let proximaTarea = "Auditoría mensual - 20 junio 2025";
@@ -101,10 +101,13 @@
         </div>
 
         <section class="actions flex items-center">
-            <button on:click={() => alert("Agregar producto")} class="button">
+            <a href="/" class="btn">Ver reportes →</a>
+            <button
+                on:click={() => alert("Agregar producto")}
+                class="btn btn-primary"
+            >
                 + Agregar producto
             </button>
-            <a href="/reportes" class="link">Ver reportes →</a>
         </section>
     </header>
 
@@ -281,33 +284,5 @@
         gap: 1rem;
         flex-wrap: wrap;
         align-items: center;
-    }
-
-    .button {
-        background-color: #0969da;
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    .button:hover {
-        background-color: #035fc4;
-    }
-
-    .link {
-        font-size: 1rem;
-        color: #0969da;
-        text-decoration: none;
-        padding: 0.75rem 1rem;
-        border-radius: 6px;
-        transition: background-color 0.2s;
-    }
-
-    .link:hover {
-        background-color: #f0f4f8;
     }
 </style>

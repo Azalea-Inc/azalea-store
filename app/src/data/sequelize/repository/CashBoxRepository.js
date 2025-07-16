@@ -3,8 +3,8 @@ const { REAL } = require("sequelize");
 class CashBoxRepository {
   constructor() {
     this.model = require("../entities/CashBoxEntity");
-    this.modelTurn = require("../entities/CashBoxRegistryEntity");
-    this.modelMovement = require("../entities/CashBoxMovementEntity");
+    this.modelTurn = require("../entities/TurnEntity");
+    this.modelMovement = require("../entities/MoneyMovementEntity");
   }
 
   async createCashBox(cashBox) {
@@ -25,6 +25,12 @@ class CashBoxRepository {
     const cashBox = await this.model.findByPk(id);
     if (!cashBox) throw new Error("Cash box not found");
     return cashBox;
+  }
+
+  async updateCashBox(id, cashBox) {
+    const cashBoxToUpdate = await this.model.findByPk(id);
+    if (!cashBoxToUpdate) throw new Error("Cash box not found");
+    return await cashBoxToUpdate.update(cashBox);
   }
 
   async renameCashBox(id, name) {
@@ -51,6 +57,20 @@ class CashBoxRepository {
   }
 
   async openTurn(turn) {
+    const cashBox = await this.model.findByPk(turn.cashBoxId);
+    if (!cashBox) throw new Error("Cash box not found");
+
+    const openTurn = await this.modelTurn.findOne({
+      where: {
+        cashBoxId: turn.cashBoxId,
+        isOpen: true,
+      },
+    });
+
+    if (openTurn) {
+      throw new Error("There is already an open turn for this cash box");
+    }
+
     return await this.modelTurn.create(turn);
   }
 
@@ -58,7 +78,12 @@ class CashBoxRepository {
     const openTurn = await this.modelTurn.findByPk(id);
     if (!openTurn) throw new Error("Open turn not found");
 
+    if (openTurn.isOpen !== true) {
+      throw new Error("Turn already closed");
+    }
+
     openTurn.closeAmount = closeAmount;
+    openTurn.isOpen = false;
     openTurn.closeDate = new Date();
     await openTurn.save();
   }

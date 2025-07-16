@@ -19,7 +19,7 @@
     <HeaderContainer>
         <HStack>
             <div class="flex flex-col">
-                <h1 class="text-xl font-medium">Productos</h1>
+                <h1 class="text-primary">Productos</h1>
             </div>
             <div class="inline-flex gap-2 items-center">
                 <Searcher></Searcher>

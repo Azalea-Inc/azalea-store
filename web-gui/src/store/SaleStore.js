@@ -3,6 +3,7 @@ import { sessionStore } from "@store/SessionStore";
 import { SaleController } from "@controllers/SaleController";
 import OpenTurnModal from "@components/sales/OpenTurnModal.svelte";
 import CloseTurnModal from "@components/sales/CloseTurnModal.svelte";
+import { toast } from "svelte-sonner";
 
 const sale = {
   turnModal: {
@@ -70,6 +71,7 @@ class SaleStore {
       sessionStore.setTurn(turn.id);
       this.closeTurnModal();
       this.setModalComponent(CloseTurnModal);
+      toast.success("Turno abierto exitosamente");
     } catch (error) {
       console.error(error.message);
     }
@@ -82,6 +84,7 @@ class SaleStore {
       this.closeTurnModal();
       this.setModalComponent(OpenTurnModal);
       this.initialize();
+      toast.success("Turno cerrado exitosamente");
     } catch (error) {
       console.error(error.message);
     }

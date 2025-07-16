@@ -2,8 +2,8 @@ const { DataTypes } = require("sequelize");
 const SequelizeDB = require("../SequelizeDB");
 const sequelize = SequelizeDB.getInstance().sequelize;
 
-const CashBoxRegistryEntity = sequelize.define(
-  "CashBoxRegistry",
+const TurnEntity = sequelize.define(
+  "Turn",
   {
     id: {
       type: DataTypes.UUID,
@@ -48,4 +48,4 @@ const CashBoxRegistryEntity = sequelize.define(
   },
 );
 
-module.exports = CashBoxRegistryEntity;
+module.exports = TurnEntity;

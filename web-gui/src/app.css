@@ -20,11 +20,14 @@ body {
     @apply bg-green-500 text-white hover:bg-green-600 border-transparent;
 }
 
+.dropdown-btn-danger {
+    @apply w-full text-left px-4 py-2 bg-red-500 rounded-md text-sm text-white hover:bg-red-600 flex items-center;
+}
+
 .text-primary {
-    font-weight: 600;
     color: #0f172a;
     letter-spacing: 0.01em;
-    @apply text-xl;
+    font-size: 1.7rem;
 }
 
 .text-secondary {

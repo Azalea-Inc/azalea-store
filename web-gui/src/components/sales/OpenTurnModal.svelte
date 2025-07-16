@@ -16,9 +16,9 @@
     className="w-full max-w-md"
     isCloseButton={false}
 >
-    <div class="flex items-center" slot="header">
-        <a href="/" class="btn">Volver</a>
-    </div>
+    <p class="text-sm text-gray-500" slot="subtitle">
+        Para ingresar primero necesita abrir un turno.
+    </p>
 
     <form
         class="flex flex-col gap-4 w-full"
@@ -43,7 +43,8 @@
         </div>
 
         <div class="form-group self-end">
-            <button class="btn btn-primary px-2">Abrir turno</button>
+            <a href="/" class="btn underline-none">Volver</a>
+            <button class="btn btn-primary">Abrir turno</button>
         </div>
     </form>
 </Modal>

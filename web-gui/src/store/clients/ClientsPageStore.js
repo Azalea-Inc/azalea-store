@@ -1,4 +1,5 @@
-import { writable } from "svelte/store";
+import { writable, get } from "svelte/store";
+import { toast } from "svelte-sonner";
 
 const initialState = {
   clients: [],
@@ -15,6 +16,10 @@ class ClientsPageStore {
     this.store.update((state) => ({ ...state, ...newState }));
   }
 
+  getState() {
+    return get(store);
+  }
+
   subscribe(subscriber) {
     return this.store.subscribe(subscriber);
   }
@@ -28,10 +33,9 @@ class ClientsPageStore {
         body: JSON.stringify(client),
       });
 
-      console.log(response);
-      const { data } = await response.json();
-      this.setState({ clients: [...this.state.clients, data], loading: false });
+      toast.success("Cliente agregado exitosamente");
     } catch (error) {
+      toast.error("Error al agregar el cliente");
       this.setState({ error, loading: false });
     }
   }
@@ -49,12 +53,14 @@ class ClientsPageStore {
 
   async removeClient(id) {
     try {
-      // await fetch(`/api/clients/${id}`, { method: "DELETE" });
+      await fetch(`/api/clients/${id}`, { method: "DELETE" });
       this.store.update((state) => ({
         clients: state.clients.filter((client) => client.id !== id),
         loading: false,
       }));
+      toast.success("Cliente eliminado exitosamente");
     } catch (error) {
+      toast.error("Error al eliminar el cliente");
       this.setState({ error, loading: false });
     }
   }

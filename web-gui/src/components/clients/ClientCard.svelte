@@ -1,15 +1,21 @@
 <script>
     import { Arrow } from "@components/icons";
     import { fade } from "svelte/transition";
+    import EditClient from "@components/clients/EditClient.svelte";
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
+    import { modals } from "@components/Modals";
     import Dropdown from "@components/Dropdown.svelte";
+    import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
 
     function handleDelete() {
-        if (!confirm("¿Estás seguro que deseas borrar este cliente?")) {
-            return;
-        }
-        dispatch("delete");
+        modals.push(ConfirmModal, {
+            title: "Eliminar Cliente",
+            message: "¿Estás seguro de que deseas eliminar este cliente?",
+            onConfirm: () => {
+                dispatch("delete");
+            },
+        });
     }
 
     export let client;
@@ -62,7 +68,11 @@
                 <li>
                     <button
                         class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                        on:click={() => dispatch("edit")}
+                        on:click={() =>
+                            modals.push(EditClient, {
+                                title: "Editar Cliente",
+                                client,
+                            })}
                     >
                         <svg
                             class="w-4 h-4 mr-2"

@@ -3,13 +3,19 @@
     import { Dropdown } from "@components";
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
+    import { modals } from "@components/Modals";
+    import EditCashBox from "./EditCashBox.svelte";
+    import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
 
     export let box;
     function handleDelete() {
-        if (!confirm("¿Estás seguro que deseas borrar esta caja?")) {
-            return;
-        }
-        dispatch("delete");
+        modals.push(ConfirmModal, {
+            title: "Eliminar Caja",
+            message: "¿Estás seguro de que deseas eliminar esta caja?",
+            onConfirm: () => {
+                dispatch("delete");
+            },
+        });
     }
 </script>
 
@@ -77,7 +83,11 @@
                 <li>
                     <button
                         class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                        on:click={() => dispatch("edit")}
+                        on:click={() =>
+                            modals.push(EditCashBox, {
+                                id: box.id,
+                                title: "Editar caja",
+                            })}
                     >
                         <svg
                             class="w-4 h-4 mr-2"
