@@ -7,6 +7,7 @@
     import Container from "@components/Container.svelte";
     import HeaderContainer from "@components/HeaderContainer.svelte";
     import HorizontalList from "@components/HorizontalList.svelte";
+    import Label from "@components/Label.svelte";
     import { usersPageStore } from "@store/users/UsersPageStore";
     const store = usersPageStore;
 
@@ -31,7 +32,7 @@
     <HeaderContainer>
         <HorizontalList>
             <div class="flex flex-col">
-                <h1 class="text-primary">Usuarios</h1>
+                <Label type="h1">Usuarios</Label>
             </div>
 
             <HorizontalList>

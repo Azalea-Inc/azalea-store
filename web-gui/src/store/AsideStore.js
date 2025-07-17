@@ -27,15 +27,15 @@ const initialState = {
       notifications: 0,
     },
     {
-      title: "Inventario",
-      href: "/inventory",
-      icon: NotebookPen,
-      notifications: 0,
-    },
-    {
       title: "Productos",
       href: "/products",
       icon: Package,
+      notifications: 0,
+    },
+    {
+      title: "Inventario",
+      href: "/inventory",
+      icon: NotebookPen,
       notifications: 0,
     },
     {
