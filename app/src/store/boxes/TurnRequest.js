@@ -1,10 +1,10 @@
 const express = require("express");
-const CashBoxController = require("./CashBoxController");
+const TurnController = require("./TurnController");
 
 class TurnRequest {
   constructor() {
     this.router = express.Router();
-    this.controller = new CashBoxController();
+    this.controller = new TurnController();
   }
 
   async openTurn(req, res) {

@@ -17,9 +17,16 @@ class Turn {
     this.closeAmount = closeAmount;
   }
 
+  setUserId(userId) {
+    this.userId = userId;
+  }
+
   static build(data) {
-    const { openAmount, cashBoxId } = data;
+    const { openAmount, cashBoxId, userId } = data;
+    if (!userId) throw new Error("UserId is required");
+
     const turn = new Turn(openAmount, cashBoxId);
+    turn.setUserId(userId);
     turn.generateId();
     return turn;
   }
