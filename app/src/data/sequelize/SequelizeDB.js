@@ -36,22 +36,18 @@ class SequelizeDB {
     }
   }
 
-  static async seed() {
-    try {
-      await SequelizeDB.connect();
-      await SequelizeDB.getInstance().sequelize.sync({ force: true });
-      const sync = require("./Sync");
-      sync();
-      console.log("Database seeded successfully.");
-    } catch (error) {
-      console.error("Unable to seed the database:", error);
-    }
-  }
-
   static async drop() {
     try {
-      await SequelizeDB.connect();
-      await SequelizeDB.getInstance().sequelize.drop();
+      const fs = require("fs").promises;
+      const path = require("path");
+
+      try {
+        await fs.unlink(path.join("data", "database.db"));
+      } catch (unlinkError) {
+        if (unlinkError.code !== "ENOENT") {
+          throw unlinkError;
+        }
+      }
       console.log("Base de datos eliminada exitosamente");
     } catch (error) {
       console.error("Error al eliminar la base de datos:", error);

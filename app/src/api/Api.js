@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const SequelizeDB = require("../data/sequelize/SequelizeDB");
 const ApiRouterBuilder = require("./ApiRouterBuilder");
-const { swaggerSpec, swaggerUi } = require("../api/swagger/swagger");
+const { swaggerSpec, swaggerUi } = require("./swagger/swagger");
 
 class Api {
   constructor() {

@@ -1,16 +1,29 @@
 <script>
-    import { createEventDispatcher } from "svelte";
     import Dropdown from "@components/Dropdown.svelte";
-    const dispatch = createEventDispatcher();
+    import { bus } from "$lib/EventBus";
+    import { modals } from "@components/Modals";
+    import ConfirmRemoveModal from "@components/Modals/ConfirmRemoveModal.svelte";
 
     function handleDelete() {
-        if (!confirm("¿Estás seguro que deseas borrar este usuario?")) {
-            return;
-        }
-        dispatch("delete");
+        modals.push(ConfirmRemoveModal, {
+            title: "Eliminar usuario",
+            message: "¿Estás seguro de que deseas eliminar este usuario?",
+            onConfirm: () => {
+                bus.emit("user-removed", user.id);
+            },
+        });
     }
 
     export let user;
+
+    const ROLE_PARAMS = {
+        ADMIN: { label: "Administrador", style: "bg-green-100 text-green-800" },
+        MANAGER: {
+            label: "Supervisor",
+            style: "bg-blue-100 text-blue-800",
+        },
+        CASHIER: { label: "Cajero", style: "bg-purple-100 text-purple-800" },
+    };
 </script>
 
 <div class="card">
@@ -50,7 +63,7 @@
                 </svg>
             </button>
 
-            <div class="w-full flex flex-col gap-1">
+            <div class="w-full flex flex-col gap-2">
                 <button class="btn">Editar</button>
 
                 <button class="btn btn-danger" on:click={handleDelete}
@@ -73,9 +86,11 @@
             </svg>
         </a>
         <div
-            class="inline-block px-2 py-0.5 text-xs font-medium bg-green-100 text-green-800 rounded-full"
+            class="inline-block px-2 py-0.5 text-xs font-medium {ROLE_PARAMS[
+                user.role
+            ].style} rounded-full"
         >
-            Administrador
+            {ROLE_PARAMS[user.role].label}
         </div>
     </div>
 </div>

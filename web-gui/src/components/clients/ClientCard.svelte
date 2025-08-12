@@ -6,14 +6,15 @@
     const dispatch = createEventDispatcher();
     import { modals } from "@components/Modals";
     import Dropdown from "@components/Dropdown.svelte";
-    import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
+    import ConfirmRemoveModal from "@components/Modals/ConfirmRemoveModal.svelte";
+    import { bus } from "$lib/EventBus";
 
     function handleDelete() {
-        modals.push(ConfirmModal, {
+        modals.push(ConfirmRemoveModal, {
             title: "Eliminar Cliente",
             message: "¿Estás seguro de que deseas eliminar este cliente?",
             onConfirm: () => {
-                dispatch("delete");
+                bus.emit("client-removed", client.id);
             },
         });
     }

@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import Chart from "chart.js/auto";
     import Container from "@components/Container.svelte";
 
@@ -21,7 +21,24 @@
     let productosChartCanvas;
     let stockChartCanvas;
 
+    import { bus } from "$lib/EventBus";
+
+    let events = [];
+
+    function subscribeEvents() {
+        events.push(
+            bus.on("add-product", () => {
+                console.log("Producto agregado");
+            }),
+        );
+    }
+
+    onDestroy(() => {
+        events.forEach((event) => event());
+    });
+
     onMount(() => {
+        subscribeEvents();
         productosChart = new Chart(productosChartCanvas, {
             type: "line",
             data: {
@@ -103,7 +120,7 @@
         <section class="actions flex items-center">
             <a href="/" class="btn">Ver reportes →</a>
             <button
-                on:click={() => alert("Agregar producto")}
+                on:click={() => bus.emit("add-product")}
                 class="btn btn-primary"
             >
                 + Agregar producto

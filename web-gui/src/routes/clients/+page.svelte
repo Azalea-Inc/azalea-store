@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import Spinner from "@components/Spinner.svelte";
     import EmptyState from "@components/EmptyState.svelte";
     import ClientCard from "@components/clients/ClientCard.svelte";
@@ -7,9 +7,9 @@
     import HeaderContainer from "@components/HeaderContainer.svelte";
     import HorizontalList from "@components/HorizontalList.svelte";
     import AddClientModal from "@components/clients/AddClientModal.svelte";
+    import ExcelUploader from "@components/ExcelUploader.svelte";
     import { clientsPageStore } from "@store/clients/ClientsPageStore";
     import { modals } from "@components/Modals/modals";
-    import ExcelUploader from "@components/ExcelUploader.svelte";
     const store = clientsPageStore;
 
     let isOpen = false;
@@ -29,6 +29,11 @@
 
     onMount(async () => {
         await store.getClients();
+        store.onMount();
+    });
+
+    onDestroy(() => {
+        store.onDestroy();
     });
 </script>
 
@@ -128,10 +133,7 @@
             {/if}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {#each filteredClients as client (client.id)}
-                    <ClientCard
-                        {client}
-                        on:delete={() => store.removeClient(client.id)}
-                    />
+                    <ClientCard {client} />
                 {/each}
             </div>
         {/if}

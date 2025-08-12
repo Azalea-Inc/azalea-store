@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch index.js",
+    "dev": "node --watch src/index.js",
     "drop": "node scripts/drop_database"
+  },
+  "_moduleAliases": {
+    "$store": "src/store",
+    "$data": "src/data",
+    "$common": "src/common",
+    "$models": "src/models",
+    "$api": "src/api"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +20,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "sequelize": "^6.37.6",
     "sqlite3": "^5.1.7",
     "swagger-jsdoc": "^6.2.8",

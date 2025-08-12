@@ -1,12 +1,12 @@
-const InventoryRouter = require("./InventoryRouter");
-const ProductRequest = require("./ProductRequest");
-const UserRequest = require("./UserRequest");
-const CashBoxRequest = require("./cashBox/CashBoxRequest");
-const SaleRequest = require("./sales/SaleRequest");
-const RegistryRequest = require("./RegistryRequest");
-const ClientRequest = require("./ClientRequest");
-const AuthRequest = require("./AuthRequest");
-const ConfigRequest = require("./ConfigRequest");
+const InventoryRouter = require("$store/inventory/InventoryRouter");
+const ProductRequest = require("$store/products/api/ProductRequest");
+const UserRequest = require("$store/users/UserRequest");
+const CashBoxRequest = require("$store/boxes/CashBoxRequest");
+const SaleRequest = require("$store/sales/SaleRequest");
+const TurnRequest = require("$store/boxes/TurnRequest");
+const ClientRequest = require("$store/clients/ClientRequest");
+const AuthRequest = require("$store/auth/AuthRequest");
+const ConfigRequest = require("$store/config/ConfigRequest");
 
 class ApiRouterBuilder {
   constructor(router) {
@@ -19,7 +19,7 @@ class ApiRouterBuilder {
     new UserRequest().setupRoutes(this.router);
     new CashBoxRequest().setupRoutes(this.router);
     new SaleRequest().setupRoutes(this.router);
-    new RegistryRequest().setupRoutes(this.router);
+    new TurnRequest().setupRoutes(this.router);
     new ClientRequest().setupRoutes(this.router);
     new AuthRequest().setupRoutes(this.router);
     new ConfigRequest().setupRoutes(this.router);

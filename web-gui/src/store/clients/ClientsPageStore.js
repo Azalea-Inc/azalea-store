@@ -1,5 +1,6 @@
 import { writable, get } from "svelte/store";
 import { toast } from "svelte-sonner";
+import { bus } from "$lib/EventBus";
 
 const initialState = {
   clients: [],
@@ -10,6 +11,7 @@ const initialState = {
 class ClientsPageStore {
   constructor() {
     this.store = writable(initialState);
+    this.events = [];
   }
 
   setState(newState) {
@@ -22,6 +24,19 @@ class ClientsPageStore {
 
   subscribe(subscriber) {
     return this.store.subscribe(subscriber);
+  }
+
+  onMount() {
+    this.events.push(
+      bus.on("client-removed", ({ detail }) => {
+        this.removeClient(detail);
+      }),
+    );
+  }
+
+  onDestroy() {
+    this.events.forEach((e) => e());
+    this.events = [];
   }
 
   async addClient(client) {

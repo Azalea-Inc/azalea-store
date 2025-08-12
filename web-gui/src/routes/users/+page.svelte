@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+    import { onDestroy, onMount } from "svelte";
     import Spinner from "@components/Spinner.svelte";
     import EmptyState from "@components/EmptyState.svelte";
     import UserCard from "@components/users/UserCard.svelte";
@@ -23,7 +23,12 @@
         : $store.users;
 
     onMount(async () => {
+        store.onMount();
         await store.getUsers();
+    });
+
+    onDestroy(() => {
+        store.onDestroy();
     });
 </script>
 
@@ -103,10 +108,7 @@
             {/if}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {#each filteredUsers as user}
-                    <UserCard
-                        {user}
-                        on:delete={() => store.removeUser(user.id)}
-                    />
+                    <UserCard {user} />
                 {/each}
             </div>
         {/if}

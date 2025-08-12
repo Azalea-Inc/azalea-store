@@ -1,2 +1,1 @@
-import { modals } from "@components/Modals/modals";
-export { modals };
+export { modals } from "@components/Modals/modals";

@@ -11,6 +11,7 @@
         name: "",
         email: "",
         password: "",
+        role: "",
     };
     let isSubmitting = false;
 
@@ -65,6 +66,23 @@
                 required
             />
         </div>
+
+        <div class="form-group">
+            <label for="role" class="form-label">Rol</label>
+            <select
+                id="role"
+                class="form-input"
+                name="role"
+                bind:value={user.role}
+                required
+            >
+                <option value="">Seleccione un rol</option>
+                <option value="ADMIN">Administrador</option>
+                <option value="MANAGER">Gerente</option>
+                <option value="CASHIER">Cajero</option>
+            </select>
+        </div>
+
         <div class="form-group">
             <label for="password" class="form-label">Contraseña</label>
             <input

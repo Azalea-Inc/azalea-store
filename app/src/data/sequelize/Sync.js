@@ -1,13 +1,25 @@
-const InventoryEntity = require("./entities/InventoryEntity");
-const ProductEntity = require("./entities/ProductEntity");
-const CashBoxEntity = require("./entities/CashBoxEntity");
-const TurnEntity = require("./entities/TurnEntity");
-const MoneyMovementEntity = require("./entities/MoneyMovementEntity");
-const SaleEntity = require("./entities/SaleEntity");
-const MovementEntity = require("./entities/MovementEntity");
-const ProductsSalesEntity = require("./entities/ProductsSalesEntity");
+const InventoryEntity = require("$store/inventory/InventoryEntity");
+const ProductEntity = require("$store/products/ProductEntity");
+const CashBoxEntity = require("$store/boxes/CashBoxEntity");
+const TurnEntity = require("$store/sales/TurnEntity");
+const MoneyMovementEntity = require("$store/sales/MoneyMovementEntity");
+const SaleEntity = require("$store/sales/SaleEntity");
+const ProductsSalesEntity = require("$store/sales/ProductsSalesEntity");
+const MovementEntity = require("$store/inventory/MovementEntity");
+const UserEntity = require("$store/users/UserEntity");
 
 module.exports = () => {
+  UserEntity.hasMany(TurnEntity, {
+    foreignKey: "userId",
+    as: "turns",
+    onDelete: "CASCADE",
+  });
+
+  TurnEntity.belongsTo(UserEntity, {
+    foreignKey: "userId",
+    as: "user",
+  });
+
   ProductEntity.hasOne(InventoryEntity, {
     foreignKey: "productId",
     as: "inventory",

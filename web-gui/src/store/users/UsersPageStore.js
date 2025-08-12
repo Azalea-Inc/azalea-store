@@ -1,4 +1,6 @@
 import { writable } from "svelte/store";
+import { bus } from "$lib/EventBus";
+import { toast } from "svelte-sonner";
 
 const initialState = {
   users: [],
@@ -6,9 +8,10 @@ const initialState = {
   error: null,
 };
 
-class UsersPageStore {
+class UsersPageVM {
   constructor() {
     this.store = writable(initialState);
+    this.events = [];
   }
 
   setState(newState) {
@@ -17,6 +20,19 @@ class UsersPageStore {
 
   subscribe(subscriber) {
     return this.store.subscribe(subscriber);
+  }
+
+  onMount(callback) {
+    this.events.push(
+      bus.on("user-removed", ({ detail }) => {
+        this.removeUser(detail);
+      }),
+    );
+  }
+
+  onDestroy(callback) {
+    this.events.forEach((event) => event());
+    this.events = [];
   }
 
   async addUser(user) {
@@ -29,8 +45,10 @@ class UsersPageStore {
       });
       const { data } = await response.json();
       this.setState({ users: [...this.state.users, data], loading: false });
+      toast.success("Usuario agregado exitosamente");
     } catch (error) {
       this.setState({ error, loading: false });
+      toast.error("Error al agregar usuario");
     }
   }
 
@@ -53,10 +71,12 @@ class UsersPageStore {
         users: state.users.filter((user) => user.id !== id),
         loading: false,
       }));
+      toast.success("Usuario eliminado exitosamente");
     } catch (error) {
       this.setState({ error, loading: false });
+      toast.error("Error al eliminar usuario");
     }
   }
 }
 
-export const usersPageStore = new UsersPageStore();
+export const usersPageStore = new UsersPageVM();
