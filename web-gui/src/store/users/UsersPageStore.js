@@ -28,6 +28,12 @@ class UsersPageVM {
         this.removeUser(detail);
       }),
     );
+
+    this.events.push(
+      bus.on("user-added", (e) => {
+        this.getUsers();
+      }),
+    );
   }
 
   onDestroy(callback) {
@@ -44,7 +50,10 @@ class UsersPageVM {
         body: JSON.stringify(user),
       });
       const { data } = await response.json();
-      this.setState({ users: [...this.state.users, data], loading: false });
+      this.store.update((state) => ({
+        ...state,
+        loading: false,
+      }));
       toast.success("Usuario agregado exitosamente");
     } catch (error) {
       this.setState({ error, loading: false });

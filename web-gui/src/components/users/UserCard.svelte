@@ -33,8 +33,9 @@
                 class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center mr-3 text-white"
             >
                 <span class="text-sm font-medium"
-                    >{user.name.charAt(0)}{user.name.split(" ")[1]?.charAt(0) ||
-                        ""}</span
+                    >{user?.name.charAt(0)}{user?.name
+                        .split(" ")[1]
+                        ?.charAt(0) || ""}</span
                 >
             </div>
             <div>

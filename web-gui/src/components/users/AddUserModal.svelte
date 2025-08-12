@@ -2,6 +2,7 @@
     import { usersPageStore } from "@store/users/UsersPageStore";
     import Modal from "@components/Modal.svelte";
     import { createEventDispatcher } from "svelte";
+    import { bus } from "$lib/EventBus";
 
     const dispatch = createEventDispatcher();
     const store = usersPageStore;
@@ -27,7 +28,8 @@
             user.name = "";
             user.email = "";
             user.password = "";
-            store.getUsers();
+            user.role = "";
+            bus.emit("user-added");
             dispatch("close");
         } catch (error) {
             console.error(error);
