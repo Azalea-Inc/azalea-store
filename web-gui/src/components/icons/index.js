@@ -1,1 +1,10 @@
+export { default as Home } from "./Home.svelte";
 export { default as Arrow } from "./Arrow.svelte";
+export { default as ShoppingCart } from "./ShoppingCart.svelte";
+export { default as Package } from "./Package.svelte";
+export { default as NotebookPen } from "./NotebookPen.svelte";
+export { default as CircleDollarSign } from "./CircleDollarSign.svelte";
+export { default as User } from "./User.svelte";
+export { default as Users } from "./Users.svelte";
+export { default as Settings } from "./Settings.svelte";
+export { default as CircleX } from "./CircleX.svelte";

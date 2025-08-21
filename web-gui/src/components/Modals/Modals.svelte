@@ -1,7 +1,7 @@
 <script>
     import { modals } from "@components/Modals/modals";
     let state = modals.state;
-    import { CircleX } from "lucide-svelte";
+    import { CircleX } from "@components/icons";
 </script>
 
 {#if !$state.hidden}
@@ -17,7 +17,7 @@
                 </h2>
 
                 <CircleX
-                    class="w-6 h-6 text-red-400 hover:text-red-500 cursor-pointer transition-colors"
+                    className="w-6 h-6 text-red-400 hover:text-red-500 cursor-pointer transition-colors"
                     onclick={() => modals.close()}
                 />
             </div>

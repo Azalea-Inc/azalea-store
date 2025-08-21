@@ -1,16 +1,14 @@
 import { writable } from "svelte/store";
 
 import {
+  Home,
   ShoppingCart,
   Package,
-  Box,
-  Settings,
   NotebookPen,
-  User,
   CircleDollarSign,
+  User,
   Users,
-  Home,
-} from "lucide-svelte";
+} from "@components/icons";
 
 const initialState = {
   menu: [

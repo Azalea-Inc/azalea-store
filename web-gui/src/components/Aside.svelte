@@ -2,7 +2,7 @@
     import UserAsideInfo from "@components/users/UserAsideInfo.svelte";
     import { page } from "$app/stores";
     import { asideStore } from "@store/AsideStore";
-    import { Settings } from "lucide-svelte";
+    import { Settings } from "@components/icons";
     import { userStore } from "@store/UserStore";
     import Tooltip from "@components/Tooltip.svelte";
 </script>
@@ -31,6 +31,7 @@
                         this={item.icon}
                         size={20}
                         class="text-gray-700 icon"
+                        className="text-gray-700 icon"
                     />
                     <!-- <span>{item.title}</span> -->
                     {#if item.notifications > 0}
