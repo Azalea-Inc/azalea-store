@@ -88,7 +88,11 @@
             title="No hay productos disponibles"
             description="Aún no se han agregado productos"
         >
-            <button class="btn btn-primary">Agregar producto</button>
+            <button
+                class="btn btn-primary"
+                on:click={() => state.addProductHandler()}
+                >Agregar producto</button
+            >
         </EmptyState>
     </div>
 {:else}

@@ -46,6 +46,20 @@
             required
         />
     </div>
+
+    <div class="form-group">
+        <label for="phone" class="form-label">Numero telefonico</label>
+        <input
+            id="phone"
+            class="form-input"
+            type="tel"
+            name="phone"
+            placeholder="Ingrese el numero telefonico"
+            bind:value={client.phone}
+            required
+        />
+    </div>
+
     <div class="form-group">
         <label for="email" class="form-label">Correo Electrónico</label>
         <input
@@ -55,7 +69,6 @@
             name="email"
             placeholder="Ingrese el correo electrónico"
             bind:value={client.email}
-            required
         />
     </div>
 

@@ -6,6 +6,7 @@ import { writable } from "svelte/store";
 import { toast } from "svelte-sonner";
 import { modals } from "@components/Modals";
 import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
+import AddProductModal from "@components/products/AddProductModal.svelte";
 
 class ProductsPageStore {
   constructor() {
@@ -54,6 +55,12 @@ class ProductsPageStore {
 
   openProductDetail(id) {
     productDetailStore.openProductDetail(id);
+  }
+
+  addProductHandler(data) {
+    modals.push(AddProductModal, {
+      title: "Agregar Producto",
+    });
   }
 
   deleteProductHandler(id) {

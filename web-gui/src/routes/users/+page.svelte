@@ -8,11 +8,18 @@
     import HeaderContainer from "@components/HeaderContainer.svelte";
     import HorizontalList from "@components/HorizontalList.svelte";
     import Label from "@components/Label.svelte";
+    import { modals } from "@components/Modals";
     import { usersPageStore } from "@store/users/UsersPageStore";
     const store = usersPageStore;
 
     let isOpen = false;
     let searchQuery = "";
+
+    function addUserHandler() {
+        modals.push(AddUserModal, {
+            title: "Agregar usuario",
+        });
+    }
 
     $: filteredUsers = searchQuery
         ? $store.users.filter(
@@ -32,7 +39,6 @@
     });
 </script>
 
-<AddUserModal {isOpen} on:close={() => (isOpen = false)} />
 <Container>
     <HeaderContainer>
         <HorizontalList>
@@ -62,10 +68,7 @@
                     </svg>
                 </div>
 
-                <button
-                    class="btn btn-primary"
-                    on:click={() => (isOpen = true)}
-                >
+                <button class="btn btn-primary" on:click={addUserHandler}>
                     <svg
                         class="w-4 h-4 mr-1"
                         viewBox="0 0 16 16"
@@ -90,9 +93,7 @@
                     title="No se encontraron resultados"
                     description="No hay usuarios que coincidan con los criterios de búsqueda actuales."
                 >
-                    <button
-                        class="btn btn-primary"
-                        on:click={() => (isOpen = true)}
+                    <button class="btn btn-primary" on:click={addUserHandler}
                         ><svg
                             class="w-4 h-4 mr-1"
                             viewBox="0 0 16 16"

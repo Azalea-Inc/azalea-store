@@ -1,12 +1,8 @@
 <script>
-    import { usersPageStore } from "@store/users/UsersPageStore";
-    import Modal from "@components/Modal.svelte";
-    import { createEventDispatcher } from "svelte";
-    import { bus } from "$lib/EventBus";
-
-    const dispatch = createEventDispatcher();
-    const store = usersPageStore;
-    export let isOpen = false;
+    import { UserController } from "@controllers/UserController";
+    import { toast } from "svelte-sonner";
+    import { modals } from "@components/Modals";
+    const controller = new UserController();
 
     let user = {
         name: "",
@@ -14,23 +10,27 @@
         password: "",
         role: "",
     };
+
     let isSubmitting = false;
+
+    function resetUser() {
+        user.name = "";
+        user.email = "";
+        user.password = "";
+        user.role = "";
+    }
 
     async function addUser() {
         if (isSubmitting) {
             return;
         }
-
         isSubmitting = true;
 
         try {
-            await store.addUser(user);
-            user.name = "";
-            user.email = "";
-            user.password = "";
-            user.role = "";
-            bus.emit("user-added");
-            dispatch("close");
+            await controller.addUser(user);
+            resetUser();
+            toast.success("Usuario agregado exitosamente");
+            modals.close();
         } catch (error) {
             console.error(error);
         } finally {
@@ -39,74 +39,69 @@
     }
 </script>
 
-<Modal {isOpen} on:close={() => dispatch("close")} title="Nuevo Usuario">
-    <form
-        on:submit|preventDefault={addUser}
-        class="form-container w-md mx-auto"
-    >
-        <div class="form-group">
-            <label for="client-name" class="form-label">Nombre</label>
-            <input
-                id="name"
-                class="form-input"
-                type="text"
-                name="client-name"
-                placeholder="Ingrese el nombre"
-                bind:value={user.name}
-                required
-            />
-        </div>
-        <div class="form-group">
-            <label for="email" class="form-label">Correo Electrónico</label>
-            <input
-                id="email"
-                class="form-input"
-                type="email"
-                name="email"
-                placeholder="Ingrese el correo electrónico"
-                bind:value={user.email}
-                required
-            />
-        </div>
+<form on:submit|preventDefault={addUser} class="form-container w-md mx-auto">
+    <div class="form-group">
+        <label for="client-name" class="form-label">Nombre</label>
+        <input
+            id="name"
+            class="form-input"
+            type="text"
+            name="client-name"
+            placeholder="Ingrese el nombre"
+            bind:value={user.name}
+            required
+        />
+    </div>
+    <div class="form-group">
+        <label for="email" class="form-label">Correo Electrónico</label>
+        <input
+            id="email"
+            class="form-input"
+            type="email"
+            name="email"
+            placeholder="Ingrese el correo electrónico"
+            bind:value={user.email}
+            required
+        />
+    </div>
 
-        <div class="form-group">
-            <label for="role" class="form-label">Rol</label>
-            <select
-                id="role"
-                class="form-input"
-                name="role"
-                bind:value={user.role}
-                required
-            >
-                <option value="">Seleccione un rol</option>
-                <option value="ADMIN">Administrador</option>
-                <option value="MANAGER">Gerente</option>
-                <option value="CASHIER">Cajero</option>
-            </select>
-        </div>
+    <div class="form-group">
+        <label for="role" class="form-label">Rol</label>
+        <select
+            id="role"
+            class="form-input"
+            name="role"
+            bind:value={user.role}
+            required
+        >
+            <option value="">Seleccione un rol</option>
+            <option value="ADMIN">Administrador</option>
+            <option value="MANAGER">Gerente</option>
+            <option value="CASHIER">Cajero</option>
+        </select>
+    </div>
 
-        <div class="form-group">
-            <label for="password" class="form-label">Contraseña</label>
-            <input
-                id="password"
-                class="form-input"
-                type="password"
-                name="password"
-                placeholder="Ingrese la contraseña"
-                bind:value={user.password}
-                required
-                minlength="8"
-                title="La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número"
-            />
-        </div>
+    <div class="form-group">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+            id="password"
+            class="form-input"
+            type="password"
+            name="password"
+            placeholder="Ingrese la contraseña"
+            bind:value={user.password}
+            required
+            minlength="8"
+            title="La contraseña debe contener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número"
+        />
+    </div>
 
-        <div class="flex justify-end pt-4">
-            <button class="btn btn-primary" disabled={isSubmitting}>
-                {isSubmitting ? "Guardando..." : "Guardar"}
-            </button>
-        </div>
-    </form>
-</Modal>
+    <div class="flex justify-end pt-4">
+        <button class="btn btn-primary" disabled={isSubmitting}>
+            {isSubmitting ? "Guardando..." : "Guardar"}
+        </button>
+    </div>
+</form>
 
 <style>
     .form-container {

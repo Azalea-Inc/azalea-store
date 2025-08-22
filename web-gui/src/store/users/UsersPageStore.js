@@ -41,26 +41,6 @@ class UsersPageVM {
     this.events = [];
   }
 
-  async addUser(user) {
-    try {
-      this.setState({ loading: true });
-      const response = await fetch("/api/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      });
-      const { data } = await response.json();
-      this.store.update((state) => ({
-        ...state,
-        loading: false,
-      }));
-      toast.success("Usuario agregado exitosamente");
-    } catch (error) {
-      this.setState({ error, loading: false });
-      toast.error("Error al agregar usuario");
-    }
-  }
-
   async getUsers() {
     try {
       this.setState({ loading: true });

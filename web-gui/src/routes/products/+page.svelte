@@ -9,13 +9,9 @@
     import Searcher from "@components/Searcher.svelte";
     import HStack from "@components/HStack.svelte";
     $: state = productsPageStore;
-
-    let isOpen = false;
 </script>
 
 <Container overflowHidden={true}>
-    <AddProductModal {isOpen} on:close={() => (isOpen = false)} />
-
     <HeaderContainer>
         <HStack>
             <div class="flex flex-col">
@@ -42,9 +38,7 @@
                 <ButtonIcon
                     buttonType="primary"
                     tooltipText="Agregar producto"
-                    onClick={() => {
-                        isOpen = true;
-                    }}
+                    onClick={() => state.addProductHandler()}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
