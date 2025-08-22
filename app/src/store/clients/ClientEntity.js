@@ -17,6 +17,11 @@ const ClientEntity = sequelize.define(
     },
     email: {
       type: DataTypes.STRING,
+      allowNull: true,
+      unique: true,
+    },
+    phone: {
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },

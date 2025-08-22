@@ -7,10 +7,12 @@ const TurnRequest = require("$store/boxes/TurnRequest");
 const ClientRequest = require("$store/clients/ClientRequest");
 const AuthRequest = require("$store/auth/AuthRequest");
 const ConfigRequest = require("$store/config/ConfigRequest");
+const AuthMiddleware = require("./AuthMiddleware");
 
 class ApiRouterBuilder {
   constructor(router) {
     this.router = router;
+    this.authMiddleware = new AuthMiddleware();
   }
 
   build() {

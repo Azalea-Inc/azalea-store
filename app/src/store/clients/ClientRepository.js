@@ -39,6 +39,10 @@ class ClientRepository {
     return client;
   }
 
+  async getByPhone(phone) {
+    return await this.model.findOne({ where: { phone } });
+  }
+
   async remove(id) {
     const client = await this.model.findByPk(id);
     if (!client) throw new Error("Client not found");

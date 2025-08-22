@@ -17,6 +17,11 @@ class AuthController {
     const token = this.tokenManager.generateToken(user);
     return token;
   }
+
+  async getUserInfo(token) {
+    const userInfo = await this.tokenManager.getUserInfo(token);
+    return userInfo;
+  }
 }
 
 module.exports = AuthController;

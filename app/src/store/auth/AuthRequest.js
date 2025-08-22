@@ -3,6 +3,7 @@ const AuthController = require("./AuthController");
 class AuthRequest {
   constructor() {
     this.controller = new AuthController();
+    this.router = require("express").Router();
   }
 
   async login(req, res) {
@@ -16,8 +17,20 @@ class AuthRequest {
     }
   }
 
+  async getUserInfo(req, res) {
+    try {
+      console.log(req.headers);
+      const user = await this.controller.getUserInfo(req.headers.authorization);
+      res.status(200).json({ user });
+    } catch (error) {
+      res.status(401).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     router.post("/login", this.login.bind(this));
+    this.router.get("/info", this.getUserInfo.bind(this));
+    router.use("/auth", this.router);
   }
 }
 

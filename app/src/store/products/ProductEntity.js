@@ -30,7 +30,7 @@ const ProductEntity = sequelize.define("Product", {
   },
   productType: DataTypes.ENUM("unit", "bulk", "kit"),
   unitOfMeasure: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM("piece", "kg", "l", "m", "cm", "mm"),
     allowNull: true,
     defaultValue: "piece",
   },

@@ -8,10 +8,21 @@ class ClientController {
 
   async addClient(data) {
     const client = Client.build(data);
-    const existingClient = await this.repository.getByEmail(client.email);
+    let existingClient = await this.repository.getByPhone(client.phone);
+
+    if (existingClient) {
+      throw new Error("Un cliente con este teléfono ya existe");
+    }
+
+    if (!client.email) {
+      return await this.repository.add(client);
+    }
+
+    existingClient = await this.repository.getByEmail(client.email);
     if (existingClient) {
       throw new Error("Un cliente con este email ya existe");
     }
+
     return await this.repository.add(client);
   }
 

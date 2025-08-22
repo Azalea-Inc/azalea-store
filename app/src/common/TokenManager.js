@@ -63,4 +63,19 @@ module.exports = class TokenManager {
       }
     }
   }
+
+  getUserInfo(token) {
+    try {
+      const payload = jwt.verify(token, this.secretKey);
+      return { valid: true, payload };
+    } catch (error) {
+      if (error.name === "TokenExpiredError") {
+        throw new Error("Token expired");
+      } else if (error.name === "JsonWebTokenError") {
+        throw new Error("Invalid signature");
+      } else {
+        throw new Error("Token validation failed");
+      }
+    }
+  }
 };
