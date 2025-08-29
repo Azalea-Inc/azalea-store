@@ -10,12 +10,11 @@ class TurnRequest {
   async openTurn(req, res) {
     try {
       const registry = await this.controller.openTurn(req.body);
-
       res
         .status(200)
         .json({ message: "Box opened successfully", data: registry });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json(error.message);
     }
   }
 

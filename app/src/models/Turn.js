@@ -23,7 +23,7 @@ class Turn {
 
   static build(data) {
     const { openAmount, cashBoxId, userId } = data;
-    if (!userId) throw new Error("UserId is required");
+    if (!userId) throw new Error("UserId es requerido");
 
     const turn = new Turn(openAmount, cashBoxId);
     turn.setUserId(userId);

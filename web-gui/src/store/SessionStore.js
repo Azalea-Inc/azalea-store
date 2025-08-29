@@ -3,7 +3,7 @@ import { saleStore } from "@store/SaleStore";
 
 const initialState = {
   userId: null,
-  cashBoxId: "c023b3c6-0016-4e80-8e3b-f6812dbcd151",
+  cashBoxId: "0b733db2-3a78-4a01-9205-d1f5253e1aca",
   turnId: null,
   currentSaleId: null,
   isTurnActive: false,

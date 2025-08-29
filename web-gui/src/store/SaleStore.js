@@ -72,8 +72,8 @@ class SaleStore {
       this.closeTurnModal();
       this.setModalComponent(CloseTurnModal);
       toast.success("Turno abierto exitosamente");
-    } catch (error) {
-      console.error(error.message);
+    } catch ({ response }) {
+      toast.error(response.data);
     }
   }
 
