@@ -93,6 +93,11 @@ class ProductRequest {
     });
   }
 
+  setMiddlewares(authMiddleware) {
+    this.authMiddleware = authMiddleware;
+    return this;
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.addProduct.bind(this));
     this.router.get("/", this.showProducts.bind(this));
@@ -103,7 +108,11 @@ class ProductRequest {
 
     new UpdateProductHandler().setup(this.router);
 
-    router.use("/products", this.router);
+    router.use(
+      "/products",
+      this.authMiddleware.authenticate.bind(this.authMiddleware),
+      this.router,
+    );
   }
 }
 

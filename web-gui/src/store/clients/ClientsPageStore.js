@@ -1,6 +1,7 @@
 import { writable, get } from "svelte/store";
 import { toast } from "svelte-sonner";
 import { bus } from "$lib/EventBus";
+import http from "$lib/http";
 
 const initialState = {
   clients: [],
@@ -42,15 +43,11 @@ class ClientsPageStore {
   async addClient(client) {
     try {
       this.setState({ loading: true });
-      const response = await fetch("/api/clients", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(client),
-      });
-
+      await http.post("/clients", client);
       toast.success("Cliente agregado exitosamente");
     } catch (error) {
-      toast.error("Error al agregar el cliente");
+      console.log(error.response.data.error);
+      toast.error(error.response.data.error);
       this.setState({ error, loading: false });
     }
   }
@@ -58,9 +55,8 @@ class ClientsPageStore {
   async getClients() {
     try {
       this.setState({ loading: true });
-      const response = await fetch("/api/clients");
-      const { data } = await response.json();
-      this.setState({ clients: data, loading: false });
+      const { data } = await http.get("/clients");
+      this.setState({ clients: data.data, loading: false });
     } catch (error) {
       this.setState({ error, loading: false });
     }
@@ -68,14 +64,14 @@ class ClientsPageStore {
 
   async removeClient(id) {
     try {
-      await fetch(`/api/clients/${id}`, { method: "DELETE" });
+      await http.delete(`/clients/${id}`);
       this.store.update((state) => ({
         clients: state.clients.filter((client) => client.id !== id),
         loading: false,
       }));
       toast.success("Cliente eliminado exitosamente");
     } catch (error) {
-      toast.error("Error al eliminar el cliente");
+      toast.error(error.response.data.error);
       this.setState({ error, loading: false });
     }
   }

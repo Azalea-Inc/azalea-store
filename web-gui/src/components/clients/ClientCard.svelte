@@ -75,7 +75,9 @@
     <div
         class="flex items-center justify-between border-t pt-4 border-gray-100"
     >
-        <button class="btn btn-primary">Ver Detalles <Arrow /></button>
+        <a href={`/clients/${client.id}`} class="btn btn-primary"
+            >Ver Detalles <Arrow /></a
+        >
         <Dropdown>
             <button
                 slot="trigger"

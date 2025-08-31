@@ -2,11 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const SequelizeDB = require("../data/sequelize/SequelizeDB");
 const ApiRouterBuilder = require("./ApiRouterBuilder");
+const cookieParser = require("cookie-parser");
 const { swaggerSpec, swaggerUi } = require("./swagger/swagger");
 
 class Api {
   constructor() {
     this.app = express();
+    this.app.use(cookieParser());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());

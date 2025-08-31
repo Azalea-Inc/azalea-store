@@ -1,22 +1,21 @@
 const TokenManager = require("../common/TokenManager");
+const AuthController = require("../store/auth/AuthController");
 
 module.exports = class AuthMiddleware {
   constructor() {
     this.tokenManager = new TokenManager();
+    this.authController = new AuthController();
   }
 
-  authenticate(req, res, next) {
-    const authHeader = req.headers["authorization"];
-    if (!authHeader) return res.status(401).json({ error: "Token requerido" });
-
-    const token = authHeader.split(" ")[1]; // formato "Bearer <token>"
-    if (!token) return res.status(401).json({ error: "Token faltante" });
-
+  async authenticate(req, res, next) {
     try {
-      const decoded = this.tokenManager.getUserInfo(token);
-      req.session = decoded; // guardar datos del usuario en la request
+      const token = req.cookies?.token;
+      if (!token) return res.status(401).json({ error: "Token requerido" });
+      const session = await this.authController.auth(token);
+      req.session = session;
       next();
     } catch (err) {
+      res.clearCookie("token");
       return res.status(403).json({ error: "Token inválido o expirado" });
     }
   }

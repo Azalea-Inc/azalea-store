@@ -5,42 +5,14 @@ module.exports = class TokenManager {
     this.secretKey = secretKey || "default-secret-key";
   }
 
-  generateToken(userInfo) {
+  generateToken(session) {
     const payload = {
-      userId: userInfo.id,
-      name: userInfo.name,
-      email: userInfo.email,
+      userId: session.userId,
+      tokenId: session.tokenId,
     };
 
     return jwt.sign(payload, this.secretKey, {
       expiresIn: "24h",
-      algorithm: "HS256",
-    });
-  }
-
-  generateAccessToken(userInfo, expiresIn = "1h") {
-    const payload = {
-      userId: userInfo.id,
-      name: userInfo.name,
-      email: userInfo.email,
-      role: userInfo.role,
-      type: "access",
-    };
-
-    return jwt.sign(payload, this.secretKey, {
-      expiresIn,
-      algorithm: "HS256",
-    });
-  }
-
-  generateRefreshToken(userInfo, expiresIn = "7d") {
-    const payload = {
-      userId: userInfo.id,
-      type: "refresh",
-    };
-
-    return jwt.sign(payload, this.secretKey, {
-      expiresIn,
       algorithm: "HS256",
     });
   }
@@ -51,7 +23,9 @@ module.exports = class TokenManager {
         return { valid: false, error: "Token not provided" };
       }
 
-      const payload = jwt.verify(token, this.secretKey);
+      const payload = jwt.verify(token, this.secretKey, {
+        ignoreExpiration: true,
+      });
       return { valid: true, payload };
     } catch (error) {
       if (error.name === "TokenExpiredError") {
@@ -60,21 +34,6 @@ module.exports = class TokenManager {
         return { valid: false, error: "Invalid signature" };
       } else {
         return { valid: false, error: "Token validation failed" };
-      }
-    }
-  }
-
-  getUserInfo(token) {
-    try {
-      const payload = jwt.verify(token, this.secretKey);
-      return { valid: true, payload };
-    } catch (error) {
-      if (error.name === "TokenExpiredError") {
-        throw new Error("Token expired");
-      } else if (error.name === "JsonWebTokenError") {
-        throw new Error("Invalid signature");
-      } else {
-        throw new Error("Token validation failed");
       }
     }
   }

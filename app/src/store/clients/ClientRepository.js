@@ -10,7 +10,9 @@ class ClientRepository {
   }
 
   async getAll() {
-    const clients = await this.model.findAll();
+    const clients = await this.model.findAll({
+      order: [["createdAt", "DESC"]],
+    });
     return clients;
   }
 

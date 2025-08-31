@@ -18,6 +18,11 @@
         unitOfMeasure: "",
     };
 
+    const typeUnits = {
+        unit: [{ label: "Pieza", value: "Piece" }],
+        bulk: [{ label: "Kilogramo", value: "Kg" }],
+    };
+
     let product = { ...initialProductState };
     let isSubmitted = false;
 
@@ -102,8 +107,10 @@
             >
                 <option value="" disabled selected>Seleccione una unidad</option
                 >
-                <option value="Kg">Kg</option>
-                <option value="Piece">Pieza</option>
+
+                {#each typeUnits[product.productType] as unit}
+                    <option value={unit.label}>{unit.label}</option>
+                {/each}
             </select>
         </div>
     </HorizontalList>

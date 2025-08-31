@@ -1,9 +1,10 @@
 <script>
     export let type = "p";
     export let text = "";
+    export let className = "";
 </script>
 
-<svelte:element this={type} class="text-{type}">
+<svelte:element this={type} class="text-{type} {className}">
     <slot>{text}</slot>
 </svelte:element>
 
