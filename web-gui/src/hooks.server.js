@@ -4,6 +4,7 @@ const PROTECTED_ROUTES = ["/dashboard", "/profile", "/admin"];
 
 export const handle = async ({ event, resolve }) => {
   // const session = event.cookies.get("session");
+  const token = event.cookies.get("token");
   // event.locals.user = session ? { name: "Joan", isLogged: true } : null;
 
   // const path = event.url.pathname;

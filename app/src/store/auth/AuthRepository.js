@@ -21,6 +21,12 @@ class AuthRepository {
     return user;
   }
 
+  async getUserInfo(id) {
+    return await this.model.findByPk(id, {
+      attributes: { exclude: ["password"] },
+    });
+  }
+
   async createSession(session) {
     return await SessionEntity.create(session);
   }

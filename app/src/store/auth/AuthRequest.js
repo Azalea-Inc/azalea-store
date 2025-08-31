@@ -33,7 +33,8 @@ class AuthRequest {
 
   async getUserInfo(req, res) {
     try {
-      res.status(200).json("OK");
+      const user = await this.controller.getUserInfo(req.session.userId);
+      res.status(200).json({ user });
     } catch (error) {
       res.status(401).json({ error: error.message });
     }
@@ -57,6 +58,7 @@ class AuthRequest {
   setupRoutes(router) {
     router.post("/login", this.login.bind(this));
     this.router.post("/logout", this.logout.bind(this));
+    this.router.get("/me", this.getUserInfo.bind(this));
     router.use(
       "/auth",
       this.authMiddleware.authenticate.bind(this.authMiddleware),

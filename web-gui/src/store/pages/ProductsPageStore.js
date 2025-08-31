@@ -7,6 +7,9 @@ import { toast } from "svelte-sonner";
 import { modals } from "@components/Modals";
 import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
 import AddProductModal from "@components/products/AddProductModal.svelte";
+import http from "$lib/http";
+
+import { ProductRepository } from "../../repository/ProductRepository";
 
 class ProductsPageStore {
   constructor() {
@@ -20,6 +23,7 @@ class ProductsPageStore {
     this.inLoading = true;
     this.host = "http://localhost:3000";
     this.store = writable(this);
+    this.repository = new ProductRepository();
   }
 
   resetState() {
@@ -75,7 +79,7 @@ class ProductsPageStore {
 
   async deleteProduct(id) {
     try {
-      await fetch(`${this.host}/api/products/${id}`, { method: "DELETE" });
+      await this.repository.deleteProduct(id);
       toast.success("Producto eliminado exitosamente");
       this.products = this.products.filter((product) => product.id !== id);
       this.update();
@@ -89,14 +93,13 @@ class ProductsPageStore {
   async getProducts() {
     try {
       this.inLoading = true;
-      const response = await fetch(
-        `${this.host}/api/products?page=${this.page}&limit=${this.limit}`,
+      const { products, pagination } = await this.repository.getProducts(
+        this.page,
+        this.limit,
       );
-      const { data, pagination } = await response.json();
-      this.products = data;
+      this.products = products;
       this.total = pagination.total;
       this.totalPages = pagination.totalPages;
-
       this.inLoading = false;
       this.update();
     } catch (error) {

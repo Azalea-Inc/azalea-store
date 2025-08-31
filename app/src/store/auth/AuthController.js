@@ -37,6 +37,11 @@ class AuthController {
     return session;
   }
 
+  async getUserInfo(userId) {
+    const user = await this.repository.getUserInfo(userId);
+    return user;
+  }
+
   async getSession(token) {
     const { payload } = await this.tokenManager.validateToken(token);
     return await this.repository.getSession(payload.tokenId);

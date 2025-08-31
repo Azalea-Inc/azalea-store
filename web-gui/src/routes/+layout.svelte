@@ -5,12 +5,16 @@
     import { MainContainer } from "@components";
     import { Toaster } from "svelte-sonner";
     import Modals from "@components/Modals/Modals.svelte";
-
     import { page } from "$app/stores";
-    import { onDestroy } from "svelte";
+    import { onDestroy, onMount } from "svelte";
+    import { userStore } from "@store/UserStore";
     let { children } = $props();
 
     let isLoginPage = $page && $page.route && $page.route.id === "/login";
+
+    onMount(async () => {
+        await userStore.getUserInfo();
+    });
 
     onDestroy(() => {
         bus.reset();

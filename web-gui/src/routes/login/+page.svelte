@@ -1,45 +1,23 @@
 <script>
+    import { goto } from "$app/navigation";
     import { userStore } from "@store/UserStore";
+    import http from "$lib/http";
 
     let email = "";
     let password = "";
-    let rememberMe = false;
     let isLoading = false;
-    let errorMessage = "";
 
-    function handleSubmit() {
+    async function loginHandler() {
         isLoading = true;
-        errorMessage = "";
-
-        fetch("/api/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password, rememberMe }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                const sessionData = {
-                    userId: data.id,
-                };
-
-                const expirationDays = rememberMe ? 30 : 1;
-                const expirationDate = new Date();
-                expirationDate.setDate(
-                    expirationDate.getDate() + expirationDays,
-                );
-
-                document.cookie = `session=${JSON.stringify(sessionData)}; expires=${expirationDate.toUTCString()}; path=/; secure; samesite=strict`;
-
-                userStore.logued();
-                window.location.href = "/";
-            })
-            .catch((error) => {
-                console.error("Error al iniciar sesión:", error);
-                errorMessage = "Error al iniciar sesión";
-                isLoading = false;
-            });
+        try {
+            await http.post("/login", { email, password });
+            isLoading = false;
+            window.location.href = "/";
+        } catch (error) {
+            console.error(error);
+        } finally {
+            isLoading = false;
+        }
     }
 </script>
 
@@ -49,13 +27,7 @@
     </div>
 
     <div class="login-form-container">
-        <form on:submit|preventDefault={handleSubmit} class="login-form">
-            {#if errorMessage}
-                <div class="error-message">
-                    {errorMessage}
-                </div>
-            {/if}
-
+        <form on:submit|preventDefault={loginHandler} class="login-form">
             <div class="form-group">
                 <label for="email">Nombre de usuario o correo electrónico</label
                 >
@@ -76,14 +48,6 @@
                     autocomplete="current-password"
                     required
                 />
-            </div>
-
-            <div class="form-group remember-me">
-                <label class="checkbox-container">
-                    <input type="checkbox" bind:checked={rememberMe} />
-                    <span class="checkmark"></span>
-                    Mantener la sesión iniciada
-                </label>
             </div>
 
             <button type="submit" class="login-button" disabled={isLoading}>
@@ -186,69 +150,6 @@
         text-decoration: underline;
     }
 
-    .remember-me {
-        display: flex;
-        align-items: center;
-    }
-
-    .checkbox-container {
-        position: relative;
-        padding-left: 25px;
-        cursor: pointer;
-        font-size: 14px;
-        user-select: none;
-        display: flex;
-        align-items: center;
-    }
-
-    .checkbox-container input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-    }
-
-    .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 16px;
-        width: 16px;
-        background-color: #fff;
-        border: 1px solid #e1e4e8;
-        border-radius: 3px;
-    }
-
-    .checkbox-container:hover input ~ .checkmark {
-        border-color: #0366d6;
-    }
-
-    .checkbox-container input:checked ~ .checkmark {
-        background-color: #0366d6;
-        border-color: #0366d6;
-    }
-
-    .checkmark:after {
-        content: "";
-        position: absolute;
-        display: none;
-    }
-
-    .checkbox-container input:checked ~ .checkmark:after {
-        display: block;
-    }
-
-    .checkbox-container .checkmark:after {
-        left: 5px;
-        top: 2px;
-        width: 3px;
-        height: 7px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-    }
-
     .login-button {
         width: 100%;
         background-color: #2ea44f;
@@ -264,6 +165,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-top: 1.5rem;
     }
 
     .login-button:hover:not(:disabled) {
