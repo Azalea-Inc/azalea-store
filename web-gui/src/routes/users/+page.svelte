@@ -2,15 +2,15 @@
     import { onDestroy, onMount } from "svelte";
     import Spinner from "@components/Spinner.svelte";
     import EmptyState from "@components/EmptyState.svelte";
-    import UserCard from "@components/users/UserCard.svelte";
-    import AddUserModal from "@components/users/AddUserModal.svelte";
     import Container from "@components/Container.svelte";
     import HeaderContainer from "@components/HeaderContainer.svelte";
     import HorizontalList from "@components/HorizontalList.svelte";
     import Label from "@components/Label.svelte";
+    import AddUserModal from "@modules/users/components/AddUserModal.svelte";
+    import UserCard from "@modules/users/components/UserCard.svelte";
     import { modals } from "@components/Modals";
-    import { usersPageStore } from "@store/users/UsersPageStore";
-    const store = usersPageStore;
+    import { usersPageVM } from "@modules/users/viewmodel/UsersPageVM";
+    const store = usersPageVM;
 
     let isOpen = false;
     let searchQuery = "";

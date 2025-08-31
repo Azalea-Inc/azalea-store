@@ -1,8 +1,8 @@
 import { writable, get } from "svelte/store";
 import { sessionStore } from "@store/SessionStore";
 import { SaleController } from "@controllers/SaleController";
-import OpenTurnModal from "@components/sales/OpenTurnModal.svelte";
-import CloseTurnModal from "@components/sales/CloseTurnModal.svelte";
+import OpenTurnModal from "@modules/sales/components/OpenTurnModal.svelte";
+import CloseTurnModal from "@modules/sales/components/CloseTurnModal.svelte";
 import { toast } from "svelte-sonner";
 
 const sale = {

@@ -2,15 +2,15 @@
     import { onDestroy, onMount } from "svelte";
     import Spinner from "@components/Spinner.svelte";
     import EmptyState from "@components/EmptyState.svelte";
-    import ClientCard from "@components/clients/ClientCard.svelte";
     import Container from "@components/Container.svelte";
     import HeaderContainer from "@components/HeaderContainer.svelte";
     import HorizontalList from "@components/HorizontalList.svelte";
-    import AddClientModal from "@components/clients/AddClientModal.svelte";
     import ExcelUploader from "@components/ExcelUploader.svelte";
-    import { clientsPageStore } from "@store/clients/ClientsPageStore";
+    import ClientCard from "@modules/clients/components/ClientCard.svelte";
+    import AddClientModal from "@modules/clients/components/AddClientModal.svelte";
+    import { clientsPageVM } from "@modules/clients/viewmodel/ClientsPageVM";
     import { modals } from "@components/Modals/modals";
-    const store = clientsPageStore;
+    const store = clientsPageVM;
 
     let isOpen = false;
     let searchQuery = "";

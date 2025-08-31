@@ -1,10 +1,10 @@
 <script>
     import { onMount } from "svelte";
-    import { cashboxesPageStore } from "@store/cashboxes/cashboxesPageStore";
+    import { boxesVM } from "@modules/boxes/viewmodel/boxesVM";
+    import AddBoxModal from "@modules/boxes/components/AddBoxModal.svelte";
+    import CashboxCard from "@modules/boxes/components/CashboxCard.svelte";
     import Breadcrumb from "@components/Breadcrumb.svelte";
-    import AddBoxModal from "@components/cashbox/AddBoxModal.svelte";
     import Spinner from "@components/Spinner.svelte";
-    import CashboxCard from "@components/cashbox/CashboxCard.svelte";
     import EmptyState from "@components/EmptyState.svelte";
     import Container from "@components/Container.svelte";
     import HeaderContainer from "@components/HeaderContainer.svelte";
@@ -12,28 +12,13 @@
     import HStack from "@components/HStack.svelte";
     import Button from "@components/Button.svelte";
     import ButtonIcon from "@components/ButtonIcon.svelte";
-    import { createEventDispatcher } from "svelte";
 
-    const dispatch = createEventDispatcher();
-    const store = cashboxesPageStore;
+    const store = boxesVM;
     let isOpen = false;
     let searchTerm = "";
-    let isLoading = false;
 
     onMount(async () => {
-        isLoading = true;
-        try {
-            await store.getBoxes();
-            dispatch("logEvent", { type: "load", success: true });
-        } catch (error) {
-            dispatch("logEvent", {
-                type: "load",
-                success: false,
-                error: error.message,
-            });
-        } finally {
-            isLoading = false;
-        }
+        await store.getBoxes();
     });
 
     $: filteredBoxes = searchTerm
@@ -101,7 +86,7 @@
     </HeaderContainer>
 
     <main class="px-6 pb-4">
-        {#if $store.loading || isLoading}
+        {#if $store.loading}
             <Spinner />
         {:else if filteredBoxes.length === 0}
             <EmptyState

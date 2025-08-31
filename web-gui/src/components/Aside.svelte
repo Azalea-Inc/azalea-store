@@ -1,5 +1,4 @@
 <script>
-    import UserAsideInfo from "@components/users/UserAsideInfo.svelte";
     import { page } from "$app/stores";
     import { asideStore } from "@store/AsideStore";
     import { Settings } from "@components/icons";

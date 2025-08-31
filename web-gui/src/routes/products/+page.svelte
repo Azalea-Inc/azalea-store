@@ -1,7 +1,6 @@
 <script>
-    import AddProductModal from "@components/products/AddProductModal.svelte";
-    import { productsPageStore } from "@store/pages/ProductsPageStore";
-    import ProductDetail from "@components/products/ProductDetail.svelte";
+    import { productsPageStore } from "@modules/products/viewmodel/ProductsPageStore";
+    import ProductDetail from "@modules/products/components/ProductDetail.svelte";
     import Container from "@components/Container.svelte";
     import HeaderContainer from "@components/HeaderContainer.svelte";
     import Button from "@components/Button.svelte";
