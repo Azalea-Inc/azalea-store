@@ -1,4 +1,5 @@
 <script>
+    import { toast } from "svelte-sonner";
     import { goto } from "$app/navigation";
     import { userStore } from "@store/UserStore";
     import http from "$lib/http";
@@ -12,8 +13,10 @@
         try {
             await http.post("/login", { email, password });
             isLoading = false;
+            toast.success("Inicio de sesión exitoso");
             window.location.href = "/";
         } catch (error) {
+            toast.error("Error al iniciar sesión");
             console.error(error);
         } finally {
             isLoading = false;
@@ -191,16 +194,6 @@
         to {
             transform: rotate(360deg);
         }
-    }
-
-    .error-message {
-        background-color: #ffebe9;
-        border: 1px solid rgba(255, 129, 130, 0.4);
-        color: #cb2431;
-        padding: 8px 12px;
-        margin-bottom: 16px;
-        border-radius: 6px;
-        font-size: 14px;
     }
 
     .login-footer {

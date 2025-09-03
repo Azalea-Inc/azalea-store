@@ -8,22 +8,13 @@ body {
     font-variation-settings: "opsz" 14;
 }
 
-.input {
-    @apply px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500;
-}
-
-.button {
-    @apply px-4 py-1 mb-2 border border-gray-300 rounded-md;
-}
-
-.button-primary {
-    @apply bg-green-500 text-white hover:bg-green-600 border-transparent;
-}
-
 .dropdown-btn-danger {
     @apply w-full text-left px-4 py-2 bg-red-500 rounded-md text-sm text-white hover:bg-red-600 flex items-center;
 }
 
+.input {
+    @apply px-4 py-2 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500;
+}
 .text-primary {
     color: #0f172a;
     letter-spacing: 0.01em;
@@ -145,9 +136,6 @@ body {
     justify-content: center;
     text-align: center;
     padding: 3rem;
-    /* background-color: #f6f8fa; */
-    /* border: 1px solid #d0d7de; */
-    /* border-radius: 6px; */
 }
 
 .card {

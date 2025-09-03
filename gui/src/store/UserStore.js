@@ -2,15 +2,15 @@ import { writable, get } from "svelte/store";
 import { AuthRepository } from "../repository/AuthRepository";
 
 const User = {
-  id: "usr_123456789",
-  email: "usuario@ejemplo.com",
-  name: "Joan Coronado",
-  avatar: "https://avatars.githubusercontent.com/u/42311777?v=4&size=64",
+  id: "",
+  email: "example@example.com",
+  name: "USER",
+  avatar: "",
   role: "",
-  status: "activo",
-  lastLogin: "2023-05-15T14:30:45Z",
-  createdAt: "2022-01-10T09:20:33Z",
-  updatedAt: "2023-05-15T14:30:45Z",
+  status: "",
+  lastLogin: "",
+  createdAt: "",
+  updatedAt: "",
   isLogged: false,
 };
 
@@ -28,13 +28,8 @@ class UserStore {
     this.store.update((state) => ({ ...state, ...newState }));
   }
 
-  async getUserInfo() {
-    try {
-      const userInfo = await this.authRepository.getUserInfo();
-      this.setState({ ...userInfo });
-    } catch (error) {
-      console.error("Error fetching user info:", error);
-    }
+  setSession(session) {
+    this.setState({ ...session });
   }
 
   getUser() {
@@ -43,6 +38,16 @@ class UserStore {
 
   logued() {
     this.setState({ isLogged: true });
+  }
+
+  reset() {
+    this.store.set({ ...User });
+  }
+
+  async logout() {
+    await this.authRepository.logout();
+    this.reset();
+    window.location.href = "/";
   }
 }
 

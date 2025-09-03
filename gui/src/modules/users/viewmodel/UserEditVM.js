@@ -1,7 +1,7 @@
 import { writable } from "svelte/store";
 import { userStore } from "@store/UserStore";
 
-class UserEditStore {
+class UserEditVM {
   constructor() {
     this.store = writable(userStore.getUser());
 
@@ -11,4 +11,4 @@ class UserEditStore {
   }
 }
 
-export const userEditStore = new UserEditStore();
+export const userEditVM = new UserEditVM();

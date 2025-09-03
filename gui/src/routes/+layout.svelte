@@ -5,15 +5,15 @@
     import { MainContainer } from "@components";
     import { Toaster } from "svelte-sonner";
     import Modals from "@components/Modals/Modals.svelte";
+    import Spinner from "@components/Spinner.svelte";
     import { page } from "$app/stores";
     import { onDestroy, onMount } from "svelte";
     import { userStore } from "@store/UserStore";
-    let { children } = $props();
+    let { children, data } = $props();
 
-    let isLoginPage = $page && $page.route && $page.route.id === "/login";
-
-    onMount(async () => {
-        await userStore.getUserInfo();
+    onMount(() => {
+        const { session } = data;
+        userStore.setSession(session);
     });
 
     onDestroy(() => {
@@ -23,6 +23,6 @@
 
 <Modals></Modals>
 <Toaster position="top-center" richColors expand closeButton duration={1500} />
-<MainContainer menu={!isLoginPage ? Aside : null}>
+<MainContainer menu={$userStore.isLogged ? Aside : null}>
     {@render children()}
 </MainContainer>

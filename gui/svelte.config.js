@@ -1,8 +1,11 @@
-import adapter from "@sveltejs/adapter-auto";
+import adapter from "@sveltejs/adapter-static";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   kit: {
+    adapter: adapter({
+      fallback: "index.html",
+    }),
     alias: {
       "@store": "src/store",
       "@components": "src/components",
@@ -10,7 +13,13 @@ const config = {
       "@controllers": "src/controllers",
       "@modules": "src/modules",
     },
-    adapter: adapter(),
+    paths: {
+      base: "",
+      relative: true,
+    },
+    prerender: {
+      entries: [],
+    },
   },
 };
 

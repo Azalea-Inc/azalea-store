@@ -9,4 +9,8 @@ export class AuthRepository {
       throw error;
     }
   }
+
+  async logout() {
+    await http.post("/auth/logout");
+  }
 }

@@ -1,8 +1,8 @@
 <script>
     import Breadcrumb from "@components/Breadcrumb.svelte";
-    import { userEditStore } from "@store/users/UserEditStore";
+    import { userEditVM } from "@modules/users/viewmodel/UserEditVM";
 
-    const state = userEditStore;
+    const state = userEditVM;
 </script>
 
 <div class="profile-container flex-1 px-10 pt-4">
