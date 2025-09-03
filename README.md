@@ -7,7 +7,7 @@ Sistema para gestión de inventario y punto de venta con interfaz web.
 El proyecto está organizado en dos carpetas principales:
 
 - `app/` - Contiene la lógica principal y backend del sistema
-- `web-gui/` - Contiene la interfaz gráfica web
+- `gui/` - Contiene la interfaz gráfica
 
 ## Características
 
@@ -24,7 +24,7 @@ El proyecto está organizado en dos carpetas principales:
 ```bash
 cd app
 npm install
-cd ../web-gui
+cd ../gui
 npm install
 ```
 
@@ -38,7 +38,7 @@ npm start
 
 2. En otra terminal, iniciar la interfaz web:
 ```bash
-cd web-gui
+cd gui
 npm start
 ```
 
