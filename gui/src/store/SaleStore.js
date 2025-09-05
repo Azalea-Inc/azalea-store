@@ -2,14 +2,11 @@ import { writable, get } from "svelte/store";
 import { sessionStore } from "@store/SessionStore";
 import { SaleController } from "@controllers/SaleController";
 import OpenTurnModal from "@modules/sales/components/OpenTurnModal.svelte";
-import CloseTurnModal from "@modules/sales/components/CloseTurnModal.svelte";
+import SaleInitView from "@modules/sales/components/SaleInitView.svelte";
 import { toast } from "svelte-sonner";
 
 const sale = {
-  turnModal: {
-    isOpen: false,
-    component: OpenTurnModal,
-  },
+  component: null,
   cart: [],
 };
 
@@ -34,32 +31,12 @@ class SaleStore {
   }
 
   setModalComponent(component) {
-    this.setState({
-      turnModal: { ...this.getState().turnModal, component },
-    });
-  }
-
-  closeTurnModal() {
-    this.setState({
-      turnModal: { ...this.getState().turnModal, isOpen: false },
-    });
-  }
-
-  openTurnModal() {
-    this.setState({
-      turnModal: { ...this.getState().turnModal, isOpen: true },
-    });
+    this.setState({ component });
   }
 
   initialize() {
-    const turnId = sessionStore.initialize();
-    if (!turnId) {
-      this.setModalComponent(OpenTurnModal);
-      this.openTurnModal();
-      return;
-    }
-    this.closeTurnModal();
-    this.setModalComponent(CloseTurnModal);
+    this.setModalComponent(SaleInitView);
+    return;
   }
 
   async openTurn(turnData) {

@@ -3,7 +3,6 @@ import { saleStore } from "@store/SaleStore";
 
 const initialState = {
   userId: null,
-  cashBoxId: "0b733db2-3a78-4a01-9205-d1f5253e1aca",
   turnId: null,
   currentSaleId: null,
   isTurnActive: false,
@@ -34,7 +33,6 @@ class SessionStore {
       this.setState({ isTurnActive: false });
       return;
     }
-    console.log(turnId);
     this.setState({ turnId, isTurnActive: true });
     return turnId;
   }

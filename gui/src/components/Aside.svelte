@@ -24,7 +24,7 @@
                     class:item-active={item.href === $page.url.pathname ||
                         $page.url.pathname.startsWith(item.href + "/")}
                     href={item.href}
-                    class="menu-item"
+                    class="menu-item outline-none focus:outline-none"
                 >
                     <svelte:component
                         this={item.icon}

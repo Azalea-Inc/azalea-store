@@ -5,7 +5,7 @@
     export let onCancel = null;
 </script>
 
-<div class="p-4 flex flex-col gap-6">
+<div class="p-4 flex flex-col gap-6 select-none">
     <p>{message}</p>
     <div class="flex items-center gap-2 justify-end">
         <button

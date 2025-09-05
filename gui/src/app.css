@@ -8,8 +8,20 @@ body {
     font-variation-settings: "opsz" 14;
 }
 
-.dropdown-btn-danger {
-    @apply w-full text-left px-4 py-2 bg-red-500 rounded-md text-sm text-white hover:bg-red-600 flex items-center;
+* {
+    outline: none;
+}
+
+.dropdown-btn {
+    @apply w-full text-left px-4 py-2 bg-gray-50 rounded-md text-sm text-gray-700 hover:bg-gray-100 flex items-center;
+}
+
+.dropdown-btn.danger {
+    @apply bg-red-500 text-white hover:bg-red-600;
+}
+
+.dropdown-menu {
+    @apply flex flex-col gap-2;
 }
 
 .input {
@@ -73,6 +85,7 @@ body {
 }
 
 .btn {
+    outline: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;

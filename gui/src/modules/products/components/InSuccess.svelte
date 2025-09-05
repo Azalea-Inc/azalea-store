@@ -209,11 +209,9 @@
                                         </svg>
                                     </button>
 
-                                    <ul class="flex flex-col gap-1">
+                                    <ul class="dropdown-menu">
                                         <li>
-                                            <button
-                                                class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                                            >
+                                            <button class="dropdown-btn">
                                                 <svg
                                                     class="w-4 h-4 mr-2"
                                                     fill="currentColor"
@@ -229,7 +227,7 @@
                                         </li>
                                         <li>
                                             <button
-                                                class="dropdown-btn-danger"
+                                                class="dropdown-btn danger"
                                                 on:click={() =>
                                                     state.deleteProductHandler(
                                                         product.id,

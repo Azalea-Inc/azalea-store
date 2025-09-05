@@ -89,7 +89,7 @@
 </script>
 
 <div bind:this={triggerEl} style="display: inline-block;">
-    <div on:click={toggleDropdown}>
+    <div on:click={toggleDropdown} role="button">
         <slot name="trigger" />
     </div>
 </div>

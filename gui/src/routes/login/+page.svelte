@@ -62,15 +62,6 @@
             </button>
         </form>
     </div>
-
-    <div class="login-footer">
-        <div class="footer-links">
-            <a href="/terms">Términos</a>
-            <a href="/privacy">Privacidad</a>
-            <a href="/security">Seguridad</a>
-            <a href="/contact">Contacto</a>
-        </div>
-    </div>
 </div>
 
 <style>
@@ -155,7 +146,7 @@
 
     .login-button {
         width: 100%;
-        background-color: #2ea44f;
+        background-color: #0366d6;
         color: #fff;
         font-size: 14px;
         font-weight: 500;
@@ -172,7 +163,7 @@
     }
 
     .login-button:hover:not(:disabled) {
-        background-color: #2c974b;
+        background-color: #0366d6;
     }
 
     .login-button:disabled {
@@ -194,27 +185,5 @@
         to {
             transform: rotate(360deg);
         }
-    }
-
-    .login-footer {
-        text-align: center;
-        font-size: 12px;
-        color: #586069;
-    }
-
-    .login-footer a {
-        color: #0366d6;
-        text-decoration: none;
-    }
-
-    .login-footer a:hover {
-        text-decoration: underline;
-    }
-
-    .footer-links {
-        display: flex;
-        justify-content: center;
-        gap: 16px;
-        margin-top: 16px;
     }
 </style>

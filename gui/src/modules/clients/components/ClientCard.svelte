@@ -96,10 +96,10 @@
                 </svg>
             </button>
 
-            <ul>
+            <ul class="dropdown-menu">
                 <li>
                     <button
-                        class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                        class="dropdown-btn"
                         on:click={() =>
                             modals.push(EditClient, {
                                 title: "Editar Cliente",
@@ -120,10 +120,7 @@
                     </button>
                 </li>
                 <li>
-                    <button
-                        class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                        on:click={handleDelete}
-                    >
+                    <button class="dropdown-btn danger" on:click={handleDelete}>
                         <svg
                             class="w-4 h-4 mr-2"
                             fill="currentColor"

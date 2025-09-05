@@ -1,5 +1,7 @@
 export const ssr = false;
 import { goto } from "$app/navigation";
+import { browser } from "$app/environment";
+import { redirect } from "@sveltejs/kit";
 import { userStore } from "@store/UserStore.js";
 
 export async function load({ fetch, url }) {
@@ -13,13 +15,23 @@ export async function load({ fetch, url }) {
 
   if (!res.ok) {
     userStore.reset();
-    goto("/login");
+    if (browser) {
+      goto("/login");
+      return {}; // evita que siga ejecutando
+    } else {
+      throw redirect(307, "/login");
+    }
   }
 
   const { user } = await res.json();
 
   if (!user || !user.id) {
-    throw goto("/login");
+    if (browser) {
+      goto("/login");
+      return {};
+    } else {
+      throw redirect(307, "/login");
+    }
   }
 
   const session = {

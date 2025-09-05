@@ -5,11 +5,11 @@
     const dispatch = createEventDispatcher();
     import { modals } from "@components/Modals";
     import EditCashBox from "./EditCashBox.svelte";
-    import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
+    import ConfirmRemoveModal from "@components/Modals/ConfirmRemoveModal.svelte";
 
     export let box;
     function handleDelete() {
-        modals.push(ConfirmModal, {
+        modals.push(ConfirmRemoveModal, {
             title: "Eliminar Caja",
             message: "¿Estás seguro de que deseas eliminar esta caja?",
             onConfirm: () => {
@@ -79,10 +79,10 @@
                 </svg>
             </button>
 
-            <ul>
+            <ul class="dropdown-menu">
                 <li>
                     <button
-                        class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                        class="dropdown-btn"
                         on:click={() =>
                             modals.push(EditCashBox, {
                                 id: box.id,
@@ -103,10 +103,7 @@
                     </button>
                 </li>
                 <li>
-                    <button
-                        class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
-                        on:click={handleDelete}
-                    >
+                    <button class="dropdown-btn danger" on:click={handleDelete}>
                         <svg
                             class="w-4 h-4 mr-2"
                             fill="currentColor"

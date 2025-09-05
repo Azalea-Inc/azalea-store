@@ -1,10 +1,8 @@
 <script>
     import Modal from "@components/Modal.svelte";
     import { saleStore } from "@store/SaleStore";
-    import { sessionStore } from "@store/SessionStore";
 
     let turn = {
-        cashBoxId: $sessionStore.cashBoxId,
         closeAmount: "",
     };
 </script>
@@ -13,7 +11,7 @@
     on:close={() => {
         saleStore.closeTurnModal();
     }}
-    isOpen={$saleStore.turnModal.isOpen}
+    isOpen
     title="Cerrar turno"
     className="w-full max-w-md"
 >

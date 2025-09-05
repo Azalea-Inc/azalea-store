@@ -24,7 +24,7 @@
         role="dialog"
         aria-modal="true"
     >
-        <div class="py-4 bg-white rounded-xl shadow-lg">
+        <div class="py-4 bg-white rounded-xl shadow-lg select-none">
             <div
                 class="flex px-4 pb-2 flex-row items-center justify-between border-b border-gray-200"
             >

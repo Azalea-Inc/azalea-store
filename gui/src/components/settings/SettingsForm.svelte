@@ -3,6 +3,10 @@
     import { settingsVM as vm } from "@store/SettingsVM";
 
     let settings = $vm.settings;
+
+    onMount(async () => {
+        await vm.getBoxes();
+    });
 </script>
 
 <header class="header">
@@ -83,6 +87,28 @@
             </span>
         </div>
     </div>
+</form>
+
+<!-- Configuración de Cajas -->
+<form class="group">
+    <h2>Configuración de Cajas</h2>
+
+    {#if $vm.currentBox}
+        <span>{$vm.currentBox.id}</span>
+        <span>{$vm.currentBox.name}</span>
+        <a href="/cashbox/{$vm.currentBox.id}">Ver detalles</a>
+    {/if}
+
+    <div class="field">
+        <label for="caja">Caja</label>
+        <select name="" id="">
+            <option value="">Seleccionar caja</option>
+            {#each $vm.boxes as box}
+                <option value={box.id}>{box.name}</option>
+            {/each}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Configuración</button>
 </form>
 
 <!-- Impresión -->

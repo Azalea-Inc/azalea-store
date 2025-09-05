@@ -7,7 +7,7 @@
     const vm = userStore;
 
     // POS Metrics
-    let totalSales = 152400;
+    let totalSales = 1200;
     let dailyTransactions = 247;
     let activeProducts = 1520;
     let lowStockItems = 17;
@@ -16,7 +16,6 @@
 
     // System Status
     let turnoActivo = true;
-    let encargadoTurno = $vm.name;
     let ultimaVenta = "14 junio 2025, 12:35 PM";
     let ultimoIngreso = "14 junio 2025, 11:10 AM";
     let proximaTarea = "Corte de caja - 18:00 PM";
@@ -309,13 +308,13 @@
                         <div class="status-value">
                             <div class="user-status active">
                                 <div class="user-avatar">
-                                    {encargadoTurno
+                                    {$vm.name
                                         .split(" ")
                                         .map((word) => word.charAt(0))
                                         .join("")
                                         .substring(0, 2)}
                                 </div>
-                                <span>{encargadoTurno}</span>
+                                <span>{$vm.name}</span>
                             </div>
                         </div>
                     {:else}

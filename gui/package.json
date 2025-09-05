@@ -8,7 +8,8 @@
     "dev:electron": "concurrently -k \"npm run dev\" \"wait-on http://localhost:5173 && electron electron/main-dev.js\"",
     "build": "vite build",
     "prod:electron": "npm run build && electron electron",
-    "electron": "electron electron"
+    "electron": "electron electron",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^4.0.0",
