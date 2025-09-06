@@ -1,9 +1,9 @@
 const { randomUUID } = require("crypto");
 
 class Inventory {
-  constructor(productId, salePrice, stock) {
+  constructor(productId, costPrice, stock) {
     this.productId = productId;
-    this.salePrice = salePrice;
+    this.costPrice = costPrice;
     this.stock = stock;
   }
 

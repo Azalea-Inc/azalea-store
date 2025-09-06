@@ -2,9 +2,9 @@
     import { onDestroy, onMount } from "svelte";
     import Chart from "chart.js/auto";
     import Container from "@components/Container.svelte";
-    import { userStore } from "@store/UserStore";
+    import { session } from "@store/Session";
 
-    const vm = userStore;
+    const vm = session;
 
     // POS Metrics
     let totalSales = 1200;

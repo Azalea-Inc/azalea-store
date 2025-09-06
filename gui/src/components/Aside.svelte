@@ -1,16 +1,18 @@
 <script>
     import { page } from "$app/stores";
-    import { asideStore } from "@store/AsideStore";
+    import { aside } from "@store/Aside";
+    import { session } from "@store/Session";
     import { Settings } from "@components/icons";
-    import { userStore } from "@store/UserStore";
     import Tooltip from "@components/Tooltip.svelte";
+    import { SessionController } from "@controllers/SessionController";
+    const sessionController = new SessionController();
 </script>
 
 <aside
     class="min-h-screen aside z-[200] border-r bg-red-200 border-gray-200 flex flex-col overflow-hidden"
 >
     <div class="flex flex-col p-4 flex-1">
-        {#each $asideStore.menu as item}
+        {#each $aside.menu as item}
             <Tooltip
                 text={item.title}
                 tooltipDirection="right"
@@ -62,7 +64,7 @@
             </a>
         </Tooltip>
 
-        {#if $userStore.isLogged}
+        {#if $session.isLogged}
             <Tooltip
                 text="Cerrar Sesión"
                 tooltipDirection="right"
@@ -74,7 +76,7 @@
                 <button
                     class="menu-item logout-button"
                     aria-label="Logout"
-                    on:click={userStore.logout()}
+                    on:click={() => sessionController.logout()}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

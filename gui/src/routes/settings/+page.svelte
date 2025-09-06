@@ -1,6 +1,7 @@
 <script>
     import { onDestroy, onMount } from "svelte";
     import { settingsVM as vm } from "@store/SettingsVM";
+    import Container from "@components/Container.svelte";
 
     let settings = $vm.settings;
 
@@ -13,8 +14,6 @@
     });
 </script>
 
-<div class="flex-1 overflow-y-auto">
-    <div class="max-w-xl mx-auto py-10">
-        <svelte:component this={$vm.component} />
-    </div>
-</div>
+<Container className="mx-auto p-10">
+    <svelte:component this={$vm.component} />
+</Container>

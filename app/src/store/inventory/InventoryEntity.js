@@ -11,9 +11,8 @@ const InventoryEntity = sequelize.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    salePrice: {
+    costPrice: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
       defaultValue: 0.0,
     },
     stock: {
@@ -32,17 +31,8 @@ const InventoryEntity = sequelize.define(
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,
+      defaultValue: true,
     },
-    // lowStockThreshold: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   defaultValue: 10,
-    // },
-    // lastRestockDate: {
-    //   type: DataTypes.DATE,
-    //   allowNull: true,
-    // },
   },
   {
     timestamps: true,

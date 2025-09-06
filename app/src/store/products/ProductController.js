@@ -1,10 +1,8 @@
 const ProductRepository = require("./ProductRepository");
 const Product = require("$models/Product");
-const Inventory = require("$models/Inventory");
 
 class ProductController {
   #repository;
-  #inventoryRepository;
 
   constructor() {
     this.#repository = new ProductRepository();
@@ -12,19 +10,20 @@ class ProductController {
 
   async addProduct(data) {
     const product = Product.build(data);
-    if (data.hasInventory) {
-      const inventory = Inventory.build({
-        productId: product.id,
-        salePrice: data.salePrice,
-        ...data,
-      });
-      return await this.#repository.addProductAndInventory(product, inventory);
-    }
     return await this.#repository.addProduct(product);
+  }
+
+  async addProducts(data) {
+    const products = data.map(Product.build);
+    return await this.#repository.addProducts(products);
   }
 
   async getProducts(page = 1, limit = 10) {
     return this.#repository.getProducts(page, limit);
+  }
+
+  async updateProduct(id, product) {
+    return await this.#repository.updateProduct(id, product);
   }
 
   async showProductDetail(id) {

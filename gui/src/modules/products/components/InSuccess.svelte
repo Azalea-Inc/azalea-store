@@ -134,12 +134,6 @@
                         <th
                             scope="col"
                             class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
-                            on:click={() => handleSort("costPrice")}
-                            >Precio compra</th
-                        >
-                        <th
-                            scope="col"
-                            class="px-3 py-1.5 cursor-pointer hover:bg-gray-100"
                             on:click={() => handleSort("salePrice")}
                         >
                             Precio venta {sortField === "salePrice"
@@ -169,9 +163,6 @@
                             </td>
                             <td class="px-3 py-1.5">
                                 {product.description}
-                            </td>
-                            <td class="px-3 py-1.5 font-medium">
-                                ${product.costPrice}
                             </td>
 
                             <td class="px-3 py-1.5 font-medium">
@@ -211,7 +202,13 @@
 
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <button class="dropdown-btn">
+                                            <button
+                                                class="dropdown-btn"
+                                                on:click={() =>
+                                                    state.editProductHandler(
+                                                        product,
+                                                    )}
+                                            >
                                                 <svg
                                                     class="w-4 h-4 mr-2"
                                                     fill="currentColor"

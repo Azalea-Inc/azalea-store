@@ -5,32 +5,24 @@
     import { productsPageStore } from "@modules/products/viewmodel/ProductsPageStore";
     import { modals } from "@components/Modals";
     import { toast } from "svelte-sonner";
+    import { onMount } from "svelte";
 
     const state = productsPageStore;
 
-    const initialProductState = {
-        code: "",
-        name: "",
-        salePrice: 0,
-        stock: 0,
-        minStock: 0,
-        productType: "",
-        unitOfMeasure: "",
-    };
+    export let product;
 
     const typeUnits = {
         unit: [{ label: "Pieza", value: "Piece" }],
         bulk: [{ label: "Kilogramo", value: "Kg" }],
     };
 
-    let product = { ...initialProductState };
     let isSubmitted = false;
 
     function resetProduct() {
         product = { ...initialProductState };
     }
 
-    async function addProduct() {
+    async function saveProduct() {
         if (isSubmitted) return;
         isSubmitted = true;
 
@@ -49,13 +41,11 @@
         }
 
         try {
-            await http.post("/products", product);
-            resetProduct();
+            await http.put(`/products/${product.id}`, product);
             await state.getProducts();
-            modals.close();
-            toast.success("Producto agregado exitosamente");
+            toast.success("Producto actualizado exitosamente");
         } catch (error) {
-            toast.error("Error al agregar el producto");
+            toast.error("Error al actualizar producto");
         } finally {
             isSubmitted = false;
         }
@@ -63,7 +53,7 @@
 </script>
 
 <form
-    on:submit|preventDefault={addProduct}
+    on:submit|preventDefault={saveProduct}
     class="flex flex-col gap-4 w-lg p-8"
 >
     <div class="form-group">
@@ -169,6 +159,20 @@
             min="0"
             required={product.hasInventory}
         />
+    </div>
+
+    <div class="form-group">
+        <label for="isActive" class="form-label">Activo</label>
+        <div class="switch">
+            <input
+                type="checkbox"
+                id="isActive"
+                bind:checked={product.isActive}
+            />
+            <label for="isActive">
+                <span class="slider"></span>
+            </label>
+        </div>
     </div>
 
     <button

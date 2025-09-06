@@ -1,7 +1,6 @@
 <script>
     import { toast } from "svelte-sonner";
     import { goto } from "$app/navigation";
-    import { userStore } from "@store/UserStore";
     import http from "$lib/http";
 
     let email = "";

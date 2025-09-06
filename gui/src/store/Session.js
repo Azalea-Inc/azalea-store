@@ -1,6 +1,4 @@
 import { writable, get } from "svelte/store";
-import { AuthRepository } from "../repository/AuthRepository";
-
 const User = {
   id: "",
   email: "example@example.com",
@@ -14,14 +12,13 @@ const User = {
   isLogged: false,
 };
 
-class UserStore {
+class Session {
   constructor() {
     this.store = writable({ ...User });
     this.subscribe = this.store.subscribe;
     this.set = this.store.set;
     this.update = this.store.update;
     this.reset = () => this.store.set({ ...User });
-    this.authRepository = new AuthRepository();
   }
 
   setState(newState) {
@@ -32,7 +29,7 @@ class UserStore {
     this.setState({ ...session });
   }
 
-  getUser() {
+  getSession() {
     return get(this.store);
   }
 
@@ -43,12 +40,6 @@ class UserStore {
   reset() {
     this.store.set({ ...User });
   }
-
-  async logout() {
-    await this.authRepository.logout();
-    this.reset();
-    window.location.href = "/";
-  }
 }
 
-export const userStore = new UserStore();
+export const session = new Session();

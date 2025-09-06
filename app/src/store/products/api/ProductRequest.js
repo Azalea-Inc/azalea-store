@@ -13,6 +13,7 @@ class ProductRequest {
       const result = await operation();
       res.status(result.status).json(result.data);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: error.message });
     }
   }
@@ -22,7 +23,17 @@ class ProductRequest {
       const product = await this.controller.addProduct(req.body);
       return {
         status: 201,
-        data: { message: "Product added successfully", data: product },
+        data: { message: "Product added successfully", product },
+      };
+    });
+  }
+
+  async addProducts(req, res) {
+    await this.handleRequest(req, res, async () => {
+      const products = await this.controller.addProducts(req.body);
+      return {
+        status: 201,
+        data: { message: "Products added successfully", products },
       };
     });
   }
@@ -43,7 +54,7 @@ class ProductRequest {
         status: 200,
         data: {
           message: "Products fetched successfully",
-          data: products,
+          products,
           pagination: { page, limit, total, totalPages },
         },
       };
@@ -98,9 +109,21 @@ class ProductRequest {
     return this;
   }
 
+  async updateProduct(req, res) {
+    await this.handleRequest(req, res, async () => {
+      await this.controller.updateProduct(req.params.id, req.body);
+      return {
+        status: 200,
+        data: { message: "Product updated successfully" },
+      };
+    });
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.addProduct.bind(this));
+    this.router.post("/bulk", this.addProducts.bind(this));
     this.router.get("/", this.showProducts.bind(this));
+    this.router.put("/:id", this.updateProduct.bind(this));
     this.router.get("/:id", this.showProductDetail.bind(this));
     this.router.put("/:id/deactivate", this.deactivateProduct.bind(this));
     this.router.put("/:id/activate", this.activateProduct.bind(this));

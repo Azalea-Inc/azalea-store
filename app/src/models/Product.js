@@ -1,14 +1,19 @@
 const { randomUUID } = require("crypto");
 
 class Product {
-  constructor(code, name, costPrice) {
+  constructor(code, name, salePrice, stock) {
     this.code = code;
     this.name = name;
-    this.costPrice = costPrice;
+    this.salePrice = salePrice;
+    this.stock = stock;
   }
 
   setStatus(status) {
     this.isActive = status;
+  }
+
+  setMinStock(minStock) {
+    this.minStock = minStock;
   }
 
   deactivate() {
@@ -36,27 +41,32 @@ class Product {
   }
 
   static build(data) {
-    const { code, name, costPrice, description, productType, unitOfMeasure } =
-      data;
-    if (!code || !name || !costPrice) {
-      throw new Error("Code, name, and costPrice are required fields");
+    const {
+      code,
+      name,
+      salePrice,
+      stock,
+      minStock,
+      description,
+      productType,
+      unitOfMeasure,
+    } = data;
+    if (!code || !name || !salePrice) {
+      throw new Error("Code, name, and salePrice are required fields");
     }
 
     if (!productType) {
       throw new Error("Product type is required");
     }
 
-    const product = new Product(code, name, costPrice);
-    product.setDescription(description);
+    const product = new Product(code, name, salePrice, stock);
     product.generateId();
+    product.setDescription(description);
+    product.setMinStock(minStock);
     product.setStatus(true);
     product.setProductType(productType);
     product.setUnitOfMeasure(unitOfMeasure);
     return product;
-  }
-
-  toString() {
-    return `Product(id=${this.id}, name=${this.name}, price=${this.costPrice})`;
   }
 }
 

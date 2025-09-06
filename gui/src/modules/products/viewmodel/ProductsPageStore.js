@@ -7,6 +7,7 @@ import { toast } from "svelte-sonner";
 import { modals } from "@components/Modals";
 import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
 import AddProductModal from "@modules/products/components/AddProductModal.svelte";
+import EditProductModal from "@modules/products/components/EditProductModal.svelte";
 import http from "$lib/http";
 
 import { ProductRepository } from "../ProductRepository";
@@ -74,6 +75,13 @@ class ProductsPageStore {
       onConfirm: () => {
         this.deleteProduct(id);
       },
+    });
+  }
+
+  editProductHandler(product) {
+    modals.push(EditProductModal, {
+      title: "Editar Producto",
+      product,
     });
   }
 

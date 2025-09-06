@@ -25,6 +25,7 @@ module.exports = () => {
     as: "inventory",
     onDelete: "CASCADE",
   });
+
   InventoryEntity.belongsTo(ProductEntity, {
     foreignKey: "productId",
     as: "product",

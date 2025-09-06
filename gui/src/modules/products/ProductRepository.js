@@ -11,7 +11,7 @@ export class ProductRepository {
         `/products?page=${page}&limit=${limit}`,
       );
 
-      return { products: data.data, pagination: data.pagination };
+      return { products: data.products, pagination: data.pagination };
     } catch (error) {
       throw error;
     }

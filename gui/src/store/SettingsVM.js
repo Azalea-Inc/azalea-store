@@ -26,6 +26,10 @@ class SettingsVM {
     this.updateState({ component: SettingsForm });
   }
 
+  goSettingsOverview() {
+    this.updateState({ component: SettingsOverview });
+  }
+
   getState() {
     return get(this.state);
   }

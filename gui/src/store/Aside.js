@@ -57,7 +57,7 @@ const initialState = {
   ],
 };
 
-function createAsideStore() {
+function createAside() {
   const { subscribe, set, update } = writable(initialState);
 
   const reset = () => {
@@ -72,4 +72,4 @@ function createAsideStore() {
   };
 }
 
-export const asideStore = createAsideStore();
+export const aside = createAside();

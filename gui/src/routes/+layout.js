@@ -2,9 +2,11 @@ export const ssr = false;
 import { goto } from "$app/navigation";
 import { browser } from "$app/environment";
 import { redirect } from "@sveltejs/kit";
-import { userStore } from "@store/UserStore.js";
+import { SessionController } from "@controllers/SessionController.js";
 
 export async function load({ fetch, url }) {
+  const sessionController = new SessionController();
+
   if (url.pathname === "/login") {
     return {};
   }
@@ -14,10 +16,10 @@ export async function load({ fetch, url }) {
   });
 
   if (!res.ok) {
-    userStore.reset();
+    sessionController.reset();
     if (browser) {
       goto("/login");
-      return {}; // evita que siga ejecutando
+      return {};
     } else {
       throw redirect(307, "/login");
     }
@@ -34,10 +36,8 @@ export async function load({ fetch, url }) {
     }
   }
 
-  const session = {
-    ...user,
-    isLogged: true,
-  };
+  sessionController.logued();
+  sessionController.setUser(user);
 
-  return { session };
+  return { session: sessionController.getSession() };
 }

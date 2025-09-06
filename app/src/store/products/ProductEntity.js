@@ -13,20 +13,25 @@ const ProductEntity = sequelize.define("Product", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  isActive: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true,
-  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  costPrice: {
+  salePrice: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
   description: {
     type: DataTypes.TEXT,
+  },
+  minStock: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
   },
   productType: DataTypes.ENUM("unit", "bulk", "kit"),
   unitOfMeasure: {

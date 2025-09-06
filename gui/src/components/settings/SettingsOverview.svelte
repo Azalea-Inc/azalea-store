@@ -15,7 +15,7 @@
     const displayValue = (value) => value || "No disponible";
 
     const goToSettingsForm = () => {
-        goto("/settings"); // Ajusta la ruta según tu formulario
+        goto("/settings");
     };
 </script>
 
@@ -27,9 +27,7 @@
         </p>
     </div>
 
-    <button on:click={() => vm.goSettingsForm()}>
-        Ir al formulario de ajustes
-    </button>
+    <button class="btn" on:click={() => vm.goSettingsForm()}> Editar </button>
 </header>
 
 <section class="overview-group">
@@ -133,7 +131,8 @@
         padding: 1rem;
         border: 1px solid #e1e4e8;
         border-radius: 8px;
-        background-color: #f6f8fa;
+        background-color: #ffff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
     .overview-group h2 {
@@ -153,11 +152,9 @@
         background-color: white;
         border: 1px solid #d0d7de;
         border-radius: 6px;
-        font-size: 1rem;
     }
 
     .overview-field .label {
-        font-weight: 600;
         color: #57606a;
     }
 

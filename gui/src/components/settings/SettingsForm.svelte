@@ -10,14 +10,21 @@
 </script>
 
 <header class="header">
-    <h1>Ajustes del Punto de Venta</h1>
+    <div class="flex items-center gap-4">
+        <button
+            class="btn mb-2"
+            href="/settings"
+            on:click={() => vm.goSettingsOverview()}>Volver</button
+        >
+        <h1>Ajustes del Punto de Venta</h1>
+    </div>
     <p class="subtitle">
         Configuraciones generales y específicas para operar el sistema POS.
     </p>
 </header>
 
 <!-- Sección General -->
-<form class="group" on:submit|preventDefault={() => vm.saveGeneralSettings()}>
+<form on:submit|preventDefault={() => vm.saveGeneralSettings()} class="group">
     <h2>General</h2>
 
     <div class="field-group">
