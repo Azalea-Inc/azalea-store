@@ -63,16 +63,20 @@
 
         $state.products = $state.products.sort((a, b) => {
             const aValue =
-                field === "price" ? a[field] : String(a[field]).toLowerCase();
+                field === "salePrice"
+                    ? a[field]
+                    : String(a[field]).toLowerCase();
             const bValue =
-                field === "price" ? b[field] : String(b[field]).toLowerCase();
+                field === "salePrice"
+                    ? b[field]
+                    : String(b[field]).toLowerCase();
 
             if (sortDirection === "asc") {
-                return field === "price"
+                return field === "salePrice"
                     ? aValue - bValue
                     : aValue.localeCompare(bValue);
             } else {
-                return field === "price"
+                return field === "salePrice"
                     ? bValue - aValue
                     : bValue.localeCompare(aValue);
             }
@@ -166,7 +170,12 @@
                             </td>
 
                             <td class="px-3 py-1.5 font-medium">
-                                ${product.salePrice}
+                                {new Intl.NumberFormat("es-MX", {
+                                    style: "currency",
+                                    currency: "MXN",
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                }).format(product.salePrice)}
                             </td>
                             <td class="px-3 py-1.5">
                                 {product.stock}

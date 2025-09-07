@@ -154,6 +154,7 @@
             class="form-control"
             type="number"
             name="salePrice"
+            step="0.01"
             placeholder="Ingrese el precio de venta"
             bind:value={product.salePrice}
             min="0"
