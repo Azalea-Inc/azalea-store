@@ -14,13 +14,13 @@ class CashBoxRepository {
   }
 
   async showCashBoxes() {
-    return await this.model.findAll();
+    return await this.model.findAll({ order: [["createdAt", "DESC"]] });
   }
 
   async showCashBoxInfo(id) {
     const cashBox = await this.model.findByPk(id);
     if (!cashBox) throw new Error("Cash box not found");
-    return cashBox;
+    return cashBox.toJSON();
   }
 
   async updateCashBox(id, cashBox) {
@@ -53,13 +53,16 @@ class CashBoxRepository {
   }
 
   async showCashBoxTurns(id) {
-    try {
-      const cashBox = await this.model.findByPk(id);
-      if (!cashBox) throw new Error("Cash box not found");
-      return await cashBox.getRegistries();
-    } catch (error) {
-      throw new Error("Failed to get cash box turns");
-    }
+    const cashBox = await this.model.findByPk(id);
+    if (!cashBox) throw new Error("Cash box not found");
+    return await cashBox.getRegistries();
+  }
+
+  async setClient(id, clientId) {
+    const cashBox = await this.model.findByPk(id);
+    if (!cashBox) throw new Error("Cash box not found");
+    cashBox.clientId = clientId;
+    return await cashBox.save();
   }
 }
 

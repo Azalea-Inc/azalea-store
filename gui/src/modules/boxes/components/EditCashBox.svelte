@@ -34,9 +34,8 @@
 
     async function getCashBox() {
         try {
-            const response = await fetch(`/api/cashbox/${id}`);
-            const { data } = await response.json();
-            cashbox = data;
+            const { data } = await http.get(`/cashbox/${id}`);
+            cashbox = data.cashBox;
         } catch (error) {
             console.error(error);
         }

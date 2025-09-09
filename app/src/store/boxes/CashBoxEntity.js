@@ -19,6 +19,9 @@ const CashBoxEntity = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    clientId: {
+      type: DataTypes.UUID,
+    },
   },
   {
     timestamps: true,

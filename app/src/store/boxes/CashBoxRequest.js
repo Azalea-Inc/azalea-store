@@ -21,11 +21,8 @@ class CashBoxRequest {
 
   async showCashBoxes(req, res) {
     try {
-      const cashBoxes = await this.controller.showCashBoxes();
-
-      res
-        .status(200)
-        .json({ message: "Boxes retrieved successfully", data: cashBoxes });
+      const boxes = await this.controller.showCashBoxes();
+      res.status(200).json({ message: "Boxes retrieved successfully", boxes });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -34,10 +31,17 @@ class CashBoxRequest {
   async showCashBoxInfo(req, res) {
     try {
       const cashBox = await this.controller.showCashBoxInfo(req.params.id);
+      const clientId = req.cookies?.clientId;
 
-      res
-        .status(200)
-        .json({ message: "Box info retrieved successfully", data: cashBox });
+      if (!clientId)
+        return res
+          .status(200)
+          .json({ message: "Box info retrieved successfully", cashBox });
+
+      res.status(200).json({
+        message: "Box info retrieved successfully",
+        cashBox: { ...cashBox, isMine: clientId === cashBox.clientId },
+      });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -95,6 +99,23 @@ class CashBoxRequest {
     }
   }
 
+  async setClient(req, res) {
+    try {
+      const cashBox = await this.controller.setClient(
+        req.params.id,
+        req.cookies?.clientId,
+      );
+
+      res.cookie("clientId", cashBox.clientId, {
+        httpOnly: true,
+      });
+
+      res.status(200).json({ message: "Client set successfully", cashBox });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.createCashBox.bind(this));
     this.router.get("/", this.showCashBoxes.bind(this));
@@ -103,6 +124,7 @@ class CashBoxRequest {
     this.router.patch("/:id/rename", this.renameCashBox.bind(this));
     this.router.delete("/:id", this.removeCashBox.bind(this));
     this.router.get("/:id/turns", this.showCashBoxTurns.bind(this));
+    this.router.post("/:id/client", this.setClient.bind(this));
     router.use("/cashbox", this.router);
   }
 }

@@ -1,5 +1,6 @@
 const CashBox = require("$models/CashBox");
 const CashBoxRepository = require("./CashBoxRepository");
+const { randomUUID } = require("crypto");
 
 class CashBoxController {
   constructor() {
@@ -33,6 +34,12 @@ class CashBoxController {
 
   async showCashBoxTurns(id) {
     return await this.repository.showCashBoxTurns(id);
+  }
+
+  async setClient(id, clientId) {
+    if (!clientId) clientId = randomUUID();
+
+    return await this.repository.setClient(id, clientId);
   }
 }
 

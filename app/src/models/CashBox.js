@@ -4,6 +4,10 @@ class CashBox {
     this.location = location;
   }
 
+  setClientId(clientId) {
+    this.clientId = clientId;
+  }
+
   static build(data) {
     const { name, location } = data;
     const cashBox = new CashBox(name, location);

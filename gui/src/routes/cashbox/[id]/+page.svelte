@@ -2,38 +2,58 @@
     import Breadcrumb from "@components/Breadcrumb.svelte";
     import { page } from "$app/stores";
     import { onMount } from "svelte";
+    import http from "$lib/http";
+    import { modals } from "@components/Modals";
+    import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
 
     $: id = $page.params.id;
 
     let cashbox = {};
     $: records = [];
-    const host = "http://localhost:3000";
 
-    async function fetchCashbox() {
+    async function getCashbox() {
         try {
-            const response = await fetch(host + `/api/cashbox/${id}`);
-            const { data } = await response.json();
-            cashbox = data;
+            const { data } = await http.get(`/cashbox/${id}`);
+            cashbox = data.cashBox;
         } catch (error) {
             console.error("Error fetching cashbox:", error);
         }
     }
 
-    async function fetchRecords() {
+    async function setClient() {
         try {
-            const response = await fetch(
-                host + `/api/cashbox/${id}/registries`,
-            );
-            const { data } = await response.json();
-            records = data;
+            const { data } = await http.post(`/cashbox/${id}/client`);
+            const { cashBox } = data;
+            cashbox = cashBox;
+        } catch (error) {
+            console.error("Error fetching client:", error);
+        }
+    }
+
+    async function setClientHandler() {
+        modals.push(ConfirmModal, {
+            title: "Confirmacion de cliente",
+            message:
+                "Seguro que quieres establecer el cliente? eso puede afectar el registro de otro usuario",
+            onConfirm: async () => {
+                await setClient();
+            },
+        });
+    }
+
+    async function getRecords() {
+        try {
+            const { data } = await http.get(`/cashbox/${id}/registries`);
+
+            records = data.data;
         } catch (error) {
             console.error("Error fetching records:", error);
         }
     }
 
     onMount(async () => {
-        await fetchCashbox();
-        await fetchRecords();
+        await getCashbox();
+        // await getRecords();
     });
 </script>
 
@@ -42,15 +62,26 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Breadcrumb />
             <div class="py-4">
-                <div class="flex items-center">
-                    <h1 class="text-2xl font-semibold text-gray-900">
-                        {cashbox.name}
-                    </h1>
-                    <span
-                        class="ml-4 px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-gray-100 text-gray-800"
-                    >
-                        📍 {cashbox.location || "No location specified"}
-                    </span>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <h1 class="text-2xl font-semibold text-gray-900">
+                            {cashbox.name}
+                        </h1>
+                        <span
+                            class="ml-4 px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-gray-100 text-gray-800"
+                        >
+                            📍 {cashbox.location || "No location specified"}
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        {#if cashbox.isMine}
+                            <p>Asociado</p>
+                        {/if}
+                        <button class="btn" on:click={setClientHandler}
+                            >{cashbox.isMine ? "Editar" : "Asociar"}</button
+                        >
+                    </div>
                 </div>
             </div>
 
@@ -58,12 +89,9 @@
                 <button
                     class="border-blue-500 text-blue-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
                 >
-                    Registros
-                </button>
-                <button
-                    class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
-                >
-                    Configuración
+                    <span class="rounded-md hover:bg-neutral-100 p-2"
+                        >Registros</span
+                    >
                 </button>
             </nav>
         </div>

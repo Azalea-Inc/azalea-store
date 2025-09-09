@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import http from "$lib/http";
 
 const initialState = {
   cashboxes: [],
@@ -18,15 +19,10 @@ class BoxesVM {
   async addCashbox(cashbox) {
     try {
       this.store.update((state) => ({ ...state, loading: true }));
-      const response = await fetch("/api/cashbox", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cashbox),
-      });
-      const { data } = await response.json();
+      const { data } = await http.post("/cashbox", cashbox);
       this.store.update((state) => ({
         ...state,
-        cashboxes: [...state.cashboxes, data],
+        cashboxes: [data.data, ...state.cashboxes],
         loading: false,
       }));
     } catch (error) {
@@ -37,11 +33,10 @@ class BoxesVM {
   async getBoxes() {
     try {
       this.store.update((state) => ({ ...state, loading: true }));
-      const response = await fetch("/api/cashbox");
-      const { data } = await response.json();
+      const { data } = await http.get("/cashbox");
       this.store.update((state) => ({
         ...state,
-        cashboxes: data,
+        cashboxes: data.boxes,
         loading: false,
       }));
     } catch (error) {
