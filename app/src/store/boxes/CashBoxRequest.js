@@ -110,6 +110,7 @@ class CashBoxRequest extends BaseRequest {
 
       res.cookie("clientId", cashBox.clientId, {
         httpOnly: true,
+        maxAge: 365 * 24 * 60 * 60 * 1000,
       });
 
       res.status(200).json({ message: "Client set successfully", cashBox });
