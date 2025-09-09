@@ -1,6 +1,6 @@
 const SaleEntity = require("./SaleEntity");
 const ProductsSalesEntity = require("./ProductsSalesEntity");
-const ProductEntity = require("../products/ProductEntity");
+const CashBoxEntity = require("../boxes/CashBoxEntity");
 
 class SaleRepository {
   constructor() {
@@ -86,6 +86,13 @@ class SaleRepository {
     } catch (error) {
       throw new Error(error.message);
     }
+  }
+
+  async getBoxConfig(clientId) {
+    const boxConfig = await CashBoxEntity.findOne({
+      where: { clientId },
+    });
+    return boxConfig;
   }
 }
 

@@ -10,6 +10,7 @@ class CashBox {
 
   static build(data) {
     const { name, location } = data;
+    if (!name || !location) throw new Error("Invalid data");
     const cashBox = new CashBox(name, location);
     return cashBox;
   }

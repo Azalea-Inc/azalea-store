@@ -1,13 +1,15 @@
 import { writable, get } from "svelte/store";
 import { sessionStore } from "@store/SessionStore";
 import { SaleController } from "@controllers/SaleController";
-import OpenTurnModal from "@modules/sales/components/OpenTurnModal.svelte";
+import LoadSaleView from "@modules/sales/components/LoadSaleView.svelte";
 import SaleInitView from "@modules/sales/components/SaleInitView.svelte";
+import OpenTurnModal from "@modules/sales/components/OpenTurnModal.svelte";
 import { toast } from "svelte-sonner";
 
 const sale = {
   component: null,
   cart: [],
+  loading: false,
 };
 
 class SaleStore {
@@ -35,8 +37,20 @@ class SaleStore {
   }
 
   initialize() {
-    this.setModalComponent(SaleInitView);
+    this.setState({ component: LoadSaleView });
     return;
+  }
+
+  async getBoxConfig() {
+    this.loading = true;
+    try {
+      await this.saleController.getBoxConfig();
+      this.setModalComponent(OpenTurnModal);
+      this.loading = false;
+    } catch (error) {
+      this.loading = false;
+      this.setModalComponent(SaleInitView);
+    }
   }
 
   async openTurn(turnData) {
@@ -63,7 +77,7 @@ class SaleStore {
       this.initialize();
       toast.success("Turno cerrado exitosamente");
     } catch (error) {
-      console.error(error.message);
+      toast.error(error.message);
     }
   }
 

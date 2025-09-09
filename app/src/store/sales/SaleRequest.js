@@ -1,8 +1,10 @@
+const BaseRequest = require("$api/BaseRequest");
 const { Router } = require("express");
 const SaleController = require("./SaleController");
 
-class SaleRequest {
+class SaleRequest extends BaseRequest {
   constructor() {
+    super();
     this.router = Router();
     this.controller = new SaleController();
   }
@@ -80,6 +82,28 @@ class SaleRequest {
     }
   }
 
+  async getBoxConfig(req, res) {
+    try {
+      const clientId = req.cookies?.clientId;
+      if (!clientId) {
+        throw new Error("Client ID not found");
+      }
+
+      const boxConfig = await this.controller.getBoxConfig(clientId);
+
+      if (!boxConfig) {
+        throw new Error("Box configuration not found");
+      }
+
+      res.status(200).json({
+        message: "Box configuration retrieved successfully",
+        boxConfig,
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.addSale.bind(this));
     this.router.get("/:id", this.showSale.bind(this));
@@ -88,6 +112,7 @@ class SaleRequest {
     this.router.delete("/:id", this.removeSale.bind(this));
     this.router.post("/:id/products", this.addProduct.bind(this));
     this.router.get("/:id/products", this.showProductsForSale.bind(this));
+    this.router.get("/box/config", this.getBoxConfig.bind(this));
 
     router.use("/sales", this.router);
   }

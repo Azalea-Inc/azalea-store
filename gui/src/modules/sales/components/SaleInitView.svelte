@@ -16,6 +16,6 @@
     <div class="flex gap-2 items-center justify-end">
         <a href="/" class="btn underline-none">Ir al inicio</a>
 
-        <a href="/settings" class="btn btn-primary">Ir a configuración</a>
+        <a href="/cashbox" class="btn btn-primary">Ir a cajas</a>
     </div>
 </Modal>

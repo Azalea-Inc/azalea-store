@@ -1,8 +1,10 @@
+const BaseRequest = require("$api/BaseRequest");
 const express = require("express");
 const TurnController = require("./TurnController");
 
-class TurnRequest {
+class TurnRequest extends BaseRequest {
   constructor() {
+    super();
     this.router = express.Router();
     this.controller = new TurnController();
   }

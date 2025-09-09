@@ -8,26 +8,41 @@ const ClientRequest = require("$store/clients/ClientRequest");
 const AuthRequest = require("$store/auth/AuthRequest");
 const ConfigRequest = require("$store/config/ConfigRequest");
 
-const AuthMiddleware = require("./AuthMiddleware");
+const MiddlewareFactory = require("./MiddlewareFactory");
 
 class ApiRouterBuilder {
   constructor(router) {
     this.router = router;
-    this.authMiddleware = new AuthMiddleware();
+    this.middlewareFactory = new MiddlewareFactory();
   }
 
   build() {
     new InventoryRouter().init(this.router);
+
     new ProductRequest()
-      .setMiddlewares(this.authMiddleware)
+      .setMiddlewareFactory(this.middlewareFactory)
       .setupRoutes(this.router);
-    new UserRequest().setupRoutes(this.router);
-    new CashBoxRequest().setupRoutes(this.router);
+
+    new UserRequest()
+      .setMiddlewareFactory(this.middlewareFactory)
+      .setupRoutes(this.router);
+
+    new CashBoxRequest()
+      .setMiddlewareFactory(this.middlewareFactory)
+      .setupRoutes(this.router);
+
     new SaleRequest().setupRoutes(this.router);
-    new TurnRequest().setupRoutes(this.router);
-    new ClientRequest().setupRoutes(this.router);
+
+    new TurnRequest()
+      .setMiddlewareFactory(this.middlewareFactory)
+      .setupRoutes(this.router);
+
+    new ClientRequest()
+      .setMiddlewareFactory(this.middlewareFactory)
+      .setupRoutes(this.router);
+
     new AuthRequest()
-      .setMiddlewares(this.authMiddleware)
+      .setMiddlewareFactory(this.middlewareFactory)
       .setupRoutes(this.router);
     new ConfigRequest().setupRoutes(this.router);
   }

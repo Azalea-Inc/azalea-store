@@ -1,8 +1,10 @@
+const BaseRequest = require("$api/BaseRequest");
 const express = require("express");
 const ClientController = require("./ClientController");
 
-class ClientRequest {
+class ClientRequest extends BaseRequest {
   constructor() {
+    super();
     this.router = express.Router();
     this.controller = new ClientController();
   }

@@ -1,5 +1,5 @@
-const TokenManager = require("../common/TokenManager");
-const AuthController = require("../store/auth/AuthController");
+const TokenManager = require("../../common/TokenManager");
+const AuthController = require("../../store/auth/AuthController");
 
 module.exports = class AuthMiddleware {
   constructor() {
@@ -7,7 +7,7 @@ module.exports = class AuthMiddleware {
     this.authController = new AuthController();
   }
 
-  async authenticate(req, res, next) {
+  async execute(req, res, next) {
     try {
       const token = req.cookies?.token;
       if (!token) return res.status(401).json({ error: "Token requerido" });

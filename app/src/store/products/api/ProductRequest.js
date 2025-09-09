@@ -1,9 +1,11 @@
+const BaseRequest = require("$api/BaseRequest");
 const express = require("express");
 const ProductController = require("../ProductController");
 const UpdateProductHandler = require("./UpdateProductHandler");
 
-class ProductRequest {
+class ProductRequest extends BaseRequest {
   constructor() {
+    super();
     this.router = express.Router();
     this.controller = new ProductController();
   }
@@ -104,11 +106,6 @@ class ProductRequest {
     });
   }
 
-  setMiddlewares(authMiddleware) {
-    this.authMiddleware = authMiddleware;
-    return this;
-  }
-
   async updateProduct(req, res) {
     await this.handleRequest(req, res, async () => {
       await this.controller.updateProduct(req.params.id, req.body);
@@ -131,11 +128,7 @@ class ProductRequest {
 
     new UpdateProductHandler().setup(this.router);
 
-    router.use(
-      "/products",
-      this.authMiddleware.authenticate.bind(this.authMiddleware),
-      this.router,
-    );
+    router.use("/products", this.applyMiddlewares(["auth"]), this.router);
   }
 }
 

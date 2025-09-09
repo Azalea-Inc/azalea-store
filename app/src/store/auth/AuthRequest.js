@@ -1,7 +1,9 @@
+const BaseRequest = require("$api/BaseRequest");
 const AuthController = require("./AuthController");
 
-class AuthRequest {
+class AuthRequest extends BaseRequest {
   constructor() {
+    super();
     this.controller = new AuthController();
     this.router = require("express").Router();
   }
@@ -50,20 +52,11 @@ class AuthRequest {
     }
   }
 
-  setMiddlewares(authMiddleware) {
-    this.authMiddleware = authMiddleware;
-    return this;
-  }
-
   setupRoutes(router) {
     router.post("/login", this.login.bind(this));
     this.router.post("/logout", this.logout.bind(this));
     this.router.get("/me", this.getUserInfo.bind(this));
-    router.use(
-      "/auth",
-      this.authMiddleware.authenticate.bind(this.authMiddleware),
-      this.router,
-    );
+    router.use("/auth", this.applyMiddlewares(["auth"]), this.router);
   }
 }
 

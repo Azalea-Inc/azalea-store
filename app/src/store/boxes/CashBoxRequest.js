@@ -1,8 +1,10 @@
+const BaseRequest = require("$api/BaseRequest");
 const { Router } = require("express");
 const CashBoxController = require("./CashBoxController");
 
-class CashBoxRequest {
+class CashBoxRequest extends BaseRequest {
   constructor() {
+    super();
     this.router = Router();
     this.controller = new CashBoxController();
   }
@@ -116,6 +118,14 @@ class CashBoxRequest {
     }
   }
 
+  async test(req, res) {
+    throw new Error("Not implemented");
+  }
+
+  handle = (fn) => (req, res, next) => {
+    Promise.resolve(fn(req, res, next)).catch(next);
+  };
+
   setupRoutes(router) {
     this.router.post("/", this.createCashBox.bind(this));
     this.router.get("/", this.showCashBoxes.bind(this));
@@ -125,7 +135,7 @@ class CashBoxRequest {
     this.router.delete("/:id", this.removeCashBox.bind(this));
     this.router.get("/:id/turns", this.showCashBoxTurns.bind(this));
     this.router.post("/:id/client", this.setClient.bind(this));
-    router.use("/cashbox", this.router);
+    router.use("/cashbox", this.applyMiddlewares(["auth"]), this.router);
   }
 }
 

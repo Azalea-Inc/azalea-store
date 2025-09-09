@@ -56,6 +56,10 @@ class SaleController {
       throw new Error(error.message);
     }
   }
+
+  async getBoxConfig(clientId) {
+    return await this.repository.getBoxConfig(clientId);
+  }
 }
 
 module.exports = SaleController;

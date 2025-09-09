@@ -12,4 +12,9 @@ export class SaleController {
     });
     return data;
   }
+
+  async getBoxConfig() {
+    const { data } = await http.get("/sales/box/config");
+    return data;
+  }
 }

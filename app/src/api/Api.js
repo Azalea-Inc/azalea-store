@@ -34,6 +34,14 @@ class Api {
     await this.setupDatabase();
     this.setupRoutes();
     await this.syncDatabase();
+    this.app.use((err, req, res, next) => {
+      console.error("💥 Error capturado:", err.message);
+
+      res.status(500).json({
+        error: true,
+        message: err.message,
+      });
+    });
     this.app.listen(3000, () => {
       console.log("Server started on port 3000");
     });

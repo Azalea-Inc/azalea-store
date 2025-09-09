@@ -40,7 +40,7 @@
             />
         </div>
 
-        <div class="form-group self-end">
+        <div class="form-group self-end flex items-center gap-2">
             <a href="/" class="btn underline-none">Volver</a>
             <button class="btn btn-primary">Abrir turno</button>
         </div>

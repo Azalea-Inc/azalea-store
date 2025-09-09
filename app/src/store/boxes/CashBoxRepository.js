@@ -4,13 +4,8 @@ class CashBoxRepository {
   }
 
   async createCashBox(cashBox) {
-    try {
-      const newCashBox = await this.model.create(cashBox);
-      return newCashBox;
-    } catch (error) {
-      console.error(error);
-      throw new Error("Failed to create cash box");
-    }
+    const newCashBox = await this.model.create(cashBox);
+    return newCashBox;
   }
 
   async showCashBoxes() {
