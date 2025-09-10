@@ -6,35 +6,26 @@ import { SessionController } from "@controllers/SessionController.js";
 
 export async function load({ fetch, url }) {
   const sessionController = new SessionController();
+  const res = await fetch("/api/auth/me", { credentials: "include" });
+  const isLogin = url.pathname === "/login";
 
-  if (url.pathname === "/login") {
-    return {};
-  }
+  const redirectTo = (path) => {
+    if (browser) {
+      goto(path);
+      return {};
+    }
+    throw redirect(307, path);
+  };
 
-  const res = await fetch("/api/auth/me", {
-    credentials: "include",
-  });
-
+  if (isLogin && !res.ok) return {};
+  if (isLogin && res.ok) return redirectTo("/");
   if (!res.ok) {
     sessionController.reset();
-    if (browser) {
-      goto("/login");
-      return {};
-    } else {
-      throw redirect(307, "/login");
-    }
+    return redirectTo("/login");
   }
 
   const { user } = await res.json();
-
-  if (!user || !user.id) {
-    if (browser) {
-      goto("/login");
-      return {};
-    } else {
-      throw redirect(307, "/login");
-    }
-  }
+  if (!user?.id) return redirectTo("/login");
 
   sessionController.logued();
   sessionController.setUser(user);

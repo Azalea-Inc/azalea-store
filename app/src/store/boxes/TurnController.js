@@ -32,6 +32,15 @@ module.exports = class TurnController {
     return await this.repository.showTurn(id);
   }
 
+  async getCurrentTurn(session) {
+    const { turnId, clientId } = session;
+
+    if (turnId) return await this.repository.showTurn(turnId);
+    if (clientId) return await this.repository.getOpenTurnByClientId(clientId);
+
+    return;
+  }
+
   async createMovement(registryId, data) {
     const movement = MoneyMovement.build({ registryId, ...data });
     return await this.repository.createMovement(registryId, movement);

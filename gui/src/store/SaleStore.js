@@ -6,6 +6,7 @@ import SaleInitView from "@modules/sales/components/SaleInitView.svelte";
 import OpenTurnModal from "@modules/sales/components/OpenTurnModal.svelte";
 import SaleView from "@modules/sales/components/SaleView.svelte";
 import { toast } from "svelte-sonner";
+import { modals } from "@components/Modals";
 
 const sale = {
   component: null,
@@ -59,7 +60,6 @@ class SaleStore {
       const turn = await this.saleController.getTurn();
       return turn;
     } catch (error) {
-      console.log(error.response.data);
       this.setModalComponent(OpenTurnModal);
     }
   }
@@ -87,11 +87,10 @@ class SaleStore {
     }
   }
 
-  async closeTurn() {
+  async closeTurn(closeAmount) {
     try {
-      await this.saleController.closeTurn(sessionStore.getTurn(), closeAmount);
-      sessionStore.closeTurn();
-      this.closeTurnModal();
+      await this.saleController.closeTurn(closeAmount);
+      modals.close();
       this.setModalComponent(OpenTurnModal);
       this.initialize();
       toast.success("Turno cerrado exitosamente");

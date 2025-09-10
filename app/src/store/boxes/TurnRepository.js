@@ -25,6 +25,22 @@ class TurnRepository {
     return newTurn.toJSON();
   }
 
+  async getOpenTurnByClientId(clientId) {
+    const box = await this.getBoxByClientId(clientId);
+    if (!box) return;
+
+    const openTurn = await this.model.findOne({
+      where: {
+        cashBoxId: box.id,
+        isOpen: true,
+      },
+    });
+
+    if (!openTurn) return;
+
+    return openTurn.toJSON();
+  }
+
   async closeTurn(id, closeAmount) {
     const openTurn = await this.model.findByPk(id);
     if (!openTurn) throw new Error("Open turn not found");
@@ -40,25 +56,21 @@ class TurnRepository {
   }
 
   async showTurns() {
-    try {
-      return await this.model.findAll({
-        include: "cashBox",
-      });
-    } catch (error) {
-      throw new Error("Failed to get turns");
-    }
+    const turns = await this.model.findAll({
+      include: "cashBox",
+    });
+
+    return turns.map((turn) => turn.toJSON());
   }
 
   async showTurn(id) {
-    try {
-      const turn = await this.model.findByPk(id, {
-        include: "cashBox",
-      });
-      if (!turn) throw new Error("Turn not found");
-      return turn;
-    } catch (error) {
-      throw new Error("Failed to get turn");
-    }
+    const turn = await this.model.findByPk(id, {
+      include: "cashBox",
+    });
+
+    if (!turn) return;
+
+    return turn.toJSON();
   }
 
   async createMovement(id, movement) {
@@ -85,6 +97,8 @@ class TurnRepository {
     const box = await CashBoxEntity.findOne({
       where: { clientId },
     });
+
+    if (!box) return;
 
     return box.toJSON();
   }

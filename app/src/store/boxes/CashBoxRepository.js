@@ -55,6 +55,9 @@ class CashBoxRepository {
 
   async setClient(id, clientId) {
     const cashBox = await this.model.findByPk(id);
+
+    const turns = await cashBox.getTurns();
+
     if (!cashBox) throw new Error("Cash box not found");
     cashBox.clientId = clientId;
     return await cashBox.save();

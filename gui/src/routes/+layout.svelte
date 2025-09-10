@@ -21,7 +21,7 @@
 </script>
 
 <Modals></Modals>
-<Toaster position="top-center" richColors expand closeButton duration={1500} />
+<Toaster position="top-center" richColors expand closeButton duration={2000} />
 <MainContainer menu={$session.isLogged ? Aside : null}>
     {@render children()}
 </MainContainer>

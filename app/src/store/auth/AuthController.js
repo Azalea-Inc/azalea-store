@@ -51,6 +51,10 @@ class AuthController {
     await this.repository.updateSession(id, { turnId });
   }
 
+  async removeTurn(id) {
+    await this.repository.updateSession(id, { turnId: null });
+  }
+
   async logout(tokenId) {
     await this.repository.logout(tokenId);
   }

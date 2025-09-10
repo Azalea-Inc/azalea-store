@@ -5,11 +5,20 @@
     import HeaderContainer from "@components/HeaderContainer.svelte";
     import SalesCart from "@modules/sales/components/SalesCart.svelte";
     import SaleControl from "@modules/sales/components/SaleControl.svelte";
+    import { modals } from "@components/Modals";
 
     import { sessionStore } from "@store/SessionStore";
     import { saleStore } from "@store/SaleStore";
+    import CloseTurnModal from "./CloseTurnModal.svelte";
     let searchbar;
     let query = "";
+
+    function closeTurnHandler() {
+        modals.push(CloseTurnModal, {
+            title: "Cerrar turno",
+            subtitle: "Esto cerrará el turno actual",
+        });
+    }
 </script>
 
 <Container overflowHidden>
@@ -21,9 +30,7 @@
 
             <HorizontalList>
                 {#if !$sessionStore.isSaleActive}
-                    <button
-                        class="btn"
-                        on:click={() => saleStore.openTurnModal()}
+                    <button class="btn" on:click={closeTurnHandler}
                         >Cerrar turno</button
                     >
 

@@ -6,11 +6,15 @@ export class SaleController {
     return data.data;
   }
 
-  async closeTurn(turnId, closeAmount) {
-    const { data } = await http.post(`/turns/${turnId}/close`, {
-      closeAmount,
-    });
-    return data;
+  async closeTurn(closeAmount) {
+    try {
+      const { data } = await http.post(`/turns/current/close`, {
+        closeAmount,
+      });
+      return data;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getBoxConfig() {

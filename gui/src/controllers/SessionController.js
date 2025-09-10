@@ -1,5 +1,6 @@
 import { session } from "@store/Session";
 import { AuthRepository } from "../repository/AuthRepository";
+import { notify } from "@controllers/Notify";
 
 export class SessionController {
   constructor() {
@@ -24,8 +25,14 @@ export class SessionController {
   }
 
   async logout() {
-    await this.authRepository.logout();
-    window.location.href = "/";
-    this.session.reset();
+    try {
+      await this.authRepository.logout();
+      window.location.href = "/";
+      this.session.reset();
+    } catch (error) {
+      notify.error(
+        "Error al cerrar sesión asegurese de cerrar el turno abierto",
+      );
+    }
   }
 }

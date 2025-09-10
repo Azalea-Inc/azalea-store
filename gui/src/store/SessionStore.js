@@ -42,11 +42,6 @@ class SessionStore {
     this.setState({ turnId, isTurnActive: true });
   }
 
-  closeTurn() {
-    localStorage.removeItem("turnId");
-    this.setState({ turnId: null, isTurnActive: false });
-  }
-
   getTurn() {
     return this.getState().turnId;
   }

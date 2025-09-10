@@ -11,6 +11,10 @@ export class AuthRepository {
   }
 
   async logout() {
-    await http.post("/auth/logout");
+    try {
+      await http.post("/auth/logout");
+    } catch (error) {
+      throw error;
+    }
   }
 }

@@ -55,7 +55,11 @@ class AuthRequest extends BaseRequest {
 
   setupRoutes(router) {
     router.post("/login", this.login.bind(this));
-    this.router.post("/logout", this.logout.bind(this));
+    this.router.post(
+      "/logout",
+      this.applyMiddlewares(["existTurn"]),
+      this.logout.bind(this),
+    );
     this.router.get("/me", this.getUserInfo.bind(this));
     router.use("/auth", this.applyMiddlewares(["auth"]), this.router);
   }
