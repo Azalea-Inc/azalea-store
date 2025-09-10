@@ -1,5 +1,10 @@
 <script>
     import { onMount } from "svelte";
+    import Container from "@components/Container.svelte";
+    import HorizontalList from "@components/HorizontalList.svelte";
+    import HeaderContainer from "@components/HeaderContainer.svelte";
+    import SalesCart from "@modules/sales/components/SalesCart.svelte";
+    import SaleControl from "@modules/sales/components/SaleControl.svelte";
 
     import { sessionStore } from "@store/SessionStore";
     import { saleStore } from "@store/SaleStore";

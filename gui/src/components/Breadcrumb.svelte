@@ -23,20 +23,24 @@
 </script>
 
 <nav class="flex items-center py-2 pl-0 px-3">
-    <a href="/" class="text-gray-600 hover:text-gray-900 text-sm"> Inicio </a>
-    {#each $breadcrumb as item, i}
-        <span class="mx-1 text-gray-400">/</span>
-        {#if i === $breadcrumb.length - 1}
-            <span class="text-gray-700 capitalize text-sm">
-                {item.label}
-            </span>
-        {:else}
-            <a
-                href={item.href}
-                class="text-gray-600 hover:text-gray-900 capitalize text-sm"
-            >
-                {item.label}
-            </a>
-        {/if}
-    {/each}
+    <div class="flex items-center bg-gray-100 rounded-md px-2 py-1">
+        <a href="/" class="text-gray-600 hover:text-gray-900 text-sm">
+            Inicio
+        </a>
+        {#each $breadcrumb as item, i}
+            <span class="mx-1 text-gray-400">/</span>
+            {#if i === $breadcrumb.length - 1}
+                <span class="text-gray-700 capitalize text-sm">
+                    {item.label}
+                </span>
+            {:else}
+                <a
+                    href={item.href}
+                    class="text-gray-600 hover:text-gray-900 capitalize text-sm"
+                >
+                    {item.label}
+                </a>
+            {/if}
+        {/each}
+    </div>
 </nav>

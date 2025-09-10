@@ -1,6 +1,7 @@
 const BaseRequest = require("$api/BaseRequest");
 const express = require("express");
 const TurnController = require("./TurnController");
+const AuthController = require("../auth/AuthController");
 
 class TurnRequest extends BaseRequest {
   constructor() {
@@ -11,7 +12,10 @@ class TurnRequest extends BaseRequest {
 
   async openTurn(req, res) {
     try {
-      const registry = await this.controller.openTurn(req.body);
+      const registry = await this.controller.openTurn(req.body, req.session);
+      const authController = new AuthController();
+      await authController.setTurn(req.session.id, registry.id);
+
       res
         .status(200)
         .json({ message: "Box opened successfully", data: registry });
@@ -85,6 +89,19 @@ class TurnRequest extends BaseRequest {
     }
   }
 
+  async getCurrentTurn(req, res) {
+    try {
+      const { turnId } = req.session;
+      const turn = await this.controller.showTurn(turnId);
+      res.status(200).json({
+        message: "Current turn retrieved successfully",
+        turn,
+      });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   setupRoutes(router) {
     this.router.post("/", this.openTurn.bind(this));
     this.router.post("/:id/close", this.closeTurn.bind(this));
@@ -92,7 +109,8 @@ class TurnRequest extends BaseRequest {
     this.router.post("/:id/movement", this.createMovement.bind(this));
     this.router.get("/:id", this.showTurn.bind(this));
     this.router.get("/:id/movements", this.showMovementsByTurn.bind(this));
-    router.use("/turns", this.router);
+    this.router.get("/current/me/", this.getCurrentTurn.bind(this));
+    router.use("/turns", this.applyMiddlewares(["auth"]), this.router);
   }
 }
 

@@ -32,7 +32,21 @@ class AuthRepository {
   }
 
   async getSession(tokenId) {
-    return await SessionEntity.findOne({ where: { tokenId, isActive: true } });
+    const session = await SessionEntity.findOne({
+      where: { tokenId, isActive: true },
+    });
+    return session.toJSON();
+  }
+
+  async getSessionByUserId(userId) {
+    const session = await SessionEntity.findOne({
+      where: { userId, isActive: true },
+    });
+    return session.toJSON();
+  }
+
+  async updateSession(id, session) {
+    await SessionEntity.update(session, { where: { id } });
   }
 
   async logout(tokenId) {

@@ -12,6 +12,10 @@ module.exports = class AuthMiddleware {
       const token = req.cookies?.token;
       if (!token) return res.status(401).json({ error: "Token requerido" });
       const session = await this.authController.auth(token);
+
+      const clientId = req.cookies?.clientId;
+      if (clientId) session.clientId = clientId;
+
       req.session = session;
       next();
     } catch (err) {

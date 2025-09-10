@@ -1,3 +1,5 @@
+const CashBoxEntity = require("./CashBoxEntity");
+
 class TurnRepository {
   constructor() {
     this.model = require("./TurnEntity");
@@ -19,7 +21,8 @@ class TurnRepository {
       throw new Error("There is already an open turn for this cash box");
     }
 
-    return await this.model.create(turn);
+    const newTurn = await this.model.create(turn);
+    return newTurn.toJSON();
   }
 
   async closeTurn(id, closeAmount) {
@@ -76,6 +79,14 @@ class TurnRepository {
     } catch (error) {
       throw new Error("Failed to get movements");
     }
+  }
+
+  async getBoxByClientId(clientId) {
+    const box = await CashBoxEntity.findOne({
+      where: { clientId },
+    });
+
+    return box.toJSON();
   }
 }
 

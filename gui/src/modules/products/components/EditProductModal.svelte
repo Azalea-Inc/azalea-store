@@ -1,6 +1,6 @@
 <script>
-    import Modal from "@components/Modal.svelte";
     import http from "$lib/http";
+    import Modal from "@components/Modal.svelte";
     import HorizontalList from "@components/HorizontalList.svelte";
     import { productsPageStore } from "@modules/products/viewmodel/ProductsPageStore";
     import { modals } from "@components/Modals";
@@ -12,14 +12,17 @@
     export let product;
 
     const typeUnits = {
-        unit: [{ label: "Pieza", value: "Piece" }],
-        bulk: [{ label: "Kilogramo", value: "Kg" }],
+        unit: [{ label: "Pieza", value: "piece" }],
+        bulk: [{ label: "Kilogramo", value: "kg" }],
     };
 
     let isSubmitted = false;
 
-    function resetProduct() {
-        product = { ...initialProductState };
+    let previousProductType = product.productType;
+
+    $: if (product.productType !== previousProductType) {
+        product.unitOfMeasure = "";
+        previousProductType = product.productType;
     }
 
     async function saveProduct() {
@@ -85,17 +88,26 @@
     <HorizontalList>
         <div class="form-group w-full">
             <label for="productType" class="form-label">Tipo de producto</label>
-            <select
-                id="productType"
-                class="form-control"
-                name="productType"
-                bind:value={product.productType}
-                required
-            >
-                <option value="" disabled selected>Seleccione un tipo</option>
-                <option value="unit">Unitario</option>
-                <option value="bulk">Granel</option>
-            </select>
+            <div>
+                <input
+                    type="radio"
+                    id="bulk"
+                    name="productType"
+                    value="bulk"
+                    bind:group={product.productType}
+                />
+                <label for="bulk">Granel</label>
+            </div>
+            <div>
+                <input
+                    type="radio"
+                    id="unit"
+                    name="productType"
+                    value="unit"
+                    bind:group={product.productType}
+                />
+                <label for="unit">Unitario</label>
+            </div>
         </div>
 
         <div class="form-group w-full">
@@ -113,7 +125,7 @@
                 >
 
                 {#each typeUnits[product.productType] as unit}
-                    <option value={unit.label}>{unit.label}</option>
+                    <option value={unit.value}>{unit.label}</option>
                 {/each}
             </select>
         </div>

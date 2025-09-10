@@ -15,6 +15,11 @@ export class SaleController {
 
   async getBoxConfig() {
     const { data } = await http.get("/sales/box/config");
-    return data;
+    return data.boxConfig;
+  }
+
+  async getTurn() {
+    const { data } = await http.get("/turns/current/me");
+    return data.turn;
   }
 }

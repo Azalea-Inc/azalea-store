@@ -7,8 +7,16 @@ module.exports = class TurnController {
     this.repository = new TurnRepository();
   }
 
-  async openTurn(data) {
-    const turn = Turn.build(data);
+  async openTurn(data, session) {
+    const box = await this.repository.getBoxByClientId(session.clientId);
+    if (!box) throw new Error("Box not found");
+
+    const turn = Turn.build({
+      ...data,
+      userId: session.userId,
+      cashBoxId: box.id,
+    });
+
     return await this.repository.openTurn(turn);
   }
 

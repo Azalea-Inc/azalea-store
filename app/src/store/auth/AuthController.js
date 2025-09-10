@@ -47,6 +47,10 @@ class AuthController {
     return await this.repository.getSession(payload.tokenId);
   }
 
+  async setTurn(id, turnId) {
+    await this.repository.updateSession(id, { turnId });
+  }
+
   async logout(tokenId) {
     await this.repository.logout(tokenId);
   }

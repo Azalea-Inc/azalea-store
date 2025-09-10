@@ -4,12 +4,14 @@ import { SaleController } from "@controllers/SaleController";
 import LoadSaleView from "@modules/sales/components/LoadSaleView.svelte";
 import SaleInitView from "@modules/sales/components/SaleInitView.svelte";
 import OpenTurnModal from "@modules/sales/components/OpenTurnModal.svelte";
+import SaleView from "@modules/sales/components/SaleView.svelte";
 import { toast } from "svelte-sonner";
 
 const sale = {
   component: null,
   cart: [],
   loading: false,
+  isTurnOpen: false,
 };
 
 class SaleStore {
@@ -36,19 +38,37 @@ class SaleStore {
     this.setState({ component });
   }
 
-  initialize() {
+  async initialize() {
     this.setState({ component: LoadSaleView });
-    return;
+
+    const config = await this.getConfig();
+    if (!config) {
+      return;
+    }
+
+    const turn = await this.getTurn();
+    if (!turn) {
+      return;
+    }
+
+    this.setModalComponent(SaleView);
   }
 
-  async getBoxConfig() {
-    this.loading = true;
+  async getTurn() {
     try {
-      await this.saleController.getBoxConfig();
-      this.setModalComponent(OpenTurnModal);
-      this.loading = false;
+      const turn = await this.saleController.getTurn();
+      return turn;
     } catch (error) {
-      this.loading = false;
+      console.log(error.response.data);
+      this.setModalComponent(OpenTurnModal);
+    }
+  }
+
+  async getConfig() {
+    try {
+      const config = await this.saleController.getBoxConfig();
+      return config;
+    } catch (error) {
       this.setModalComponent(SaleInitView);
     }
   }
@@ -59,9 +79,8 @@ class SaleStore {
         throw new Error("Turn data is required");
       }
       const turn = await this.saleController.openTurn(turnData);
-      sessionStore.setTurn(turn.id);
-      this.closeTurnModal();
-      this.setModalComponent(CloseTurnModal);
+      this.setState({ isTurnOpen: true });
+      this.setModalComponent(SaleView);
       toast.success("Turno abierto exitosamente");
     } catch ({ response }) {
       toast.error(response.data);
