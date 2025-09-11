@@ -1,151 +1,139 @@
 <script>
-    import { onMount } from "svelte";
-    import { settingsVM as vm } from "@store/SettingsVM";
-
-    let settings = $vm.settings;
-
-    onMount(async () => {
-        await vm.getBoxes();
-    });
+    export let vm;
+    const { settings } = vm;
 </script>
 
-<header class="header">
-    <div class="flex items-center gap-4">
-        <button
-            class="btn mb-2"
-            href="/settings"
-            on:click={() => vm.goSettingsOverview()}>Volver</button
-        >
+<div class="mx-auto w-full max-w-3xl">
+    <header class="header">
         <h1>Ajustes del Punto de Venta</h1>
-    </div>
-    <p class="subtitle">
-        Configuraciones generales y específicas para operar el sistema POS.
-    </p>
-</header>
+        <p class="subtitle">
+            Configuraciones generales y específicas para operar el sistema POS.
+        </p>
+    </header>
 
-<!-- Sección General -->
-<form on:submit|preventDefault={() => vm.saveGeneralSettings()} class="group">
     <h2>General</h2>
+    <!-- Sección General -->
+    <form
+        on:submit|preventDefault={() => vm.saveGeneralSettings()}
+        class="group"
+    >
+        <div class="field-group">
+            <div class="field">
+                <label for="nombreComercio">Nombre del comercio</label>
+                <input
+                    type="text"
+                    id="nombreComercio"
+                    placeholder="Ingrese el nombre del comercio"
+                    bind:value={$settings.store_name}
+                    required
+                />
+            </div>
 
-    <div class="field-group">
-        <div class="field">
-            <label for="nombreComercio">Nombre del comercio</label>
-            <input
-                type="text"
-                id="nombreComercio"
-                placeholder="Ingrese el nombre del comercio"
-                bind:value={settings.store_name}
-                required
-            />
+            <div class="field">
+                <label for="email">Email</label>
+                <input
+                    type="text"
+                    id="email"
+                    placeholder="Ingrese el email del comercio"
+                    bind:value={$settings.email}
+                />
+            </div>
         </div>
 
         <div class="field">
-            <label for="email">Email</label>
-            <input
-                type="text"
-                id="email"
-                placeholder="Ingrese el email del comercio"
-                bind:value={settings.email}
-            />
-        </div>
-    </div>
-
-    <div class="field">
-        <label for="currency">Moneda</label>
-        <select id="currency" bind:value={settings.currency}>
-            <option value="">Seleccione una moneda</option>
-            <option value="USD">USD - Dólar estadounidense</option>
-            <option value="EUR">EUR - Euro</option>
-            <option value="MXN">MXN - Peso mexicano</option>
-            <option value="COP">COP - Peso colombiano</option>
-        </select>
-    </div>
-
-    <div class="field-group">
-        <div class="field">
-            <label for="direction">Dirección</label>
-            <input
-                type="text"
-                id="direction"
-                placeholder="Ingrese la dirección del comercio"
-                bind:value={settings.address}
-            />
+            <label for="currency">Moneda</label>
+            <select id="currency" bind:value={$settings.currency}>
+                <option value="">Seleccione una moneda</option>
+                <option value="USD">USD - Dólar estadounidense</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="MXN">MXN - Peso mexicano</option>
+                <option value="COP">COP - Peso colombiano</option>
+            </select>
         </div>
 
-        <div class="field">
-            <label for="telefono">Teléfono</label>
-            <input
-                type="text"
-                id="telefono"
-                placeholder="Ingrese el teléfono del comercio"
-                bind:value={settings.phone}
-            />
+        <div class="field-group">
+            <div class="field">
+                <label for="direction">Dirección</label>
+                <input
+                    type="text"
+                    id="direction"
+                    placeholder="Ingrese la dirección del comercio"
+                    bind:value={$settings.address}
+                />
+            </div>
+
+            <div class="field">
+                <label for="telefono">Teléfono</label>
+                <input
+                    type="text"
+                    id="telefono"
+                    placeholder="Ingrese el teléfono del comercio"
+                    bind:value={$settings.phone}
+                />
+            </div>
         </div>
-    </div>
 
-    <button type="submit" class="btn btn-primary">Guardar General</button>
-    <div class="field mt-8">
-        <div class="field readonly">
-            <label>Última actualización</label>
-            <span class="readonly-value">
-                {settings.updated_at
-                    ? new Date(settings.updated_at).toLocaleString()
-                    : "No disponible"}
-            </span>
+        <button type="submit" class="btn btn-primary self-end"
+            >Guardar General</button
+        >
+        <div class="field mt-8">
+            <div class="field readonly">
+                <label>Última actualización</label>
+                <span class="readonly-value">
+                    {$settings?.updated_at
+                        ? new Date($settings?.updated_at).toLocaleString()
+                        : "No disponible"}
+                </span>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
 
-<!-- Configuración de Cajas -->
-<form class="group">
-    <h2>Configuración de Cajas</h2>
-
-    {#if $vm.currentBox}
-        <span>{$vm.currentBox.id}</span>
-        <span>{$vm.currentBox.name}</span>
-        <a href="/cashbox/{$vm.currentBox.id}">Ver detalles</a>
-    {/if}
-
-    <div class="field">
-        <label for="caja">Caja</label>
-        <select name="" id="">
-            <option value="">Seleccionar caja</option>
-            {#each $vm.boxes as box}
-                <option value={box.id}>{box.name}</option>
-            {/each}
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Guardar Configuración</button>
-</form>
-
-<!-- Impresión -->
-<form class="group">
     <h2>Impresión</h2>
-    <div class="field checkbox">
-        <input type="checkbox" id="imprimirTicket" />
-        <label for="imprimirTicket">Imprimir ticket automáticamente</label>
+    <!-- Impresión -->
+    <div class="group">
+        <div class="flex items-center justify-between">
+            <label for="isActivePrinter" class="field-label"
+                >Impresión automática</label
+            >
+            <div class="switch">
+                <input
+                    type="checkbox"
+                    id="isActivePrinter"
+                    bind:checked={$settings.isActivePrinter}
+                />
+                <label for="isActivePrinter">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Guardar Impresión</button>
-</form>
+</div>
 
 <style>
     .header h1 {
-        font-size: 2rem;
+        font-size: 1.5rem;
         margin-bottom: 0.25rem;
     }
 
     .subtitle {
         color: #57606a;
         margin-bottom: 2rem;
+        font-size: 1rem;
     }
 
     .group {
+        padding: 1rem;
+        border: 1px solid #e1e4e8;
+        border-radius: 8px;
+        background-color: #ffff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid #d0d7de;
+        font-size: 1rem;
+        display: flex;
+        flex-direction: column;
     }
 
-    .group h2 {
+    h2 {
         font-size: 1.25rem;
         margin-bottom: 0.75rem;
         color: #1f2328;
@@ -169,6 +157,7 @@
         margin-bottom: 0.25rem;
         font-weight: 500;
         font-size: 0.95rem;
+        color: #1f2328;
     }
 
     .field input[type="text"],
