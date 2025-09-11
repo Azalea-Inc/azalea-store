@@ -1,9 +1,9 @@
-const BaseRequest = require("$api/BaseRequest");
 const express = require("express");
+const BaseHandler = require("$api/BaseHandler");
 const TurnController = require("./TurnController");
 const AuthController = require("../auth/AuthController");
 
-class TurnRequest extends BaseRequest {
+class TurnHandler extends BaseHandler {
   constructor() {
     super();
     this.router = express.Router();
@@ -123,8 +123,9 @@ class TurnRequest extends BaseRequest {
     this.router.get("/:id", this.showTurn.bind(this));
     this.router.get("/:id/movements", this.showMovementsByTurn.bind(this));
     this.router.get("/current/me/", this.initTurn.bind(this));
+
     router.use("/turns", this.applyMiddlewares(["auth"]), this.router);
   }
 }
 
-module.exports = TurnRequest;
+module.exports = TurnHandler;

@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const SequelizeDB = require("../data/sequelize/SequelizeDB");
-const ApiRouterBuilder = require("./ApiRouterBuilder");
 const cookieParser = require("cookie-parser");
+const SequelizeDB = require("../data/sequelize/SequelizeDB");
+const ApiHandlerBuilder = require("./ApiHandlerBuilder");
 const { swaggerSpec, swaggerUi } = require("./swagger/swagger");
 
 class Api {
@@ -19,7 +19,7 @@ class Api {
 
   setupRoutes() {
     this.app.use("/api", this.router);
-    new ApiRouterBuilder(this.router).build();
+    new ApiHandlerBuilder(this.router).build();
   }
 
   async setupDatabase() {

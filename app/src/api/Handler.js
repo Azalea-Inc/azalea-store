@@ -1,11 +1,11 @@
-const BaseRequest = require("./BaseRequest");
+const BaseHandler = require("./BaseHandler");
 const express = require("express");
 
-class Router extends BaseRequest {
+class Handler extends BaseHandler {
   constructor() {
     super();
     this.router = express.Router();
   }
 }
 
-module.exports = Router;
+module.exports = Handler;

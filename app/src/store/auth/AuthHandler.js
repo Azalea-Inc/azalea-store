@@ -1,11 +1,10 @@
-const BaseRequest = require("$api/BaseRequest");
+const Handler = require("$api/Handler");
 const AuthController = require("./AuthController");
 
-class AuthRequest extends BaseRequest {
+module.exports = class AuthHandler extends Handler {
   constructor() {
     super();
     this.controller = new AuthController();
-    this.router = require("express").Router();
   }
 
   async login(req, res) {
@@ -63,6 +62,4 @@ class AuthRequest extends BaseRequest {
     this.router.get("/me", this.getUserInfo.bind(this));
     router.use("/auth", this.applyMiddlewares(["auth"]), this.router);
   }
-}
-
-module.exports = AuthRequest;
+};

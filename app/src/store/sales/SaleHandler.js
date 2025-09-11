@@ -1,11 +1,9 @@
-const BaseRequest = require("$api/BaseRequest");
-const { Router } = require("express");
+const Handler = require("../../api/Handler");
 const SaleController = require("./SaleController");
 
-class SaleRequest extends BaseRequest {
+module.exports = class SaleHandler extends Handler {
   constructor() {
     super();
-    this.router = Router();
     this.controller = new SaleController();
   }
 
@@ -114,8 +112,6 @@ class SaleRequest extends BaseRequest {
     this.router.get("/:id/products", this.showProductsForSale.bind(this));
     this.router.get("/box/config", this.getBoxConfig.bind(this));
 
-    router.use("/sales", this.router);
+    router.use("/sales", this.applyMiddlewares(["auth"]), this.router);
   }
-}
-
-module.exports = SaleRequest;
+};

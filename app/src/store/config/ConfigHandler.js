@@ -1,9 +1,9 @@
-const express = require("express");
+const Handler = require("../../api/Handler");
 const ConfigController = require("./ConfigController");
 
-class ConfigRequest {
+class ConfigHandler extends Handler {
   constructor() {
-    this.router = express.Router();
+    super();
     this.controller = new ConfigController();
   }
 
@@ -44,8 +44,8 @@ class ConfigRequest {
     this.router.get("/", this.getConfig.bind(this));
     this.router.patch("/", this.updateConfig.bind(this));
     this.router.patch("/rename", this.renameStore.bind(this));
-    router.use("/config", this.router);
+    router.use("/config", this.applyMiddlewares(["auth"]), this.router);
   }
 }
 
-module.exports = ConfigRequest;
+module.exports = ConfigHandler;

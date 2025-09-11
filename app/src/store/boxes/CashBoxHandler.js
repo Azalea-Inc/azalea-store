@@ -1,8 +1,8 @@
-const BaseRequest = require("$api/BaseRequest");
+const BaseHandler = require("$api/BaseHandler");
 const { Router } = require("express");
 const CashBoxController = require("./CashBoxController");
 
-class CashBoxRequest extends BaseRequest {
+class CashBoxHandler extends BaseHandler {
   constructor() {
     super();
     this.router = Router();
@@ -140,4 +140,4 @@ class CashBoxRequest extends BaseRequest {
   }
 }
 
-module.exports = CashBoxRequest;
+module.exports = CashBoxHandler;

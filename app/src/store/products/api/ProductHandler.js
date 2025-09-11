@@ -1,9 +1,9 @@
-const BaseRequest = require("$api/BaseRequest");
+const BaseHandler = require("$api/BaseHandler");
 const express = require("express");
 const ProductController = require("../ProductController");
 const UpdateProductHandler = require("./UpdateProductHandler");
 
-class ProductRequest extends BaseRequest {
+class ProductHandler extends BaseHandler {
   constructor() {
     super();
     this.router = express.Router();
@@ -132,4 +132,4 @@ class ProductRequest extends BaseRequest {
   }
 }
 
-module.exports = ProductRequest;
+module.exports = ProductHandler;

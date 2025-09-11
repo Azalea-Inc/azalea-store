@@ -1,7 +1,9 @@
+const Handler = require("../../api/Handler");
 const InventoryController = require("./InventoryController");
 
-class InventoryRequest {
+class InventoryHandler extends Handler {
   constructor() {
+    super();
     this.controller = new InventoryController();
   }
 
@@ -106,6 +108,26 @@ class InventoryRequest {
       res.status(400).json({ error: error.message });
     }
   }
+
+  setupRoutes(router) {
+    this.router.post("/", this.addInventory.bind(this));
+    this.router.get("/", this.getInventories.bind(this));
+    this.router.get("/:id", this.showInventoryDetail.bind(this));
+    this.router.post("/:id/movement", this.addMovementToInventory.bind(this));
+    this.router.get("/movements/:id", this.showMovementDetail.bind(this));
+    this.router.get("/:id/movements", this.showMovementsToInventory.bind(this));
+    this.router.delete("/:id", this.removeInventory.bind(this));
+    this.router.patch(
+      "/:id/deactivate",
+      this.deactivateProductToInventory.bind(this),
+    );
+    this.router.patch(
+      "/:id/activate",
+      this.activateProductToInventory.bind(this),
+    );
+
+    router.use("/inventory", this.applyMiddlewares(["auth"]), this.router);
+  }
 }
 
-module.exports = InventoryRequest;
+module.exports = InventoryHandler;

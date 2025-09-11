@@ -1,4 +1,4 @@
-const Api = require("$api/Api");
+const Api = require("./api/Api");
 const ConfigController = require("$store/config/ConfigController");
 
 module.exports = class Store {

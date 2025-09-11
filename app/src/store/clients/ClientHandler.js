@@ -1,8 +1,8 @@
-const BaseRequest = require("$api/BaseRequest");
+const BaseHandler = require("$api/BaseHandler");
 const express = require("express");
 const ClientController = require("./ClientController");
 
-class ClientRequest extends BaseRequest {
+class ClientHandler extends BaseHandler {
   constructor() {
     super();
     this.router = express.Router();
@@ -100,4 +100,4 @@ class ClientRequest extends BaseRequest {
   }
 }
 
-module.exports = ClientRequest;
+module.exports = ClientHandler;

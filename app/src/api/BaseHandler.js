@@ -1,4 +1,4 @@
-module.exports = class BaseRequest {
+module.exports = class BaseHandler {
   setMiddlewareFactory(middlewareFactory) {
     this.middlewareFactory = middlewareFactory;
     return this;

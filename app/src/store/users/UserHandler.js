@@ -1,11 +1,9 @@
-const BaseRequest = require("$api/BaseRequest");
-const express = require("express");
+const Handler = require("../../api/Handler");
 const UserController = require("./UserController");
 
-class UserRequest extends BaseRequest {
+class UserHandler extends Handler {
   constructor() {
     super();
-    this.router = express.Router();
     this.controller = new UserController();
   }
 
@@ -89,8 +87,8 @@ class UserRequest extends BaseRequest {
     this.router.delete("/:id", this.removerUser.bind(this));
     this.router.patch("/:id/password", this.changePassword.bind(this));
 
-    router.use("/users", this.router);
+    router.use("/users", this.applyMiddlewares(["auth"]), this.router);
   }
 }
 
-module.exports = UserRequest;
+module.exports = UserHandler;
