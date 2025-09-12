@@ -1,5 +1,6 @@
 import { writable, get } from "svelte/store";
-const User = {
+
+const session = {
   id: "",
   email: "example@example.com",
   name: "USER",
@@ -12,34 +13,30 @@ const User = {
   isLogged: false,
 };
 
-class Session {
+class SessionStore {
   constructor() {
-    this.store = writable({ ...User });
-    this.subscribe = this.store.subscribe;
-    this.set = this.store.set;
-    this.update = this.store.update;
-    this.reset = () => this.store.set({ ...User });
+    this.session = writable({ ...session });
+  }
+
+  reset() {
+    this.session.set({ ...session });
   }
 
   setState(newState) {
-    this.store.update((state) => ({ ...state, ...newState }));
+    this.session.update((state) => ({ ...state, ...newState }));
+  }
+
+  getSession() {
+    return get(this.session);
   }
 
   setSession(session) {
     this.setState({ ...session });
   }
 
-  getSession() {
-    return get(this.store);
-  }
-
   logued() {
     this.setState({ isLogged: true });
   }
-
-  reset() {
-    this.store.set({ ...User });
-  }
 }
 
-export const session = new Session();
+export const sessionStore = new SessionStore();

@@ -12,6 +12,7 @@ const settings = {
 export class SettingsVM {
   constructor() {
     this.settings = writable({ ...settings });
+    this.isSubmitted = writable(false);
   }
 
   async onCreate() {
@@ -28,13 +29,37 @@ export class SettingsVM {
     }
   }
 
-  async saveGeneralSettings() {
+  async togglePrinterStatus() {
     try {
-      await http.patch("/config", get(this.settings));
+      await http.patch("/config", {
+        isActivePrinter: get(this.settings).isActivePrinter,
+      });
+
+      const currentStatus = get(this.settings).isActivePrinter;
+      notify.info(
+        !currentStatus
+          ? "Impresora desactivada con éxito"
+          : "Impresora activada con éxito",
+      );
       await this.loadSettings();
-      notify.success("Ajustes guardados con éxito");
     } catch (error) {
       notify.error(error);
+    }
+  }
+
+  async saveGeneralSettings() {
+    try {
+      if (get(this.isSubmitted)) return;
+      this.isSubmitted.set(true);
+      await http.patch("/config", get(this.settings));
+      await this.loadSettings();
+      notify.info("Ajustes guardados con éxito");
+    } catch (error) {
+      notify.error(error);
+    } finally {
+      setTimeout(() => {
+        this.isSubmitted.set(false);
+      }, 1000);
     }
   }
 }

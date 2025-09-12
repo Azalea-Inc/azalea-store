@@ -30,5 +30,5 @@ export async function load({ fetch, url }) {
   sessionController.logued();
   sessionController.setUser(user);
 
-  return { session: sessionController.getSession() };
+  return;
 }

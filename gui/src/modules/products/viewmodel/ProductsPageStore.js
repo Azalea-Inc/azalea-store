@@ -69,7 +69,7 @@ class ProductsPageStore {
   }
 
   deleteProductHandler(id) {
-    modals.push(ConfirmModal, {
+    modals.warning({
       title: "Eliminar Producto",
       message: "¿Estás seguro de que deseas eliminar este producto?",
       onConfirm: () => {
@@ -88,7 +88,7 @@ class ProductsPageStore {
   async deleteProduct(id) {
     try {
       await this.repository.deleteProduct(id);
-      toast.success("Producto eliminado exitosamente");
+      toast.info("Producto eliminado exitosamente");
       this.products = this.products.filter((product) => product.id !== id);
       this.update();
     } catch (error) {

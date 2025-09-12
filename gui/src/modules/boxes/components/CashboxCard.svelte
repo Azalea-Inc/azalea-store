@@ -5,11 +5,10 @@
     const dispatch = createEventDispatcher();
     import { modals } from "@components/Modals";
     import EditCashBox from "./EditCashBox.svelte";
-    import ConfirmRemoveModal from "@components/Modals/ConfirmRemoveModal.svelte";
 
     export let box;
     function handleDelete() {
-        modals.push(ConfirmRemoveModal, {
+        modals.warning({
             title: "Eliminar Caja",
             message: "¿Estás seguro de que deseas eliminar esta caja?",
             onConfirm: () => {

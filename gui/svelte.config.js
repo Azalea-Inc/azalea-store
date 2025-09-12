@@ -12,6 +12,7 @@ const config = {
       "@utils": "src/lib/utils",
       "@controllers": "src/controllers",
       "@modules": "src/modules",
+      "@viewmodels": "src/viewmodels",
     },
     paths: {
       base: "",

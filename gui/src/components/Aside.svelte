@@ -1,11 +1,11 @@
 <script>
     import { page } from "$app/stores";
-    import { aside } from "@store/Aside";
-    import { session } from "@store/Session";
+    import { AsideVM } from "@viewmodels/AsideVM";
     import { Settings } from "@components/icons";
     import Tooltip from "@components/Tooltip.svelte";
-    import { SessionController } from "@controllers/SessionController";
-    const sessionController = new SessionController();
+
+    const vm = new AsideVM();
+    const { aside, session } = vm;
 </script>
 
 <aside
@@ -76,7 +76,7 @@
                 <button
                     class="menu-item logout-button"
                     aria-label="Logout"
-                    on:click={() => sessionController.logout()}
+                    on:click={() => vm.logout()}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

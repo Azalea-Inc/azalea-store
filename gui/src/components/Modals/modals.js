@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import WarningConfirmModal from "./WarningConfirmModal.svelte";
 
 const initialState = {
   stack: [],
@@ -9,6 +10,10 @@ const initialState = {
 class Modals {
   constructor() {
     this.state = writable({ ...initialState });
+  }
+
+  warning(props) {
+    this.push(WarningConfirmModal, props);
   }
 
   push(component, props = {}) {

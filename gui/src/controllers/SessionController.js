@@ -1,38 +1,36 @@
-import { session } from "@store/Session";
-import { AuthRepository } from "../repository/AuthRepository";
+import { sessionStore } from "@store/Session";
 import { notify } from "@controllers/Notify";
+import { AuthRepository } from "../repository/AuthRepository";
+import { get } from "svelte/store";
 
 export class SessionController {
   constructor() {
-    this.session = session;
+    this.sessionStore = sessionStore;
     this.authRepository = new AuthRepository();
   }
 
   reset() {
-    this.session.reset();
+    this.sessionStore.reset();
   }
 
   logued() {
-    this.session.logued();
+    this.sessionStore.logued();
   }
 
   setUser(user) {
-    this.session.setState(user);
+    this.sessionStore.setState(user);
   }
 
   getSession() {
-    return this.session.getSession();
+    return this.sessionStore.getSession();
   }
 
   async logout() {
     try {
       await this.authRepository.logout();
-      window.location.href = "/";
-      this.session.reset();
+      this.sessionStore.reset();
     } catch (error) {
-      notify.error(
-        "Error al cerrar sesión asegurese de cerrar el turno abierto",
-      );
+      throw error;
     }
   }
 }

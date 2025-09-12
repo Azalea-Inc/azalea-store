@@ -8,20 +8,28 @@
     import Spinner from "@components/Spinner.svelte";
     import { page } from "$app/stores";
     import { onDestroy, onMount } from "svelte";
-    import { session } from "@store/Session";
+    import { sessionStore } from "@store/Session";
     let { children, data } = $props();
 
     onMount(() => {
-        session.setSession(data.session);
+        sessionStore.setSession(data.session);
     });
 
     onDestroy(() => {
         bus.reset();
     });
+
+    const { session } = sessionStore;
 </script>
 
 <Modals></Modals>
-<Toaster position="top-center" richColors expand closeButton duration={2000} />
+<Toaster
+    position="bottom-right"
+    richColors
+    expand
+    closeButton
+    duration={3000}
+/>
 <MainContainer menu={$session.isLogged ? Aside : null}>
     {@render children()}
 </MainContainer>

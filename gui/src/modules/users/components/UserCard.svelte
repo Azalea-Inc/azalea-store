@@ -2,10 +2,9 @@
     import Dropdown from "@components/Dropdown.svelte";
     import { bus } from "$lib/EventBus";
     import { modals } from "@components/Modals";
-    import ConfirmRemoveModal from "@components/Modals/ConfirmRemoveModal.svelte";
 
     function handleDelete() {
-        modals.push(ConfirmRemoveModal, {
+        modals.warning({
             title: "Eliminar usuario",
             message: "¿Estás seguro de que deseas eliminar este usuario?",
             onConfirm: () => {

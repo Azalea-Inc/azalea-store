@@ -46,7 +46,7 @@
         try {
             await http.put(`/products/${product.id}`, product);
             await state.getProducts();
-            toast.success("Producto actualizado exitosamente");
+            toast.info("Producto actualizado exitosamente");
         } catch (error) {
             toast.error("Error al actualizar producto");
         } finally {

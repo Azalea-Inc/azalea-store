@@ -5,10 +5,9 @@
     import { Arrow } from "@components/icons";
     import EditClient from "./EditClient.svelte";
     import Dropdown from "@components/Dropdown.svelte";
-    import ConfirmRemoveModal from "@components/Modals/ConfirmRemoveModal.svelte";
 
     function handleDelete() {
-        modals.push(ConfirmRemoveModal, {
+        modals.warning({
             title: "Eliminar Cliente",
             message: "¿Estás seguro de que deseas eliminar este cliente?",
             onConfirm: () => {

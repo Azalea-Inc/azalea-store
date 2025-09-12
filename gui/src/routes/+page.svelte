@@ -2,9 +2,9 @@
     import { onDestroy, onMount } from "svelte";
     import Chart from "chart.js/auto";
     import Container from "@components/Container.svelte";
-    import { session } from "@store/Session";
+    import { sessionStore } from "@store/Session";
 
-    const vm = session;
+    const { session } = sessionStore;
 
     // POS Metrics
     let totalSales = 1200;
@@ -131,12 +131,12 @@
 
 <Container className="p-8 pt-6 bg-gray-50 min-h-screen">
     <!-- Header -->
-    <header class="header sticky top-0 z-10">
+    <header class="header md:sticky top-0 z-10">
         <div class="header-content">
             <div class="header-info">
                 <div class="store-status">
                     <div class="status-indicator active"></div>
-                    <span class="store-name">{$vm.name}</span>
+                    <span class="store-name">{$session.name}</span>
                 </div>
                 <h1 class="dashboard-title">Panel de Control POS</h1>
                 <p class="subtitle">
@@ -308,13 +308,13 @@
                         <div class="status-value">
                             <div class="user-status active">
                                 <div class="user-avatar">
-                                    {$vm.name
+                                    {$session.name
                                         .split(" ")
                                         .map((word) => word.charAt(0))
                                         .join("")
                                         .substring(0, 2)}
                                 </div>
-                                <span>{$vm.name}</span>
+                                <span>{$session.name}</span>
                             </div>
                         </div>
                     {:else}

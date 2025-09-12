@@ -3,7 +3,7 @@
     import DefaultModal from "@components/Modals/DefaultModal.svelte";
 </script>
 
-<div>
+<div class="p-6">
     <div class="form-group">
         <label for="excel">📄 Cargar archivo Excel</label>
         <input type="file" id="excel" accept=".xlsx, .xls" />

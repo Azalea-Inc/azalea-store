@@ -69,7 +69,9 @@
                 <button
                     class="btn btn-secondary flex items-center gap-2"
                     on:click={() => {
-                        modals.push(ExcelUploader);
+                        modals.push(ExcelUploader, {
+                            title: "Cargar Excel",
+                        });
                     }}
                 >
                     <svg

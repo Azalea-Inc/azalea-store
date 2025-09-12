@@ -1,6 +1,6 @@
 <script>
     export let vm;
-    const { settings } = vm;
+    const { settings, isSubmitted } = vm;
 </script>
 
 <div class="mx-auto w-full max-w-3xl">
@@ -40,15 +40,17 @@
             </div>
         </div>
 
-        <div class="field">
-            <label for="currency">Moneda</label>
-            <select id="currency" bind:value={$settings.currency}>
-                <option value="">Seleccione una moneda</option>
-                <option value="USD">USD - Dólar estadounidense</option>
-                <option value="EUR">EUR - Euro</option>
-                <option value="MXN">MXN - Peso mexicano</option>
-                <option value="COP">COP - Peso colombiano</option>
-            </select>
+        <div class="field-group">
+            <div class="field">
+                <label for="currency">Moneda</label>
+                <select id="currency" bind:value={$settings.currency}>
+                    <option value="">Seleccione una moneda</option>
+                    <option value="USD">USD - Dólar estadounidense</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="MXN">MXN - Peso mexicano</option>
+                    <option value="COP">COP - Peso colombiano</option>
+                </select>
+            </div>
         </div>
 
         <div class="field-group">
@@ -73,9 +75,13 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary self-end"
-            >Guardar General</button
+        <button
+            type="submit"
+            disabled={$isSubmitted}
+            class="btn btn-primary self-end"
         >
+            {$isSubmitted ? "Guardando..." : "Guardar"}
+        </button>
         <div class="field mt-8">
             <div class="field readonly">
                 <label>Última actualización</label>
@@ -100,6 +106,7 @@
                     type="checkbox"
                     id="isActivePrinter"
                     bind:checked={$settings.isActivePrinter}
+                    on:change={() => vm.togglePrinterStatus()}
                 />
                 <label for="isActivePrinter">
                     <span class="slider"></span>
@@ -147,10 +154,22 @@
     }
 
     .field-group {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
         margin-bottom: 1rem;
+    }
+
+    @media (max-width: 900px) {
+        .field-group {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .field-group {
+            grid-template-columns: 1fr;
+        }
     }
 
     .field label {
@@ -162,17 +181,13 @@
 
     .field input[type="text"],
     .field input[type="number"],
+    .field input[type="email"],
     .field select {
         padding: 0.3rem 0.5rem;
         border: 1px solid #d0d7de;
         border-radius: 6px;
         font-size: 1rem;
-    }
-
-    .field.checkbox {
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
+        width: 100%;
     }
 
     .field.readonly {

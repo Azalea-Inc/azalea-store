@@ -46,7 +46,6 @@ class ClientsPageVM {
       await http.post("/clients", client);
       toast.success("Cliente agregado exitosamente");
     } catch (error) {
-      console.log(error.response.data.error);
       toast.error(error.response.data.error);
       this.setState({ error, loading: false });
     }
