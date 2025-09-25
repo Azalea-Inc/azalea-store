@@ -21,11 +21,16 @@ const SaleEntity = sequelize.define("Sale", {
       min: 0,
     },
   },
+  status: {
+    type: DataTypes.ENUM("OPENED", "COMPLETED", "CANCELLED"),
+    allowNull: false,
+    defaultValue: "OPENED",
+  },
   turnId: {
     type: DataTypes.UUID,
     allowNull: false,
     references: {
-      model: "CashBoxRegistries",
+      model: "Turns",
       key: "id",
     },
   },

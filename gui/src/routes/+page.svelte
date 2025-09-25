@@ -129,7 +129,7 @@
     });
 </script>
 
-<Container className="p-8 pt-6 bg-gray-50 min-h-screen">
+<Container className="p-8 pt-6 bg-gray-50">
     <!-- Header -->
     <header class="header md:sticky top-0 z-10">
         <div class="header-content">

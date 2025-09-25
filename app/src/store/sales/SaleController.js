@@ -8,9 +8,10 @@ class SaleController {
     this.repository = new SaleRepository();
   }
 
-  async addSale(data) {
-    const sale = Sale.build(data);
-    const createdSale = await this.repository.addSale(sale);
+  async createSale(session) {
+    if (!session.turnId) throw new Error("Turn ID is required");
+    const sale = Sale.build(session);
+    const createdSale = await this.repository.createSale(sale);
     return createdSale;
   }
 
@@ -23,9 +24,12 @@ class SaleController {
     }
   }
 
-  async showSales(id) {
-    const sales = await this.repository.showSales(id);
-    return sales;
+  async showSales() {
+    return await this.repository.showSales();
+  }
+
+  async showSalesByTurn(turnId) {
+    return await this.repository.showSalesByTurn(turnId);
   }
 
   async addProduct(id, data) {

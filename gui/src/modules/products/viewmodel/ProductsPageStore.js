@@ -8,7 +8,6 @@ import { modals } from "@components/Modals";
 import ConfirmModal from "@components/Modals/ConfirmModal.svelte";
 import AddProductModal from "@modules/products/components/AddProductModal.svelte";
 import EditProductModal from "@modules/products/components/EditProductModal.svelte";
-import http from "$lib/http";
 
 import { ProductRepository } from "../ProductRepository";
 
@@ -17,12 +16,8 @@ class ProductsPageStore {
     this.products = [];
     this.currentPage = InSuccess;
     this.errorMessage = "Error loading products";
-    this.page = 1;
-    this.limit = 50;
     this.total = 0;
-    this.totalPages = 0;
     this.inLoading = true;
-    this.host = "http://localhost:3000";
     this.store = writable(this);
     this.repository = new ProductRepository();
   }
@@ -30,10 +25,7 @@ class ProductsPageStore {
   resetState() {
     this.products = [];
     this.currentPage = InSuccess;
-    this.page = 1;
-    this.limit = 50;
     this.total = 0;
-    this.totalPages = 0;
     this.inLoading = true;
     this.update();
   }
@@ -98,16 +90,15 @@ class ProductsPageStore {
     }
   }
 
-  async getProducts() {
+  async getProducts(page = 0, limit = 50) {
     try {
       this.inLoading = true;
       const { products, pagination } = await this.repository.getProducts(
-        this.page,
-        this.limit,
+        page,
+        limit,
       );
       this.products = products;
       this.total = pagination.total;
-      this.totalPages = pagination.totalPages;
       this.inLoading = false;
       this.update();
     } catch (error) {

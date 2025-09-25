@@ -1,12 +1,15 @@
 <script>
     import { slide } from "svelte/transition";
     import { flip } from "svelte/animate";
-    import Spinner from "@components/Spinner.svelte";
-    import EmptyState from "@components/EmptyState.svelte";
     import { productsPageStore } from "@modules/products/viewmodel/ProductsPageStore";
     import { onMount, onDestroy } from "svelte";
+    import Spinner from "@components/Spinner.svelte";
+    import EmptyState from "@components/EmptyState.svelte";
     import Dropdown from "@components/Dropdown.svelte";
     import CategoriesList from "./CategoriesList.svelte";
+    import Container from "@components/layout/Container.svelte";
+    import RowContainer from "@components/layout/RowContainer.svelte";
+    import Pagination from "@components/Pagination.svelte";
 
     const state = productsPageStore;
 
@@ -27,32 +30,6 @@
             text: "Inactivo",
         },
     };
-
-    function onItemsHandle() {
-        $state.page = 1;
-        state.getProducts();
-    }
-
-    function handlePrevPage() {
-        if ($state.page > 1) {
-            $state.page--;
-        }
-        state.getProducts();
-    }
-
-    function handleNextPage() {
-        if ($state.page < $state.totalPages) $state.page++;
-        state.getProducts();
-    }
-
-    function handlePageClick(p) {
-        $state.page = p;
-        state.getProducts();
-    }
-
-    function handleSearch() {
-        $state.page = 1;
-    }
 
     function handleSort(field) {
         if (sortField === field) {
@@ -101,11 +78,12 @@
         </EmptyState>
     </div>
 {:else}
-    <div class="flex overflow-hidden">
+    <RowContainer overflowHidden>
         <CategoriesList></CategoriesList>
 
-        <div
-            class="flex flex-col flex-1 px-6 pb-4 overflow-hidden"
+        <Container
+            className="flex-1 px-6 pb-4"
+            overflowHidden
             transition={{ slide }}
         >
             <div class="overflow-y-auto box-table flex-1">
@@ -267,65 +245,15 @@
             </div>
 
             <!-- Pagination -->
-            <div class="flex items-center justify-between py-4">
-                <div class="flex items-center gap-1">
-                    <span class="text-xs text-gray-600">Items por página:</span>
-                    <select
-                        bind:value={$state.limit}
-                        on:change={onItemsHandle}
-                        class="text-xs border border-gray-300 rounded-md px-1 py-0.5"
-                    >
-                        <option value={10}>10</option>
-                        <option value={20}>20</option>
-                        <option value={50}>50</option>
-                        <option value={100}>100</option>
-                    </select>
-                </div>
-
-                <div class="flex gap-2">
-                    <button
-                        on:click={handlePrevPage}
-                        disabled={state.page === 1}
-                        class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
-                        >Anterior</button
-                    >
-                    {#if $state.totalPages <= 6}
-                        {#each Array($state.totalPages) as _, i}
-                            <button
-                                on:click={() => handlePageClick(i + 1)}
-                                class="px-2 py-1 {$state.page === i + 1
-                                    ? 'bg-[#0969da] text-white border-[#0969da]'
-                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-xs"
-                                >{i + 1}</button
-                            >
-                        {/each}
-                    {:else}
-                        {#each [1, 2, 3, 4, 5, $state.totalPages].filter((p, i, arr) => i === arr.indexOf(p) && p <= $state.totalPages && (p <= 3 || p >= $state.totalPages || p === $state.page || p === $state.page - 1 || p === $state.page + 1)) as page}
-                            <button
-                                on:click={() => handlePageClick(page)}
-                                class="px-2 py-1 {$state.page === page
-                                    ? 'bg-[#0969da] text-white border-[#0969da]'
-                                    : 'border-gray-300 hover:bg-gray-50'} border rounded-md text-xs"
-                                >{page}</button
-                            >
-                        {/each}
-                    {/if}
-                    <button
-                        on:click={handleNextPage}
-                        disabled={$state.page === $state.totalPages}
-                        class="px-2 py-1 border border-gray-300 rounded-md hover:bg-gray-50 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
-                        >Siguiente</button
-                    >
-                </div>
-                <span class="text-xs text-gray-600"
-                    >Mostrando {($state.page - 1) * $state.limit + 1}-{Math.min(
-                        $state.page * $state.limit,
-                        $state.total,
-                    )} de {$state.total} resultados</span
-                >
-            </div>
-        </div>
-    </div>
+            <Pagination
+                totalItems={$state.total}
+                on:change={(e) => {
+                    const { page, limit } = e.detail;
+                    state.getProducts(page, limit);
+                }}
+            />
+        </Container>
+    </RowContainer>
 {/if}
 
 <style>
@@ -333,9 +261,5 @@
         font-weight: 600;
         font-size: 12px;
         color: #24292f;
-    }
-
-    :global(.text-2xs) {
-        font-size: 0.625rem;
     }
 </style>

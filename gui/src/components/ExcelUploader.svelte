@@ -35,12 +35,6 @@
 </div>
 
 <style>
-    :global(body) {
-        font-family:
-            -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-            sans-serif;
-    }
-
     .form-group {
         display: flex;
         flex-direction: column;

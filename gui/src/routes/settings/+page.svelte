@@ -11,6 +11,6 @@
     });
 </script>
 
-<Container className="mx-auto p-10">
+<Container className="p-10">
     <SettingsForm {vm} />
 </Container>

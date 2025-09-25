@@ -8,7 +8,7 @@ class SaleRepository {
     this.productsSalesModel = ProductsSalesEntity;
   }
 
-  async addSale(sale) {
+  async createSale(sale) {
     try {
       const createdSale = await this.model.create(sale);
       return createdSale;
@@ -27,15 +27,16 @@ class SaleRepository {
     }
   }
 
-  async showSales(id) {
-    try {
-      const sales = await this.model.findAll({
-        where: { CashBoxRegistryId: id },
-      });
-      return sales;
-    } catch (error) {
-      throw new Error(error.message);
-    }
+  async showSales() {
+    const sales = await this.model.findAll();
+    return sales.map((sale) => sale.toJSON());
+  }
+
+  async showSalesByTurn(turnId) {
+    const sales = await this.model.findAll({
+      where: { turnId: turnId },
+    });
+    return sales.map((sale) => sale.toJSON());
   }
 
   async addProduct(id, product) {

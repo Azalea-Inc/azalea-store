@@ -7,10 +7,12 @@ module.exports = class SaleHandler extends Handler {
     this.controller = new SaleController();
   }
 
-  async addSale(req, res) {
+  async createSale(req, res) {
     try {
-      const sale = await this.controller.addSale(req.body);
-      res.status(201).json({ message: "Sale added successfully", data: sale });
+      const sale = await this.controller.createSale(req.session);
+      res
+        .status(201)
+        .json({ message: "Sale created successfully", data: sale });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -51,10 +53,17 @@ module.exports = class SaleHandler extends Handler {
 
   async showSales(req, res) {
     try {
-      const sales = await this.controller.showSales(req.params.id);
-      res
-        .status(200)
-        .json({ message: "Sales retrieved successfully", data: sales });
+      const sales = await this.controller.showSales();
+      res.status(200).json({ message: "Sales retrieved successfully", sales });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async showSalesByTurn(req, res) {
+    try {
+      const sales = await this.controller.showSalesByTurn(req.session?.turnId);
+      res.status(200).json({ message: "Sales retrieved successfully", sales });
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -103,9 +112,10 @@ module.exports = class SaleHandler extends Handler {
   }
 
   setupRoutes(router) {
-    this.router.post("/", this.addSale.bind(this));
+    this.router.post("/", this.createSale.bind(this));
     this.router.get("/:id", this.showSale.bind(this));
-    this.router.get("/:id/all", this.showSales.bind(this));
+    this.router.get("/", this.showSales.bind(this));
+    this.router.get("/turn/all", this.showSalesByTurn.bind(this));
     this.router.post("/:id/print", this.printTicket.bind(this));
     this.router.delete("/:id", this.removeSale.bind(this));
     this.router.post("/:id/products", this.addProduct.bind(this));

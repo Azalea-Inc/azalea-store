@@ -42,9 +42,9 @@ module.exports = () => {
     as: "cashBox",
   });
 
-  TurnEntity.hasOne(SaleEntity, {
+  TurnEntity.hasMany(SaleEntity, {
     foreignKey: "turnId",
-    as: "sale",
+    as: "sales",
     onDelete: "CASCADE",
   });
 

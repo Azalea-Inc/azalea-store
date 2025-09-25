@@ -24,7 +24,7 @@
 <Container overflowHidden>
     <HeaderContainer>
         <HorizontalList>
-            <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-4">
                 <h1 class="text-title">Azalea</h1>
             </div>
 

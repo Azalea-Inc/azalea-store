@@ -15,7 +15,6 @@ module.exports = class AuthHandler extends Handler {
           return res.status(200).json({ message: "Already logged in" });
 
         res.clearCookie("token");
-        return res.status(401).json({ error: "Invalid session" });
       }
 
       const { email, password } = req.body;

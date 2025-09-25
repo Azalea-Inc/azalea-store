@@ -57,9 +57,9 @@
         </HStack>
     </HeaderContainer>
 
-    <main class="flex-1 flex flex-col overflow-hidden">
+    <Container className="flex-1" overflowHidden>
         <svelte:component this={$state.currentPage} />
-    </main>
+    </Container>
 </Container>
 
 <ProductDetail></ProductDetail>

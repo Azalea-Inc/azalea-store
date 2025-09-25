@@ -2,6 +2,7 @@ import { derived, writable } from "svelte/store";
 import { sessionStore } from "@store/Session";
 import { modals } from "@components/Modals";
 import { SessionController } from "@controllers/SessionController";
+import { notify } from "@controllers/Notify";
 
 import {
   Home,

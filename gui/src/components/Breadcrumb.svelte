@@ -1,6 +1,7 @@
 <script>
     import { page } from "$app/stores";
     import { derived } from "svelte/store";
+    export let className = "";
 
     import { translations, LANGUAGES } from "$lib/Translations";
     const lang = LANGUAGES.es;
@@ -22,7 +23,7 @@
     });
 </script>
 
-<nav class="flex items-center py-2 pl-0 px-3">
+<nav class="flex items-center py-2 pl-0 px-3 ${className}">
     <div class="flex items-center bg-gray-100 rounded-md px-2 py-1">
         <a href="/" class="text-gray-600 hover:text-gray-900 text-sm">
             Inicio

@@ -3,15 +3,16 @@
     import { AsideVM } from "@viewmodels/AsideVM";
     import { Settings } from "@components/icons";
     import Tooltip from "@components/Tooltip.svelte";
+    import Container from "@components/layout/Container.svelte";
 
     const vm = new AsideVM();
     const { aside, session } = vm;
 </script>
 
 <aside
-    class="min-h-screen aside z-[200] border-r bg-red-200 border-gray-200 flex flex-col overflow-hidden"
+    class="aside z-[200] border-r bg-red-200 border-gray-200 flex flex-col overflow-hidden"
 >
-    <div class="flex flex-col p-4 flex-1">
+    <Container className="p-4 flex-1">
         {#each $aside.menu as item}
             <Tooltip
                 text={item.title}
@@ -43,9 +44,9 @@
                 </a>
             </Tooltip>
         {/each}
-    </div>
+    </Container>
 
-    <div class="flex flex-col p-4 flex-1 justify-end w-full">
+    <Container className="p-4 justify-end">
         <Tooltip
             text="Ajustes"
             tooltipDirection="right"
@@ -98,7 +99,7 @@
                 </button>
             </Tooltip>
         {/if}
-    </div>
+    </Container>
 </aside>
 
 <style>

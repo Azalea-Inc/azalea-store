@@ -4,7 +4,7 @@
 </script>
 
 <div
-    class="flex flex-col bg-gray-50 {overflowHidden
+    class="flex flex-row {overflowHidden
         ? 'overflow-hidden'
         : 'overflow-y-auto'} {className}"
 >

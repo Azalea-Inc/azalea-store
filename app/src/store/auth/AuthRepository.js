@@ -35,6 +35,11 @@ class AuthRepository {
     const session = await SessionEntity.findOne({
       where: { tokenId, isActive: true },
     });
+
+    if (!session) {
+      return;
+    }
+
     return session.toJSON();
   }
 

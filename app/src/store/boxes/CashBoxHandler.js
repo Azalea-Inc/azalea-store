@@ -119,14 +119,6 @@ class CashBoxHandler extends BaseHandler {
     }
   }
 
-  async test(req, res) {
-    throw new Error("Not implemented");
-  }
-
-  handle = (fn) => (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
-
   setupRoutes(router) {
     this.router.post("/", this.createCashBox.bind(this));
     this.router.get("/", this.showCashBoxes.bind(this));
